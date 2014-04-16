@@ -11,9 +11,14 @@ body {
 footer {
 	margin: 50px 0;
 }
-a {
+a, h3{
   color: #A83F2A;
 }
 h1 small {
 	color: #162836;
 }
+.theList
+{
+    text-align: right;
+    list-style-position: inside;
+}​
