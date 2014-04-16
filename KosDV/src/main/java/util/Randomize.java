@@ -17,15 +17,15 @@ public class Randomize {
         return randomNum;
     }
 
-    public List<Integer> randomFotosList(int numFotosTotal, int numFotosObtain) {
+    public List<Integer> randomPhotoList(int numPhotosTotal, int numPhotosObtain) {
 
         Integer rand;
         List<Integer> photoList = new ArrayList<Integer>();
 
         Randomize ran = new Randomize();
 
-        for (int i = 0; i < numFotosObtain; i++) {
-            rand = ran.randInt(0, numFotosTotal - 1);
+        for (int i = 0; i < numPhotosObtain; i++) {
+            rand = ran.randInt(0, numPhotosTotal - 1);
             photoList.add(rand);
 
             for (int j = 0; j < (photoList.size() - 1); j++) {
