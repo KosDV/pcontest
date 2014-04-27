@@ -1,4 +1,4 @@
-package generic;
+package hibernate.generic;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,8 +9,8 @@ import org.hibernate.Session;
 import util.HibernateUtil;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class GenUserFunctions <T, USER_ID extends Serializable> {
-	
+public class GenImageFunctions<T, IMAGE_ID extends Serializable> {
+
     protected Session getSession() {
         return HibernateUtil.getSession();
     }
@@ -19,12 +19,12 @@ public class GenUserFunctions <T, USER_ID extends Serializable> {
         Session hibernateSession = this.getSession();
         hibernateSession.saveOrUpdate(entity);
     }
-    
+
     public void merge(T entity) {
         Session hibernateSession = this.getSession();
         hibernateSession.merge(entity);
     }
-    
+
     public void update(T entity) {
         Session hibernateSession = this.getSession();
         hibernateSession.update(entity);
@@ -35,19 +35,19 @@ public class GenUserFunctions <T, USER_ID extends Serializable> {
         hibernateSession.delete(entity);
     }
 
-	public List<T> findMany(Query query) {
+    public List<T> findMany(Query query) {
         List<T> t;
         t = (List<T>) query.list();
         return t;
     }
 
-	public T findOne(Query query) {
+    public T findOne(Query query) {
         T t;
         t = (T) query.uniqueResult();
         return t;
     }
 
-	public List findAll(Class c) {
+    public List findAll(Class c) {
         Session hibernateSession = this.getSession();
         List T = null;
         Query query = hibernateSession.createQuery("from " + c.getName());
@@ -55,11 +55,10 @@ public class GenUserFunctions <T, USER_ID extends Serializable> {
         return T;
     }
 
-	public T findByID(Class c, Integer id) {
+    public T findByID(Class c, Integer id) {
         Session hibernateSession = this.getSession();
         T t = null;
         t = (T) hibernateSession.get(c, id);
         return t;
     }
-    
 }

@@ -2,13 +2,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>CITIEII</groupId>
-	<artifactId>KosDV</artifactId>
+	<groupId>KosDV</groupId>
+	<artifactId>pcontest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>KosDV</name>
-	<url>http://maven.apache.org</url>
+	<name>pcontest</name>
+	<url>https://github.com/KosDV/pcontest</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

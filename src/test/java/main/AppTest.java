@@ -1,4 +1,4 @@
-package CITIEII.KosDV;
+package main;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

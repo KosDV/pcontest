@@ -1,6 +1,7 @@
-package hibernate;
+package hibernate.main;
 
-import generic.GenUserFunctions;
+import hibernate.generic.GenUserFunctions;
+import hibernate.specific.UserFunctions;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,7 +11,6 @@ import java.util.List;
 
 import model.Image;
 import model.User;
-import specific.UserFunctions;
 import util.HibernateUtil;
 
 public class App {

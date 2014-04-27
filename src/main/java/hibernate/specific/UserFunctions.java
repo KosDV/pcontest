@@ -1,4 +1,4 @@
-package specific;
+package hibernate.specific;
 
 import model.User;
 
