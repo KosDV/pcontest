@@ -24,6 +24,7 @@ public class Image implements Serializable {
     private Integer height;
     private String title;
     private String description;
+    private String coordinates;
     private Integer votes; // [0, 5]
     private User user;
 
@@ -107,5 +108,13 @@ public class Image implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
+
+	public String getCoordinates() {
+		return coordinates;
+	}
+
+	public void setCoordinates(String coordinates) {
+		this.coordinates = coordinates;
+	}
 
 }
