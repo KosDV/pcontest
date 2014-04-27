@@ -1,6 +1,6 @@
 package hibernate.specific;
 
-import model.User;
+import hibernate.model.User;
 
 import org.hibernate.HibernateException;
 import org.hibernate.NonUniqueResultException;

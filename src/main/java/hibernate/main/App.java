@@ -1,6 +1,8 @@
 package hibernate.main;
 
 import hibernate.generic.GenUserFunctions;
+import hibernate.model.Image;
+import hibernate.model.User;
 import hibernate.specific.UserFunctions;
 
 import java.io.BufferedReader;
@@ -9,8 +11,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Image;
-import model.User;
 import util.HibernateUtil;
 
 public class App {

@@ -1,6 +1,7 @@
-package model;
+package hibernate.model;
 
 import static javax.persistence.GenerationType.IDENTITY;
+import hibernate.model.User;
 
 import java.io.Serializable;
 
@@ -12,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
-import model.User;
 
 @SuppressWarnings("serial")
 @Entity
