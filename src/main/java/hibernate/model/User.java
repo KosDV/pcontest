@@ -3,6 +3,8 @@ package hibernate.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,7 +19,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user", catalog = "kaos")
 public class User implements Serializable {
-	
+
 	private Integer id;
 	private String name;
 	private String surname;
@@ -26,9 +28,13 @@ public class User implements Serializable {
 	private String password;
 	private String nif;
 	private Image image;
-	private Integer counter; 
-	
+	private Vote vote;
+	private Integer counter;
+	private String isAdmin; // YES NO
+	private Set<Image> imagesToVote = new HashSet<Image>();
+
 	public User() {
+
 	}
 
 	public User(String name, String surname, String birth, String email,
@@ -56,9 +62,9 @@ public class User implements Serializable {
 		this.image = image;
 	}
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "USER_ID", unique = true, nullable = false)
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "USER_ID", unique = true, nullable = false)
 	public Integer getId() {
 		return id;
 	}
@@ -84,7 +90,7 @@ public class User implements Serializable {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	
+
 	@Column(name = "BIRTH", nullable = false)
 	public String getBirth() {
 		return birth;
@@ -120,24 +126,47 @@ public class User implements Serializable {
 	public void setNif(String nif) {
 		this.nif = nif;
 	}
-	
+
 	@Column(name = "COUNTER", unique = false)
 	public Integer getCounter() {
-        return counter;
-    }
+		return counter;
+	}
 
-    public void setCounter(Integer counter) {
-        this.counter = counter;
-    }
+	public void setCounter(Integer counter) {
+		this.counter = counter;
+	}
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
 	public Image getImage() {
 		return image;
 	}
-
+	// TODO Add Hibernate decorators
 	public void setImage(Image image) {
 		this.image = image;
 	}
 
-	
+	public Vote getVote() {
+		return vote;
+	}
+
+	public void setVote(Vote vote) {
+		this.vote = vote;
+	}
+
+	public String getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(String isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	public Set<Image> getImagesToVote() {
+		return imagesToVote;
+	}
+
+	public void setImagesToVote(Set<Image> imagesToVote) {
+		this.imagesToVote = imagesToVote;
+	}
+
 }
