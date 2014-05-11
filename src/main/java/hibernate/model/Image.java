@@ -6,18 +6,20 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "image", catalog = "kaos")
+@Table(name = "picture", catalog = "kaos")
 public class Image implements Serializable {
 
 	private Integer id;
@@ -26,7 +28,7 @@ public class Image implements Serializable {
 	private String title;
 	private String description;
 	private String coordinates;
-	// private Set<Vote> votes = new HashSet<Vote>(0);
+	private Set<Vote> votes = new HashSet<Vote>(0);
 	private User user;
 
 	public Image() {
@@ -44,7 +46,7 @@ public class Image implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "IMAGE_ID", unique = true, nullable = false)
+	@Column(name = "PICTURE_ID", unique = true, nullable = false)
 	public Integer getId() {
 		return id;
 	}
@@ -106,6 +108,15 @@ public class Image implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "pictures")
+	public Set<Vote> getVotes() {
+		return votes;
+	}
+
+	public void setVotes(Set<Vote> votes) {
+		this.votes = votes;
 	}
 
 }

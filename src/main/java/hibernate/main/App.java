@@ -3,13 +3,16 @@ package hibernate.main;
 import hibernate.generic.GenUserFunctions;
 import hibernate.model.Image;
 import hibernate.model.User;
+import hibernate.model.Vote;
 import hibernate.specific.UserFunctions;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import util.HibernateUtil;
 
@@ -38,6 +41,18 @@ public class App {
 					user2);
 			Image img3 = new Image(103, 104, "Img03", "Imatge de prova 3",
 					user3);
+			
+			/** VOTES **/
+			Set<Image> images = new HashSet<Image>();
+			images.add(img1);
+			images.add(img2);
+			
+			Set<Image> images2 = new HashSet<Image>();
+			images2.add(img1);
+			images2.add(img3);
+			
+			Vote vote1 = new Vote(images);
+			Vote vote2 = new Vote(images2);
 
 			/** TRANSACTIONS **/
 			HibernateUtil.getSession().save(user1);
@@ -48,6 +63,9 @@ public class App {
 			HibernateUtil.getSession().save(img1);
 			HibernateUtil.getSession().save(img2);
 			HibernateUtil.getSession().save(img3);
+			
+			HibernateUtil.getSession().save(vote1);
+			HibernateUtil.getSession().save(vote2);
 
 			HibernateUtil.getSession().getTransaction().commit();
 
@@ -55,7 +73,7 @@ public class App {
 			System.err.println("ERROR: There's been a problem.");
 		}
 
-		HibernateUtil.getSession().beginTransaction();
+		/*HibernateUtil.getSession().beginTransaction();
 
 		GenUserFunctions userF = new GenUserFunctions();
 		List<User> users = new ArrayList<User>();
@@ -106,7 +124,7 @@ public class App {
 			}
 		} catch (IOException e) {
 			System.err.println("There's been an error.");
-		}
+		}*/
 
 	}
 }
