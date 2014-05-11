@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -28,17 +29,15 @@ public class User implements Serializable {
 	private String password;
 	private String nif;
 	private Image image;
-	private Vote vote;
-	private Integer counter;
-	private String isAdmin; // YES NO
-	private Set<Image> imagesToVote = new HashSet<Image>();
+	private String voted = "NO"; // YES NO
+	private String isAdmin = "NO"; // YES NO
 
 	public User() {
 
 	}
 
 	public User(String name, String surname, String birth, String email,
-			String password, String nif, Integer counter) {
+			String password, String nif) {
 		super();
 		this.name = name;
 		this.surname = surname;
@@ -46,20 +45,6 @@ public class User implements Serializable {
 		this.email = email;
 		this.password = password;
 		this.nif = nif;
-		this.counter = counter;
-	}
-
-	public User(String name, String surname, String birth, String email,
-			String password, String nif, Integer counter, Image image) {
-		super();
-		this.name = name;
-		this.surname = surname;
-		this.birth = birth;
-		this.email = email;
-		this.password = password;
-		this.nif = nif;
-		this.counter = counter;
-		this.image = image;
 	}
 
 	@Id
@@ -73,7 +58,7 @@ public class User implements Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "NAME", unique = true, nullable = false)
+	@Column(name = "NAME", nullable = false)
 	public String getName() {
 		return name;
 	}
@@ -127,32 +112,16 @@ public class User implements Serializable {
 		this.nif = nif;
 	}
 
-	@Column(name = "COUNTER", unique = false)
-	public Integer getCounter() {
-		return counter;
+	@Column(name = "VOTED", nullable = false)
+	public String getVoted() {
+		return voted;
 	}
 
-	public void setCounter(Integer counter) {
-		this.counter = counter;
+	public void setVoted(String voted) {
+		this.voted = voted;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
-	public Image getImage() {
-		return image;
-	}
-	// TODO Add Hibernate decorators
-	public void setImage(Image image) {
-		this.image = image;
-	}
-
-	public Vote getVote() {
-		return vote;
-	}
-
-	public void setVote(Vote vote) {
-		this.vote = vote;
-	}
-
+	@Column(name = "isADMIN", nullable = false)
 	public String getIsAdmin() {
 		return isAdmin;
 	}
@@ -161,12 +130,13 @@ public class User implements Serializable {
 		this.isAdmin = isAdmin;
 	}
 
-	public Set<Image> getImagesToVote() {
-		return imagesToVote;
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+	public Image getImage() {
+		return image;
 	}
 
-	public void setImagesToVote(Set<Image> imagesToVote) {
-		this.imagesToVote = imagesToVote;
+	public void setImage(Image image) {
+		this.image = image;
 	}
 
 }
