@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
@@ -23,6 +24,7 @@ import javax.persistence.Table;
 public class Vote implements Serializable {
 	private Integer id;
 	private Set<Image> pictures = new HashSet<Image>(0);
+	private Urn urn;
 
 	public Vote() {
 	}
@@ -53,6 +55,16 @@ public class Vote implements Serializable {
 
 	public void setPictures(Set<Image> pictures) {
 		this.pictures = pictures;
+	}
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "URN_ID", nullable = false)
+	public Urn getUrn() {
+		return urn;
+	}
+
+	public void setUrn(Urn urn) {
+		this.urn = urn;
 	}
 
 }
