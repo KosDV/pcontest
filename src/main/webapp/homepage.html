@@ -18,11 +18,6 @@
 <!-- Normalize CSS -->
 <link rel="stylesheet" href="css/normalize.css">
 
-<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 
 <body>
@@ -42,30 +37,29 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="#about">About</a></li>
-					<li><a href="#contact">Contact</a></li>
-					<li class="theList"><a href="#login">Sign out</a></li>
-					<li><a href="#PROVA" onClick='pContestClosed()'
-						id="prova-info">Prova</a></li>
+					<li><a href="#about" onClick='About()'>About</a></li>
+					<li><a href="#contact" onClick='Contact()'>Contact</a></li>
+					<li class="theList"><a href="index.html">Sign out</a></li>
+					<li><a href="#deadline" onClick='DeadLine()'>Deadline</a></li>
+					<li><a href="#loadPicture" onClick='LoadPicture()'>Load Picture</a></li>
 				</ul>
 			</div>
 		</div>
 		<!-- /.container -->
 	</nav>
-	<!--------------------- NAVIGATION BAR ENDS --------------------->
 
 	<!--------------------- PAGE HEADER STARTS--------------------->
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">
-					pContest 2014 <small>Vote the five best!</small>
+					pContest 2014 <small> Capturing moments.. </small>
 				</h1>
 			</div>
 		</div>
 	</div>
-	<!--------------------- PAGE HEADER ENDS --------------------->
 
+	<!--------------------- PAGE CONTENT --------------------->
 	<div class="container">
 		<div id="contingut-pagina">
 			<section id="contingut">
@@ -98,97 +92,16 @@
 						</h3>
 					</div>
 				</div>
-
-				<!--------------------- SECOND LINE --------------------->
-				<div class="row">
-					<div class="col-md-4 portfolio-item">
-						<a href="#project-link"> <img class="img-responsive"
-							src="/assets/sampleImg/5.jpg">
-						</a>
-						<h3>
-							NASCAR <input type="checkbox" name="input" value="Type here">
-						</h3>
-					</div>
-
-					<div class="col-md-4 portfolio-item">
-						<a href="#project-link"> <img class="img-responsive"
-							src="/assets/sampleImg/6.jpg">
-						</a>
-						<h3>
-							Sunset <input type="checkbox" name="input" value="Type here">
-						</h3>
-					</div>
-
-					<div class="col-md-4 portfolio-item">
-						<a href="#project-link"> <img class="img-responsive"
-							src="/assets/sampleImg/2.jpg">
-						</a>
-						<h3>
-							Station <input type="checkbox" name="input" value="Type here">
-						</h3>
-					</div>
-				</div>
-
-				<!--------------------- THIRD LINE --------------------->
-				<div class="row">
-					<div class="col-md-4 portfolio-item">
-						<a href="#project-link"> <img class="img-responsive"
-							src="http://placehold.it/700x400">
-						</a>
-						<h3>
-							<input type="checkbox" name="input" value="Type here">
-						</h3>
-					</div>
-					<div class="col-md-4 portfolio-item">
-						<a href="#project-link"> <img class="img-responsive"
-							src="http://placehold.it/700x400">
-						</a>
-						<h3>
-							<input type="checkbox" name="input" value="Type here">
-						</h3>
-					</div>
-					<div class="col-md-4 portfolio-item">
-						<a href="#project-link"> <img class="img-responsive"
-							src="http://placehold.it/700x400">
-						</a>
-						<h3>
-							<input type="checkbox" name="input" value="Type here">
-						</h3>
-					</div>
-				</div>
 			</section>
 		</div>
 	</div>
-	<!-- /.container -->
-
-	<!--------------------- UPLOAD AN IMAGE --------------------->
-	<div class="container">
-		<h2>File Upload with Jersey</h2>
-		<form action="localhost:8000/prueba/upload" method="post"
-			enctype="multipart/form-data">
-			<p>
-				Select a file: <input type="file" name="file" size="45" />
-			</p>
-			<input type="submit" value="Upload" />
-		</form>
-	</div>
 
 	<!--------------------- FOOTER --------------------->
-	<!-- 	<div id="footer"> -->
-	<!-- 		<div class="container"> -->
-	<!-- 			<div class="row"> -->
-	<!-- 				<div class="col-lg-12"> -->
-	<!-- 					<p>Copyright &copy; KosDV 2014</p> -->
-	<!-- 				</div> -->
-	<!-- 			</div> -->
-	<!-- 		</div> -->
-	<!-- 	</div> -->
-
 	<div class="container">
 		<footer>
 			<div class="row">
 				<div class="col-lg-12">
-					<p>Copyright &copy; KosDV 2014</p>
+					<h4>Copyright &copy; KosDV 2014</h4>
 				</div>
 			</div>
 		</footer>
@@ -203,6 +116,14 @@
 		window.jQuery
 				|| document
 						.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')
+	</script>
+	<script>
+		$(function() {
+			$('.required-icon').tooltip({
+				placement : 'left',
+				title : 'Required field'
+			});
+		});
 	</script>
 
 	<script src="js/vendor/bootstrap.min.js"></script>
