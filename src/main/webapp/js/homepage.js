@@ -5,6 +5,31 @@ function Prova() {
 	document.getElementById("contingut-pagina").innerHTML = html;
 }
 
+function pContestClosed() {
+	
+	var html="";
+	html += "<div class=\"container\">  ";
+	html += "<h2>Example of creating Modals with Twitter Bootstrap<\/h2>  ";
+	html += "<div id=\"example\" class=\"modal hide fade in\" style=\"display: none; \">  ";
+	html += "<div class=\"modal-header\">  ";
+	html += "<a class=\"close\" data-dismiss=\"modal\">×<\/a>  ";
+	html += "<h3>This is a Modal Heading<\/h3>  ";
+	html += "<\/div>  ";
+	html += "<div class=\"modal-body\">  ";
+	html += "<h4>Text in a modal<\/h4>  ";
+	html += "<p>You can add some text here.<\/p>                ";
+	html += "<\/div>  ";
+	html += "<div class=\"modal-footer\">  ";
+	html += "<a href=\"#\" class=\"btn btn-success\">Call to action<\/a>  ";
+	html += "<a href=\"#\" class=\"btn\" data-dismiss=\"modal\">Close<\/a>  ";
+	html += "<\/div>  ";
+	html += "<\/div>  ";
+	html += "<p><a data-toggle=\"modal\" href=\"#example\" class=\"btn btn-primary btn-large\">Launch demo modal<\/a><\/p>  ";
+	html += "<\/div>";
+
+	document.getElementById("contingut-pagina").innerHTML = html;
+}
+
 function Home() {
 
 	var html = "";

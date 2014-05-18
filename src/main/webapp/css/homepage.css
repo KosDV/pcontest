@@ -1,7 +1,8 @@
 body {
-	margin-top: 50px; /* 50px is the height of the navbar - change this if the navbarn height changes */
+	margin-top: 50px;
+	/* 50px is the height of the navbar - change this if the navbarn height changes */
 	padding-bottom: 40px;
-  	background-color: #009c8b;
+	background-color: #009c8b;
 }
 
 .portfolio-item {
@@ -11,14 +12,39 @@ body {
 footer {
 	margin: 50px 0;
 }
-a, h3{
-  color: #A83F2A;
+
+a,h3 {
+	color: #A83F2A;
 }
+
 h1 small {
 	color: #162836;
 }
-.theList
-{
-    text-align: right;
-    list-style-position: inside;
-}​
+
+.theList {
+	text-align: right;
+	list-style-position: inside;
+}
+
+#container {
+	margin: 0 auto;
+	width: 800px;
+	border: 1px solid #333;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	font-family: Verdana, Geneva, sans-serif;
+	text-align: center;
+}
+
+img {
+	border: 10px solid #444;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 10px;
+	margin: 15px;
+}
+
+img:hover {
+	border-color: #555;
+	-moz-box-shadow: 0px 0px 15px #111;
+	-webkit-box-shadow: 0px 0px 15px #111;
+}

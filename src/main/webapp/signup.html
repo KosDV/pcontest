@@ -1,72 +1,72 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="/assets/ico/favicon.ico">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" href="/assets/ico/favicon.ico">
 
-    <title>signup Template for Bootstrap</title>
+<title>Signup pContest</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap core CSS -->
+<link href="/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="/css/signup.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="/css/signup.css" rel="stylesheet">
 
-    <!-- Normalize CSS -->
-    <link rel="stylesheet" href="css/normalize.css">
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="css/normalize.css">
 
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+</head>
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
+<body>
+	<div class="container">
+	
+		<!-------------- SING UP FORM -------------->
+		<form class="form-signup" role="form" id="signup-form">
+			<h2 class="form-signup-heading">Please sign up</h2>
+			<div class="control-group" id="cgName"><input id="name" type="text" class="form-control" placeholder="Name" required autofocus></div>
+			<div class="control-group" id="cgSurname"><input id="surname" type="text" class="form-control" placeholder="Surname" required></div>
+			<div class="control-group" id="cgId"><input id="id" type="text" class="form-control" placeholder="ID Number" required></div>
+			<div class="control-group" id="cgTel"><input id="tel" type="tel" class="form-control" placeholder="Phone" required></div>
+			<div class="control-group" id="cgMail"><input id="mail" type="email" class="form-control" placeholder="Email address" required></div>
+			<div class="control-group" id="cgPass"><input id="password" type="password" class="form-control" placeholder="Password" required></div>
+			<button id="signup-btn" class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+			<label class="alert-link"> <a href="index.html">Already
+					Registered?!</a>
+			</label>
+		</form>
+	</div>
+	
+	
 
-  <body>
-
-    <div class="container">
-
-      <form class="form-signup" role="form">
-        <h2 class="form-signup-heading">Please sign up</h2>
-        <input id="name" type="text" class="form-control" placeholder="Name" required autofocus>
-        <input id="surname" type="text" class="form-control" placeholder="Surname" required>
-        <input id="id" type="text" class="form-control" placeholder="ID Number" required>
-        <input id="tel" type="tel" class="form-control" placeholder="Phone" required>
-        <input id="mail" type="email" class="form-control" placeholder="Email address" required>
-        <input id="password" type="password" class="form-control" placeholder="Password" required>
-        <button id="signup-btn" class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
-        <label class="alert-link">
-          <a href="index.html">Already Registered?!</a>
-        </label>
-      </form>
-
-    </div> <!-- /container -->
-
-
-    <!-- Bootstrap core JavaScript
+	<!-- Bootstrap core JavaScript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-      <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script
+		src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	<script>
+		window.jQuery
+				|| document
+						.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')
+	</script>
 
-      <script src="js/vendor/bootstrap.min.js"></script>
+	<script src="js/vendor/bootstrap.min.js"></script>
 
-      <script src="js/plugins.js"></script>
-      <script src="js/main.js"></script>
+	<script src="js/plugins.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/singup"></script>
 
-      <script>
-          var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-          (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-          g.src='//www.google-analytics.com/ga.js';
-          s.parentNode.insertBefore(g,s)}(document,'script'));
-      </script>
-  </body>
+	<script>
+		var _gaq = [ [ '_setAccount', 'UA-XXXXX-X' ], [ '_trackPageview' ] ];
+		(function(d, t) {
+			var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+			g.src = '//www.google-analytics.com/ga.js';
+			s.parentNode.insertBefore(g, s)
+		}(document, 'script'));
+	</script>
+</body>
 </html>
