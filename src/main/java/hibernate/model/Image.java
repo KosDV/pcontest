@@ -3,15 +3,12 @@ package hibernate.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -27,7 +24,6 @@ public class Image implements Serializable {
 	private String title;
 	private String description;
 	private String coordinates;
-	private Set<Vote> votes = new HashSet<Vote>(0);
 	private User user;
 
 	public Image() {
@@ -107,15 +103,6 @@ public class Image implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "pictures")
-	public Set<Vote> getVotes() {
-		return votes;
-	}
-
-	public void setVotes(Set<Vote> votes) {
-		this.votes = votes;
 	}
 
 }

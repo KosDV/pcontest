@@ -10,12 +10,12 @@ import hibernate.specific.UserFunctions;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import util.HibernateUtil;
+import util.Paillier;
 
 public class App {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -47,17 +47,20 @@ public class App {
 					user3);
 
 			/** VOTES **/
-			Set<Image> images = new HashSet<Image>();
-			images.add(img1);
-			images.add(img2);
+			Paillier paillier = new Paillier();
+			String m1 = "010101";
+			BigInteger m1Big = new BigInteger(m1);
+			BigInteger c1 = paillier.Encryption(m1Big);
 
-			Set<Image> images2 = new HashSet<Image>();
-			images2.add(img1);
-			images2.add(img3);
+			String m2 = "010001";
+			BigInteger m2Big = new BigInteger(m2);
+			BigInteger c2 = paillier.Encryption(m2Big);
 
-			Vote vote1 = new Vote(images);
+			Vote vote1 = new Vote();
+			vote1.setEncryptedVote(c1.toString());
 			vote1.setUrn(urn);
-			Vote vote2 = new Vote(images2);
+			Vote vote2 = new Vote();
+			vote2.setEncryptedVote(c2.toString());
 			vote2.setUrn(urn);
 
 			urn.getListVotes().add(vote1);
@@ -83,6 +86,7 @@ public class App {
 			HibernateUtil.getSession().getTransaction().rollback();
 			throw e;
 		}
+
 		HibernateUtil.getSession().beginTransaction();
 		try {
 			GenUserFunctions userF = new GenUserFunctions();
