@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "picture", catalog = "kaos")
-public class Image implements Serializable {
+public class Picture implements Serializable {
 
 	private Integer id;
 	private Integer width;
@@ -26,10 +26,10 @@ public class Image implements Serializable {
 	private String coordinates;
 	private User user;
 
-	public Image() {
+	public Picture() {
 	}
 
-	public Image(Integer width, Integer height, String title,
+	public Picture(Integer width, Integer height, String title,
 			String description, User user) {
 		super();
 		this.width = width;
@@ -37,6 +37,15 @@ public class Image implements Serializable {
 		this.title = title;
 		this.description = description;
 		this.user = user;
+	}
+	
+	public Picture(Integer width, Integer height, String title,
+			String description) {
+		super();
+		this.width = width;
+		this.height = height;
+		this.title = title;
+		this.description = description;
 	}
 
 	@Id
