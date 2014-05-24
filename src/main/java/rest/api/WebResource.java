@@ -1,6 +1,7 @@
 package rest.api;
 
-import hibernate.model.Image;
+import hibernate.manager.UserManager;
+import hibernate.model.Picture;
 import hibernate.model.User;
 
 import java.util.HashSet;
@@ -10,10 +11,13 @@ import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import rest.model.UserBean;
 
 @Path("/web")
 public class WebResource {
@@ -46,6 +50,19 @@ public class WebResource {
 	}
 
 	@GET
+	@Path("/users/{user-code}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public UserBean getUserResource(@PathParam("user-code") String userNif) {
+		UserManager userManager = new UserManager();
+
+		UserBean user = new UserBean(userManager.findByUserNif(userNif));
+		System.out.println("The user with NIF:" + userNif + " is "
+				+ user.getName() + " " + user.getSurname());
+		return user;
+
+	}
+
+	@GET
 	@Path("/users")
 	@Produces(MediaType.APPLICATION_JSON)
 	public HashSet<User> getUsersResource() {
@@ -57,7 +74,7 @@ public class WebResource {
 	@Path("/photos/upload")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response uploadPhotoResource(Image image,
+	public Response uploadPhotoResource(Picture image,
 			@DefaultValue("null") @QueryParam("user") String userId) {
 		if (image == null || userId.isEmpty())
 			return Response.status(400).entity("KO!").build();
@@ -67,9 +84,9 @@ public class WebResource {
 	@GET
 	@Path("/photos")
 	@Produces(MediaType.APPLICATION_JSON)
-	public HashSet<Image> getPhotosToVoteResource(
+	public HashSet<Picture> getPhotosToVoteResource(
 			@DefaultValue("null") @QueryParam("user") String userId) {
-		HashSet<Image> photos = null;
+		HashSet<Picture> photos = null;
 		return photos;
 	}
 
