@@ -25,7 +25,7 @@ public class User implements Serializable {
 	private String email;
 	private String password;
 	private String nif;
-	private Image image;
+	private Picture image;
 	private String voted = "NO"; // YES NO
 	private String isAdmin = "NO"; // YES NO
 
@@ -129,11 +129,11 @@ public class User implements Serializable {
 
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "user",
 			cascade = CascadeType.ALL)
-	public Image getImage() {
+	public Picture getImage() {
 		return image;
 	}
 
-	public void setImage(Image image) {
+	public void setImage(Picture image) {
 		this.image = image;
 	}
 

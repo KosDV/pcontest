@@ -3,15 +3,12 @@ package hibernate.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -19,7 +16,7 @@ import javax.persistence.Table;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "picture", catalog = "kaos")
-public class Image implements Serializable {
+public class Picture implements Serializable {
 
 	private Integer id;
 	private Integer width;
@@ -27,13 +24,12 @@ public class Image implements Serializable {
 	private String title;
 	private String description;
 	private String coordinates;
-	private Set<Vote> votes = new HashSet<Vote>(0);
 	private User user;
 
-	public Image() {
+	public Picture() {
 	}
 
-	public Image(Integer width, Integer height, String title,
+	public Picture(Integer width, Integer height, String title,
 			String description, User user) {
 		super();
 		this.width = width;
@@ -41,6 +37,15 @@ public class Image implements Serializable {
 		this.title = title;
 		this.description = description;
 		this.user = user;
+	}
+	
+	public Picture(Integer width, Integer height, String title,
+			String description) {
+		super();
+		this.width = width;
+		this.height = height;
+		this.title = title;
+		this.description = description;
 	}
 
 	@Id
@@ -107,15 +112,6 @@ public class Image implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "pictures")
-	public Set<Vote> getVotes() {
-		return votes;
-	}
-
-	public void setVotes(Set<Vote> votes) {
-		this.votes = votes;
 	}
 
 }
