@@ -4,7 +4,9 @@ import hibernate.manager.UserManager;
 import hibernate.model.Picture;
 import hibernate.model.User;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
@@ -21,12 +23,21 @@ import rest.model.UserBean;
 
 @Path("/web")
 public class WebResource {
+    
+    public UserManager mgmtUser;
 
 	@GET
 	@Path("/users/test")
 	public Response getTest() {
-
 		return Response.status(200).entity("OK!").build();
+	}
+	
+	@GET
+    @Path("/users/list")
+	private List<User> getUsersTest(){
+	    List<User> list = new ArrayList<User>();
+	    list = mgmtUser.loadAllUsers();
+	    return list;
 	}
 
 	@POST
