@@ -16,8 +16,8 @@ import org.hibernate.annotations.Parameter;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "picture", catalog = "kaos")
-public class Picture implements Serializable {
+@Table(name = "PHOTO", catalog = "kaos")
+public class Photo implements Serializable {
 
     private Integer id;
     private Integer width;
@@ -27,10 +27,10 @@ public class Picture implements Serializable {
     private String coordinates;
     private User user;
 
-    public Picture() {
+    public Photo() {
     }
 
-    public Picture(Integer width, Integer height, String title,
+    public Photo(Integer width, Integer height, String title,
             String description, User user) {
         super();
         this.width = width;
@@ -40,7 +40,7 @@ public class Picture implements Serializable {
         this.user = user;
     }
 
-    public Picture(Integer width, Integer height, String title,
+    public Photo(Integer width, Integer height, String title,
             String description) {
         super();
         this.width = width;
@@ -52,7 +52,7 @@ public class Picture implements Serializable {
     @GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "user"))
     @Id
     @GeneratedValue(generator = "generator")
-    @Column(name = "PICTURE_ID", unique = true, nullable = false)
+    @Column(name = "PHOTO_ID", unique = true, nullable = false)
     public Integer getId() {
         return id;
     }

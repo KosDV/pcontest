@@ -1,6 +1,6 @@
 package hibernate.manager;
 
-import hibernate.model.Picture;
+import hibernate.model.Photo;
 import hibernate.model.User;
 import hibernate.specific.PictureDAO;
 import hibernate.specific.UserDAO;
@@ -18,11 +18,11 @@ public class PictureManager implements IPictureManager {
 	private UserDAO userDAO = new UserDAO();
 
 	@SuppressWarnings("unchecked")
-	public List<Picture> loadAllPictures() {
-		List<Picture> allPictures = new ArrayList<Picture>();
+	public List<Photo> loadAllPictures() {
+		List<Photo> allPictures = new ArrayList<Photo>();
 		try {
 			HibernateUtil.beginTransaction();
-			allPictures = pictureDAO.findAll(Picture.class);
+			allPictures = pictureDAO.findAll(Photo.class);
 			HibernateUtil.commitTransaction();
 		} catch (HibernateException ex) {
 			System.err.println("Error while loading all pictures.");
@@ -30,7 +30,7 @@ public class PictureManager implements IPictureManager {
 		return allPictures;
 	}
 
-	public Boolean saveNewPicture(Picture pic, User user) {
+	public Boolean saveNewPicture(Photo pic, User user) {
 		try {
 			HibernateUtil.beginTransaction();
 			user.setImage(pic);
@@ -46,8 +46,8 @@ public class PictureManager implements IPictureManager {
 		}
 	}
 
-	public Picture findPictureById(Integer id) {
-		Picture pic = null;
+	public Photo findPictureById(Integer id) {
+		Photo pic = null;
 		try {
 			HibernateUtil.beginTransaction();
 			pic = pictureDAO.findByPictureById(id);

@@ -1,14 +1,14 @@
 package hibernate.manager;
 
-import hibernate.model.Picture;
+import hibernate.model.Photo;
 import hibernate.model.User;
 
 import java.util.List;
 
 public interface IPictureManager {
-	public List<Picture> loadAllPictures();
+	public List<Photo> loadAllPictures();
 
-	public Boolean saveNewPicture(Picture pic, User user);
+	public Boolean saveNewPicture(Photo pic, User user);
 
-	public Picture findPictureById(Integer id);
+	public Photo findPictureById(Integer id);
 }

@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "urn", catalog = "kaos")
+@Table(name = "URN", catalog = "kaos")
 public class Urn implements Serializable {
 
 	private Integer id;

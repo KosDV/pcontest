@@ -4,7 +4,7 @@ import hibernate.manager.PictureManager;
 import hibernate.manager.UrnManager;
 import hibernate.manager.UserManager;
 import hibernate.manager.VoteManager;
-import hibernate.model.Picture;
+import hibernate.model.Photo;
 import hibernate.model.Urn;
 import hibernate.model.User;
 import hibernate.model.Vote;
@@ -44,9 +44,9 @@ public class App {
 		user4.setIsAdmin("YES");
 
 		/** IMAGES **/
-		Picture img1 = new Picture(101, 102, "Img01", "Imatge de prova 1");
-		Picture img2 = new Picture(102, 103, "Img02", "Imatge de prova 2");
-		Picture img3 = new Picture(103, 104, "Img03", "Imatge de prova 3");
+		Photo img1 = new Photo(101, 102, "Img01", "Imatge de prova 1");
+		Photo img2 = new Photo(102, 103, "Img02", "Imatge de prova 2");
+		Photo img3 = new Photo(103, 104, "Img03", "Imatge de prova 3");
 
 		/** VOTES **/
 		Paillier paillier = new Paillier();
@@ -81,7 +81,7 @@ public class App {
 		voteManager.saveNewVote(vote2, urn);
 
 		List<User> users = new ArrayList<User>();
-		List<Picture> images = new ArrayList<Picture>();
+		List<Photo> images = new ArrayList<Photo>();
 
 		users = userManager.loadAllUsers();
 		images = pictureManager.loadAllPictures();
@@ -100,7 +100,7 @@ public class App {
 		System.out.println("LIST OF IMAGES");
 		System.out.println("==============");
 		for (int i = 0; i < images.size(); i++) {
-			Picture listImages = images.get(i);
+			Photo listImages = images.get(i);
 			System.out.println((i + 1) + "." + listImages.getTitle() + " - "
 					+ listImages.getUser().getName());
 		}

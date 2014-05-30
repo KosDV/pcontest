@@ -13,48 +13,45 @@ import util.HibernateUtil;
 
 public class UserManager implements IUserManager {
 
-	private UserDAO userDAO = new UserDAO();
+    private UserDAO userDAO = new UserDAO();
 
-	public User findByUserNif(String userNif) {
-		User user = null;
-		try {
-			HibernateUtil.beginTransaction();
-			user = userDAO.findByUserNif(userNif);
-			HibernateUtil.commitTransaction();
-		} catch (NonUniqueResultException ex) {
-			System.err.println(ex.getMessage());
-			ex.printStackTrace();
-			return null;
-		} catch (HibernateException ex) {
-			ex.printStackTrace();
-			return null;
-		}
-		return user;
-	}
+    public User findByUserNif(String userNif) {
+        User user = null;
+        try {
+            HibernateUtil.beginTransaction();
+            user = userDAO.findByUserNif(userNif);
+            HibernateUtil.commitTransaction();
+            return user;
+        } catch (HibernateException ex) {
+            System.err.println(ex.getMessage());
+            throw new HibernateException(ex.getCause());
+        }
+    }
 
-	public List<User> loadAllUsers() {
-		List<User> allUsers = new ArrayList<User>();
+    public List<User> loadAllUsers() {
+        List<User> allUsers = new ArrayList<User>();
 
-		try {
-			HibernateUtil.beginTransaction();
-			allUsers = userDAO.findAll(User.class);
-			HibernateUtil.commitTransaction();
-		} catch (HibernateException ex) {
-		    System.out.println(ex.getMessage());
-			ex.printStackTrace();
-		}
-		return allUsers;
-	}
+        try {
+            HibernateUtil.beginTransaction();
+            allUsers = userDAO.findAll(User.class);
+            HibernateUtil.commitTransaction();
+            return allUsers;
+        } catch (HibernateException ex) {
+            System.err.println(ex.getMessage());
+            throw new HibernateException(ex.getCause());
+        }
+    }
 
-	public void saveNewUser(User user) {
-		try {
-			HibernateUtil.beginTransaction();
-			userDAO.save(user);
-			HibernateUtil.commitTransaction();
-		} catch (HibernateException ex) {
-			System.err.println(ex.getMessage());
-			HibernateUtil.rollbackTransaction();
-		}
-	}
+    public void saveNewUser(User user) {
+        try {
+            HibernateUtil.beginTransaction();
+            userDAO.save(user);
+            HibernateUtil.commitTransaction();
+        } catch (HibernateException ex) {
+            HibernateUtil.rollbackTransaction();
+            System.err.println(ex.getMessage());
+            throw new HibernateException(ex.getCause());
+        }
+    }
 
 }
