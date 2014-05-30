@@ -22,7 +22,7 @@ public class UserManager implements IUserManager {
 			user = userDAO.findByUserNif(userNif);
 			HibernateUtil.commitTransaction();
 		} catch (NonUniqueResultException ex) {
-			System.err.println("Query returned more than one result");
+			System.err.println(ex.getMessage());
 			ex.printStackTrace();
 			return null;
 		} catch (HibernateException ex) {
@@ -40,6 +40,7 @@ public class UserManager implements IUserManager {
 			allUsers = userDAO.findAll(User.class);
 			HibernateUtil.commitTransaction();
 		} catch (HibernateException ex) {
+		    System.out.println(ex.getMessage());
 			ex.printStackTrace();
 		}
 		return allUsers;
@@ -51,7 +52,7 @@ public class UserManager implements IUserManager {
 			userDAO.save(user);
 			HibernateUtil.commitTransaction();
 		} catch (HibernateException ex) {
-			System.err.println("ERROR: Saving User: " + user.getNif());
+			System.err.println(ex.getMessage());
 			HibernateUtil.rollbackTransaction();
 		}
 	}

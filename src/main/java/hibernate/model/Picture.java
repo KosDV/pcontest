@@ -1,7 +1,5 @@
 package hibernate.model;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -13,105 +11,109 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "picture", catalog = "kaos")
 public class Picture implements Serializable {
 
-	private Integer id;
-	private Integer width;
-	private Integer height;
-	private String title;
-	private String description;
-	private String coordinates;
-	private User user;
+    private Integer id;
+    private Integer width;
+    private Integer height;
+    private String title;
+    private String description;
+    private String coordinates;
+    private User user;
 
-	public Picture() {
-	}
+    public Picture() {
+    }
 
-	public Picture(Integer width, Integer height, String title,
-			String description, User user) {
-		super();
-		this.width = width;
-		this.height = height;
-		this.title = title;
-		this.description = description;
-		this.user = user;
-	}
-	
-	public Picture(Integer width, Integer height, String title,
-			String description) {
-		super();
-		this.width = width;
-		this.height = height;
-		this.title = title;
-		this.description = description;
-	}
+    public Picture(Integer width, Integer height, String title,
+            String description, User user) {
+        super();
+        this.width = width;
+        this.height = height;
+        this.title = title;
+        this.description = description;
+        this.user = user;
+    }
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "PICTURE_ID", unique = true, nullable = false)
-	public Integer getId() {
-		return id;
-	}
+    public Picture(Integer width, Integer height, String title,
+            String description) {
+        super();
+        this.width = width;
+        this.height = height;
+        this.title = title;
+        this.description = description;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "user"))
+    @Id
+    @GeneratedValue(generator = "generator")
+    @Column(name = "PICTURE_ID", unique = true, nullable = false)
+    public Integer getId() {
+        return id;
+    }
 
-	@Column(name = "WIDTH")
-	public Integer getWidth() {
-		return width;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setWidth(Integer width) {
-		this.width = width;
-	}
+    @Column(name = "WIDTH")
+    public Integer getWidth() {
+        return width;
+    }
 
-	@Column(name = "HEIGHT")
-	public Integer getHeight() {
-		return height;
-	}
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
 
-	public void setHeight(Integer height) {
-		this.height = height;
-	}
+    @Column(name = "HEIGHT")
+    public Integer getHeight() {
+        return height;
+    }
 
-	@Column(name = "TITLE", unique = true, nullable = false)
-	public String getTitle() {
-		return title;
-	}
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    @Column(name = "TITLE", unique = true, nullable = false)
+    public String getTitle() {
+        return title;
+    }
 
-	@Column(name = "DESCRIPTION", nullable = false)
-	public String getDescription() {
-		return description;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    @Column(name = "DESCRIPTION", nullable = false)
+    public String getDescription() {
+        return description;
+    }
 
-	@Column(name = "COORDINATES")
-	public String getCoordinates() {
-		return coordinates;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setCoordinates(String coordinates) {
-		this.coordinates = coordinates;
-	}
+    @Column(name = "COORDINATES")
+    public String getCoordinates() {
+        return coordinates;
+    }
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@PrimaryKeyJoinColumn
-	public User getUser() {
-		return user;
-	}
+    public void setCoordinates(String coordinates) {
+        this.coordinates = coordinates;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    @OneToOne(fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
 }

@@ -35,7 +35,7 @@ public class PictureManager implements IPictureManager {
 			HibernateUtil.beginTransaction();
 			user.setImage(pic);
 			pic.setUser(user);
-			userDAO.save(user);
+			userDAO.update(user);
 			HibernateUtil.commitTransaction();
 			return true;
 

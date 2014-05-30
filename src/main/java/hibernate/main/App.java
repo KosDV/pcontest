@@ -44,7 +44,7 @@ public class App {
 		user4.setIsAdmin("YES");
 
 		/** IMAGES **/
-		Picture img1 = new Picture(101, 102, "Img01", "Imatge de prova");
+		Picture img1 = new Picture(101, 102, "Img01", "Imatge de prova 1");
 		Picture img2 = new Picture(102, 103, "Img02", "Imatge de prova 2");
 		Picture img3 = new Picture(103, 104, "Img03", "Imatge de prova 3");
 
@@ -72,9 +72,9 @@ public class App {
 		userManager.saveNewUser(user3);
 		userManager.saveNewUser(user4);
 
-		pictureManager.saveNewPicture(img1, user1);
+		pictureManager.saveNewPicture(img1, user3);
 		pictureManager.saveNewPicture(img2, user2);
-		pictureManager.saveNewPicture(img3, user3);
+		pictureManager.saveNewPicture(img3, user1);
 
 		// TODO add User_ID field to set user.voted = true
 		voteManager.saveNewVote(vote1, urn);
