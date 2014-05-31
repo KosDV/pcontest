@@ -5,14 +5,19 @@ import java.io.IOException;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
-
+import javax.ws.rs.core.MultivaluedMap;
 
 public class CorsSupportFilter implements ContainerResponseFilter {
-    @Override
+
     public void filter(ContainerRequestContext requestContext,
-            ContainerResponseContext ResponseContext) throws IOException {
-        ResponseContext.getHeaders().add("Access-Control-Allow-Origin", "*");
-        ResponseContext.getHeaders().add("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
-        //ResponseContext.getAllowedMethods().add("POST");
+            ContainerResponseContext responseContext) throws IOException {
+        MultivaluedMap<String, Object> headers = responseContext.getHeaders();
+
+        headers.add("Access-Control-Allow-Origin", "*");
+        // headers.add("Access-Control-Allow-Origin", "http://pcontest.com");
+        // //allows CORS requests only coming from pcontest.com
+        headers.add("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
+        headers.add("Access-Control-Allow-Headers",
+                "X-Requested-With, Content-Type, X-pcontest");
     }
 }
