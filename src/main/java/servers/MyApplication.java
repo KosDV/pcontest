@@ -10,6 +10,6 @@ public class MyApplication extends ResourceConfig {
 	public MyApplication() {
 		super(WebResource.class,
 		// register Jackson ObjectMapper resolver
-				MyObjectMapperProvider.class, JacksonFeature.class);
+				MyObjectMapperProvider.class, JacksonFeature.class, CorsSupportFilter.class);
 	}
 }
