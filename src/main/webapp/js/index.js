@@ -1,14 +1,14 @@
 $('#signin-form').submit(function(e) {
 	e.preventDefault();
 
-	$.cookie('email', $('#email').val());
+	$.cookie('nif', $('#nif').val());
 	$.cookie('password', $('#password').val());
 
-	var email = $('#email').val();
+	var nif = $('#nif').val();
 	var password = $('#password').val();
 
 	var opcion = 0;
-	loginUser(email, password, opcion, loginUserSuccess, loginUserError);
+	loginUser(nif, password, opcion, loginUserSuccess, loginUserError);
 });
 
 function loginUserError(jqXHR, options, error) {
@@ -32,10 +32,6 @@ function loginUserSuccess(data, status, jqxhr) {
 
 	if (jqxhr.status == 202) { // upload a picture
 		window.location.href = "homepage.html";
-	}
-
-	if (jqxhr.status == 201) {// se loguea como administrador
-		window.location.href = "gestionArtistas.html";
 	}
 
 }
