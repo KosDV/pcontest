@@ -16,8 +16,10 @@ public class CorsSupportFilter implements ContainerResponseFilter {
         headers.add("Access-Control-Allow-Origin", "*");
         // headers.add("Access-Control-Allow-Origin", "http://pcontest.com");
         // //allows CORS requests only coming from pcontest.com
-        headers.add("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
+        headers.add("Access-Control-Allow-Methods",
+                "GET, POST, DELETE, PUT, OPTIONS");
+        headers.add("Access-Control-Max-Age", "1000");
         headers.add("Access-Control-Allow-Headers",
-                "X-Requested-With, Content-Type, X-pcontest");
+                "X-Requested-With, Content-Type, Accept, Origin");
     }
 }
