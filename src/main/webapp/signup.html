@@ -23,25 +23,44 @@
 </head>
 
 <body>
+
 	<div class="container">
-	
+
 		<!-------------- SING UP FORM -------------->
 		<form class="form-signup" role="form" id="signup-form">
 			<h2 class="form-signup-heading">Please sign up</h2>
-			<div class="control-group" id="cgName"><input id="name" type="text" class="form-control" placeholder="Name" required autofocus></div>
-			<div class="control-group" id="cgSurname"><input id="surname" type="text" class="form-control" placeholder="Surname" required></div>
-			<div class="control-group" id="cgId"><input id="id" type="text" class="form-control" placeholder="ID Number" required></div>
-			<div class="control-group" id="cgTel"><input id="tel" type="tel" class="form-control" placeholder="Phone" required></div>
-			<div class="control-group" id="cgMail"><input id="mail" type="email" class="form-control" placeholder="Email address" required></div>
-			<div class="control-group" id="cgPass"><input id="password" type="password" class="form-control" placeholder="Password" required></div>
-			<button id="signup-btn" class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+			<div class="control-group" id="cgName">
+				<input id="name" type="text" class="form-control" placeholder="Name"
+					required autofocus>
+			</div>
+			<div class="control-group" id="cgSurname">
+				<input id="surname" type="text" class="form-control"
+					placeholder="Surname" required>
+			</div>
+			<div class="control-group" id="cgNif">
+				<input id="nif" type="text" class="form-control"
+					placeholder="ID Number" required>
+			</div>
+			<div class="control-group" id="cgBirth">
+				<input id="birth" type="birth" class="form-control"
+					placeholder="Phone" required>
+			</div>
+			<div class="control-group" id="cgMail">
+				<input id="email" type="email" class="form-control"
+					placeholder="Email address" required>
+			</div>
+			<div class="control-group" id="cgPass">
+				<input id="password" type="password" class="form-control"
+					placeholder="Password" required>
+			</div>
+			<button id="signup-btn" class="btn btn-lg btn-primary btn-block"
+				type="submit">Sign up</button>
 			<label class="alert-link"> <a href="index.html">Already
 					Registered?!</a>
 			</label>
 		</form>
 	</div>
-	
-	
+
 
 	<!-- Bootstrap core JavaScript
     ================================================== -->
@@ -57,8 +76,8 @@
 	<script src="js/vendor/bootstrap.min.js"></script>
 
 	<script src="js/plugins.js"></script>
-	<script src="js/main.js"></script>
-	<script src="js/singup"></script>
+	<script src="js/api.js"></script>
+	<script src="js/singup.js"></script>
 
 	<script>
 		var _gaq = [ [ '_setAccount', 'UA-XXXXX-X' ], [ '_trackPageview' ] ];

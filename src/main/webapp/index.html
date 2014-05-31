@@ -14,48 +14,42 @@
 <link href="/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="/css/signin.css" rel="stylesheet">
+<!-- <link href="/css/signin.css" rel="stylesheet"> -->
+<link href="/css/index.css" rel="stylesheet">
 <link href="/css/.css" rel="stylesheet">
 
-<!-- Normalize CSS -->
-<link rel="stylesheet" href="css/normalize.css">
+<!-- <!-- Normalize CSS -->
+<!-- <link rel="stylesheet" href="css/normalize.css"> -->
 </head>
 
 <body>
+
+	<div id="fullscreen_bg" class="fullscreen_bg" />
 	<div class="container">
-		<form class="signin-form" role="form">
-			<h2 class="form-signin-heading">Please sign in</h2>
-			<input type="email" id="email" class="form-control"
-				placeholder="Email address" required autofocus> <input
-				type="password" id="password" class="form-control"
-				placeholder="Password" required> <label class="checkbox">
-				<input type="checkbox" value="remember-me"> Remember me <a
-				href="#">Forgot Your Password?</a>
-			</label>
-			<button id="signin-btn" class="btn btn-lg btn-primary btn-block"
-				type="submit">Sign in</button>
-			<label class="alert-link"> <a href="signup.html">Register
-					Now!</a> <a href="#rules">ContestRules</a>
-			</label>
+
+		<form class="form-signin">
+			<h1 class="form-signin-heading text-muted"></h1>
+			<h1>
+				<p style="text-align: center;">
+					<font color=#ffffff>pContest</font>
+				</p>
+			</h1>
+			<input type="text" id="nif" class="form-control" placeholder="NIF"
+				required="" autofocus=""> <input type="password"
+				id="password" class="form-control" placeholder="Password"
+				required="">
+			<button class="btn btn-lg btn-primary btn-block" type="submit">
+				Sign In</button>
+			<a href="#"><font color=#ffffff>Forgot Your Password?</font></a>
 		</form>
 
 	</div>
-	<!-- /container -->
 
-	<!-- 	<div class="container"> -->
-	<!-- 		<div class="login-container"> -->
-	<!-- 			<div id="output"></div> -->
-	<!-- 			<div class="avatar"></div> -->
-	<!-- 			<div class="form-box"> -->
-	<!-- 				<form action="" method=""> -->
-	<!-- 					<input name="user" type="text" placeholder="username"> <input -->
-	<!-- 						type="password" placeholder="password"> -->
-	<!-- 					<button class="btn btn-info btn-block login" type="submit">Login</button> -->
-	<!-- 				</form> -->
-	<!-- 			</div> -->
-	<!-- 		</div> -->
-
-	<!-- 	</div> -->
+	<div id="footer">
+		<div class="container">
+			<p class="text-muted">Place sticky footer content here.</p>
+		</div>
+	</div>
 
 
 	<!-- Bootstrap core JavaScript
@@ -83,5 +77,6 @@
 			s.parentNode.insertBefore(g, s)
 		}(document, 'script'));
 	</script>
+
 </body>
 </html>

@@ -3,10 +3,8 @@ var surnameOK = false;
 var passwordOK = false;
 var emailOK = false;
 var usernameExists = false;
-var idOK = false,
-var telOK = false;
-
-ERROR_PAGE = "error.html";
+var idOK = false;
+var birthOK = false;
 
 $('#name').blur(function() {
 	var username = $('#name').val();
@@ -36,51 +34,51 @@ $('#password').blur(function() {
 	}
 });
 
-$('#mail').blur(function() {
-	var mail = $('#mail').val();
-	if (mail === '') {
-		mailOK = false;
+$('#email').blur(function() {
+	var email = $('#email').val();
+	if (email === '') {
+		emailOK = false;
 	} else {
-		mailOK = true;
+		emailOK = true;
 	}
 });
 
-$('#tel').blur(function() {
-	var mail = $('#tel').val();
-	if (tel === '') {
-		telOK = false;
+$('#birth').blur(function() {
+	var email = $('#birth').val();
+	if (birth === '') {
+		birthOK = false;
 	} else {
-		telOK = true;
+		birthOK = true;
 	}
 });
 
-$('#id').blur(function() {
-	var id = $('#id').val();
-	if (id === '') {
+$('#nif').blur(function() {
+	var nif = $('#nif').val();
+	if (nif === '') {
 		idOK = false;
 	} else {
 		idOK = true;
 	}
 });
 
-$('#form-signup').submit(
+$('#signup-form').submit(
 		function(e) {
 			e.preventDefault();
 			var name = $('#name').val();
 			var surname = $('#surname').val();
-			var id = $('#id').val();
-			var tel = $('#tel').val();
-			var mail = $('#mail').val();
+			var nif = $('#nif').val();
+			var birth = $('#birth').val();
+			var email = $('#email').val();
 			var password = $('#password').val();
 
-			if (usernameOK && surnameOK && idOK && telOK && mailOK
+			if (usernameOK && surnameOK && idOK && birthOK && emailOK
 					&& passwordOK) {
 				var data = new Object();
 				data.name = name;
 				data.surname = surname;
-				data.id = id;
-				data.tel = tel;
-				data.mail = mail;
+				data.nif = nif;
+				data.birth = birth;
+				data.email = email;
 				data.password = password;
 				alert(JSON.stringify(data));
 				registerUser(JSON.stringify(data), registerUserSuccess,
@@ -90,9 +88,19 @@ $('#form-signup').submit(
 			}
 		});
 
-function registerUserSuccess(data, status, jqxhr){
- 	bootbox.alert("Usuario creado correctamente. ", 
- 			function(){
- 				window.location.href = "index.html";
- 			});
+function registerUserSuccess(data, status, jqxhr) {
+	bootbox.alert("Usuario creado correctamente. ", function() {
+		window.location.href = "index.html";
+	});
+}
+
+function registerUserError(jqxhr, options, error) {
+	if (jqxhr.status == 409) {
+		usernameExists = true;
+		$('#form-signup').addClass('error');
+		bootbox.alert("El usuario ya existe");
+	} else {
+		var response = $.parseJSON(jqxhr.responseText);
+		bootbox.alert("Error." + response.errorMessage);
+	}
 }
