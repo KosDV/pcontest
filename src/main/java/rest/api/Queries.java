@@ -12,25 +12,44 @@ import org.hibernate.HibernateException;
 import rest.model.UserBean;
 
 public class Queries {
-    String OK = "200";
+    Integer OK = 0;
+    Integer KO = -1;
 
-    public void registerUser(UserBean userBean) throws HibernateException, NoSuchAlgorithmException {
-            Random randomGenerator = new Random();
-            Integer randInt = randomGenerator.nextInt(100);
-            //user.setRandInt(randInt);
+    public void registerUser(UserBean userBean) throws HibernateException,
+            NoSuchAlgorithmException {
+        Random randomGenerator = new Random();
+        Integer randInt = randomGenerator.nextInt(100);
+        // user.setRandInt(randInt);
 
-            String password = userBean.getPassword();
-            StringBuilder passRand = new StringBuilder(password)
-                    .append(randInt);
-            String passwordDigested = generateSHA2(passRand.toString());
-            System.out.println("passwordDigested: " + passwordDigested);
-            //user.setPassword(passwordDigested);
-            
-            User user = new User(userBean.getName(), userBean.getSurname(), userBean.getBirth(), userBean.getEmail(), passwordDigested, userBean.getNif());
-            user.setRandInt(randInt);
+        String password = userBean.getPassword();
+        StringBuilder passRand = new StringBuilder(password).append(randInt);
+        String passwordDigested = generateSHA2(passRand.toString());
+        System.out.println("passwordDigested: " + passwordDigested);
+        // user.setPassword(passwordDigested);
 
-            UserManager userManager = new UserManager();
-            userManager.saveNewUser(user);
+        User user = new User(userBean.getName(), userBean.getSurname(),
+                userBean.getBirth(), userBean.getEmail(), passwordDigested,
+                userBean.getNif());
+        user.setRandInt(randInt);
+
+        UserManager userManager = new UserManager();
+        userManager.saveNewUser(user);
+    }
+
+    public Integer checkUserPassword(String nif, String password)
+            throws NoSuchAlgorithmException {
+        UserManager usrM = new UserManager();
+        User user = usrM.findByUserNif(nif);
+        String userDigestedPassword = user.getPassword();
+        Integer randInt = user.getRandInt();
+        StringBuilder sb = new StringBuilder(password).append(randInt);
+        String paramDigestedPassword = generateSHA2(sb.toString());
+        System.out.println("SYSTEM PASS: " + userDigestedPassword);
+        System.out.println("PARAM PASS: " + paramDigestedPassword);
+        if (paramDigestedPassword.equals(userDigestedPassword))
+            return OK;
+        else
+            return KO;
     }
 
     public String generateSHA2(String password) throws NoSuchAlgorithmException {
