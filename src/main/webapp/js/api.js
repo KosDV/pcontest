@@ -3,16 +3,15 @@ var API_BASE_URL = "http://localhost:8000/api/web/users/register";
 // REGISTRAR USUARIO
 function registerUser(user, callback, callbackError) {
 	var url = API_BASE_URL;// + 'web' + 'users';
-
+	$.support.cors = true
 	$.ajax({
 		url : url,
 		type : 'POST',
 		data : user,
 		dataType : 'json',
 		headers : {
-			"Content-Type" : "application/json",
-			"Accept" : "application/json",
-			"Access-Control-Allow-Origin" : "*"
+			"Content-Type" : "Application/json",
+			"Accept" : "Application/json",
 		},
 		crossDomain : true,
 		success : function(data, status, jqxhr) {

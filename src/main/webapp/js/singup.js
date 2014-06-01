@@ -80,8 +80,8 @@ $('#signup-form').submit(
 				data.birth = birth;
 				data.email = email;
 				data.password = password;
-				alert(JSON.stringify(data));
-				registerUser(JSON.stringify(data), registerUserSuccess,
+				alert(JSON.stringify({"user":data}));
+				registerUser(JSON.stringify({"user":data}), registerUserSuccess,
 						registerUserError);
 			} else {
 				alert("No submit");
