@@ -24,11 +24,16 @@
 
 <body>
 
+	<div id="fullscreen_bg" class="fullscreen_bg" />
 	<div class="container">
 
 		<!-------------- SING UP FORM -------------->
 		<form class="form-signup" role="form" id="signup-form">
-			<h2 class="form-signup-heading">Please sign up</h2>
+			<h1>
+				<p style="text-align: center;">
+					<font color=#ffffff>pContest</font>
+				</p>
+			</h1>
 			<div class="control-group" id="cgName">
 				<input id="name" type="text" class="form-control" placeholder="Name"
 					required autofocus>
@@ -38,12 +43,12 @@
 					placeholder="Surname" required>
 			</div>
 			<div class="control-group" id="cgNif">
-				<input id="nif" type="text" class="form-control"
-					placeholder="ID Number" required>
+				<input id="nif" type="text" required pattern="[0-9]{8}[A-Z]{1}"
+					class="form-control" placeholder="NIF" required>
 			</div>
 			<div class="control-group" id="cgBirth">
-				<input id="birth" type="birth" class="form-control"
-					placeholder="Phone" required>
+				<input id="birth" type="date" value="2013-01-01"
+					class="form-control" placeholder="Phone" required>
 			</div>
 			<div class="control-group" id="cgMail">
 				<input id="email" type="email" class="form-control"
@@ -55,11 +60,15 @@
 			</div>
 			<button id="signup-btn" class="btn btn-lg btn-primary btn-block"
 				type="submit">Sign up</button>
-			<label class="alert-link"> <a href="index.html">Already
-					Registered?!</a>
-			</label>
+			<a href="#"><font color=#ffffff>Already Registered?</font></a>
 		</form>
 	</div>
+
+	<footer class="navbar-default navbar-fixed-bottom">
+		<div class="container">
+			<p class="text-muted">Copyright &copy; KosDV 2014</p>
+		</div>
+	</footer>
 
 
 	<!-- Bootstrap core JavaScript

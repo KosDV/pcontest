@@ -8,7 +8,7 @@
 <meta name="author" content="">
 <link rel="shortcut icon" href="/assets/ico/favicon.ico">
 
-<title>Signin Template for Bootstrap</title>
+<title>pContest</title>
 
 <!-- Bootstrap core CSS -->
 <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -34,10 +34,10 @@
 					<font color=#ffffff>pContest</font>
 				</p>
 			</h1>
-			<input type="text" id="nif" class="form-control" placeholder="NIF"
-				required="" autofocus=""> <input type="password"
+			<input type="text" id="nif" required pattern="[0-9]{8}[A-Z]{1}" class="form-control" placeholder="NIF"
+				required> <input type="password"
 				id="password" class="form-control" placeholder="Password"
-				required="">
+				required>
 			<button class="btn btn-lg btn-primary btn-block" type="submit">
 				Sign In</button>
 			<a href="#"><font color=#ffffff>Forgot Your Password?</font></a>
@@ -45,11 +45,12 @@
 
 	</div>
 
-	<div id="footer">
+	<footer class="navbar-default navbar-fixed-bottom">
 		<div class="container">
-			<p class="text-muted">Place sticky footer content here.</p>
+			<p class="text-muted">Copyright &copy; KosDV 2014</p>
 		</div>
-	</div>
+	</footer>
+
 
 
 	<!-- Bootstrap core JavaScript
