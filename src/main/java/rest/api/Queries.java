@@ -18,7 +18,7 @@ public class Queries {
     public void registerUser(UserBean userBean) throws HibernateException,
             NoSuchAlgorithmException {
         Random randomGenerator = new Random();
-        Integer randInt = randomGenerator.nextInt(100);
+        Integer randInt = randomGenerator.nextInt();
         // user.setRandInt(randInt);
 
         String password = userBean.getPassword();
@@ -30,7 +30,7 @@ public class Queries {
         User user = new User(userBean.getName(), userBean.getSurname(),
                 userBean.getBirth(), userBean.getEmail(), passwordDigested,
                 userBean.getNif());
-        user.setRandInt(randInt);
+        user.setSalt(randInt);
 
         UserManager userManager = new UserManager();
         userManager.saveNewUser(user);
@@ -41,7 +41,7 @@ public class Queries {
         UserManager usrM = new UserManager();
         User user = usrM.findByUserNif(nif);
         String userDigestedPassword = user.getPassword();
-        Integer randInt = user.getRandInt();
+        Integer randInt = user.getSalt();
         StringBuilder sb = new StringBuilder(password).append(randInt);
         String paramDigestedPassword = generateSHA2(sb.toString());
         System.out.println("SYSTEM PASS: " + userDigestedPassword);

@@ -24,7 +24,7 @@ public class User implements Serializable {
     private String birth;
     private String email;
     private String password;
-    private Integer randInt;
+    private Integer salt;
     private String nif;
     private Photo image;
     private String voted = "NO"; // YES NO
@@ -137,13 +137,13 @@ public class User implements Serializable {
         this.image = image;
     }
 
-    @Column(name = "RAND")
-    public Integer getRandInt() {
-        return randInt;
+    @Column(name = "SALT")
+    public Integer getSalt() {
+        return salt;
     }
 
-    public void setRandInt(Integer randInt) {
-        this.randInt = randInt;
+    public void setSalt(Integer randInt) {
+        this.salt = randInt;
     }
 
 }
