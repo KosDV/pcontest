@@ -11,6 +11,8 @@ import org.glassfish.jersey.server.ResourceConfig;
 
 public class Server {
 	// Base URI the Grizzly HTTP server will listen on
+	//public static final URI BASE_URI = URI.create("https://localhost:80433/api");
+
 	public static final URI BASE_URI = URI.create("http://localhost:8000/api");
 
 	/**

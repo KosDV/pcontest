@@ -1,4 +1,5 @@
 var API_BASE_URL = "http://localhost:8000/api/web/users/register";
+// var API_BASE_URL = "https://localhost:80443/api/web/users/register";
 
 // REGISTRAR USUARIO
 function registerUser(user, callback, callbackError) {
