@@ -25,19 +25,21 @@ public class Photo implements Serializable {
     private String title;
     private String description;
     private String coordinates;
+    private String photo_path;
     private User user;
 
     public Photo() {
     }
 
     public Photo(Integer width, Integer height, String title,
-            String description, User user) {
+            String description, String photo_path, User user) {
         super();
         this.width = width;
         this.height = height;
         this.title = title;
         this.description = description;
         this.user = user;
+        this.photo_path = photo_path;
     }
 
     public Photo(Integer width, Integer height, String title,
@@ -115,5 +117,13 @@ public class Photo implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
+
+	public String getPhoto_path() {
+		return photo_path;
+	}
+
+	public void setPhoto_path(String photo_path) {
+		this.photo_path = photo_path;
+	}
 
 }
