@@ -4,6 +4,8 @@ import hibernate.model.User;
 
 import java.util.List;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
 public interface IUserManager {
 	public User findByUserNif(String userNif);
 

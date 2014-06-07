@@ -9,6 +9,8 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.NonUniqueResultException;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
 import util.HibernateUtil;
 
 public class UserManager implements IUserManager {

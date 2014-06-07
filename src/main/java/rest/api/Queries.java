@@ -9,6 +9,8 @@ import java.util.Random;
 
 import org.hibernate.HibernateException;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
 import rest.model.UserBean;
 
 public class Queries {
@@ -34,6 +36,7 @@ public class Queries {
 
         UserManager userManager = new UserManager();
         userManager.saveNewUser(user);
+
     }
 
     public Integer checkUserPassword(String nif, String password)

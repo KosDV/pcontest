@@ -61,46 +61,57 @@ $('#nif').blur(function() {
 	}
 });
 
-$('#signup-form').submit(
-		function(e) {
-			e.preventDefault();
-			var name = $('#name').val();
-			var surname = $('#surname').val();
-			var nif = $('#nif').val();
-			var birth = $('#birth').val();
-			var email = $('#email').val();
-			var password = $('#password').val();
+$('#signup-form').submit(function(e) {
+	e.preventDefault();
+	var name = $('#name').val();
+	var surname = $('#surname').val();
+	var nif = $('#nif').val();
+	var birth = $('#birth').val();
+	var email = $('#email').val();
+	var password = $('#password').val();
 
-			if (usernameOK && surnameOK && idOK && birthOK && emailOK
-					&& passwordOK) {
-				var data = new Object();
-				data.name = name;
-				data.surname = surname;
-				data.nif = nif;
-				data.birth = birth;
-				data.email = email;
-				data.password = password;
-				alert(JSON.stringify({"user":data}));
-				registerUser(JSON.stringify({"user":data}), registerUserSuccess,
-						registerUserError);
-			} else {
-				alert("No submit");
-			}
-		});
+	if (usernameOK && surnameOK && idOK && birthOK && emailOK && passwordOK) {
+		var data = new Object();
+		data.name = name;
+		data.surname = surname;
+		data.nif = nif;
+		data.birth = birth;
+		data.email = email;
+		data.password = password;
+		alert(JSON.stringify({
+			"user" : data
+		}));
+		registerUser(JSON.stringify({
+			"user" : data
+		}), registerUserSuccess, registerUserError);
+	} else {
+		alert("Error al introducir los datos!");
+	}
+});
 
 function registerUserSuccess(data, status, jqxhr) {
-	bootbox.alert("Usuario creado correctamente. ", function() {
-		window.location.href = "index.html";
-	});
+	alert("Connection OK");
+	alert("Response: " + JSON.stringify(data) + " Status: " + status);
+
+	var code = JSON.stringify(data.code.code);
+	var msg = JSON.stringify(data.code.message);
+
+	if (code == 200) {
+		alert("User registered!");
+		window.location.replace("homepage.html#loadPicture");
+	} else {
+		alert(msg);
+	}
+
 }
 
 function registerUserError(jqxhr, options, error) {
 	if (jqxhr.status == 409) {
 		usernameExists = true;
-		$('#form-signup').addClass('error');
-		bootbox.alert("El usuario ya existe");
+		$('#signup-form').addClass('error');
+		alert("El usuario ya existe");
 	} else {
 		var response = $.parseJSON(jqxhr.responseText);
-		bootbox.alert("Error." + response.errorMessage);
+		alert("Error." + response.errorMessage);
 	}
 }
