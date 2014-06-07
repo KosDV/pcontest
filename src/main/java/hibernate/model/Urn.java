@@ -22,6 +22,7 @@ public class Urn implements Serializable {
 	private Integer id;
 	private String name;
 	private Set<Vote> ListVotes = new HashSet<Vote>();
+	private String contestStatus;
 
 	public Urn() {
 	}
@@ -41,19 +42,6 @@ public class Urn implements Serializable {
 		this.id = id;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "urn")
-	public Set<Vote> getListVotes() {
-		return ListVotes;
-	}
-
-	public void setListVotes(Set<Vote> listVotes) {
-		this.ListVotes = listVotes;
-	}
-
-	/*public Integer getNumVotes() {
-		return this.ListVotes.size();
-	}*/
-
 	@Column(name = "URN_NAME")
 	public String getName() {
 		return name;
@@ -61,6 +49,24 @@ public class Urn implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Column(name = "CONTEST_STATUS")
+	public String getContestStatus() {
+		return contestStatus;
+	}
+
+	public void setContestStatus(String contestStatus) {
+		this.contestStatus = contestStatus;
+	}
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "urn")
+	public Set<Vote> getListVotes() {
+		return ListVotes;
+	}
+
+	public void setListVotes(Set<Vote> listVotes) {
+		this.ListVotes = listVotes;
 	}
 
 }
