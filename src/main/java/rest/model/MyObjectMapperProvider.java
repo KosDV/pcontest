@@ -70,7 +70,7 @@ public class MyObjectMapperProvider implements ContextResolver<ObjectMapper> {
 
     public ObjectMapper getContext(Class<?> type) {
 
-        if (type == UserBean.class || type == CodeBean.class) {
+        if (type == RegisterDTO.class || type == StatusDTO.class || type == UserDTO.class) {
             return combinedObjectMapper;
         } else {
             return defaultObjectMapper;

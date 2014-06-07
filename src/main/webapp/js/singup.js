@@ -93,8 +93,8 @@ function registerUserSuccess(data, status, jqxhr) {
 	alert("Connection OK");
 	alert("Response: " + JSON.stringify(data) + " Status: " + status);
 
-	var code = JSON.stringify(data.code.code);
-	var msg = JSON.stringify(data.code.message);
+	var code = JSON.stringify(data.status.code);
+	var msg = JSON.stringify(data.status.message);
 
 	if (code == 200) {
 		alert("User registered!");

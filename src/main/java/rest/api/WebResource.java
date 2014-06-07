@@ -22,105 +22,132 @@ import javax.ws.rs.core.Response;
 
 import org.hibernate.HibernateException;
 
-import rest.model.UserBean;
-import rest.model.CodeBean;
+import rest.model.StatusDTO;
+import rest.model.UserDTO;
+import rest.model.RegisterDTO;
 
 @Path("/web")
 public class WebResource {
 
-    public UserManager mgmtUser;
-    Integer OK = 200;
-    Integer UNAUTHORIZED = 401;
-    Integer BAD_REQUEST = 400;
-    Integer INTERNAL_ERROR = 500;
+	public UserManager mgmtUser;
+	Integer OK = 200;
+	Integer BAD_REQUEST = 400;
+	Integer UNAUTHORIZED = 401;
+	Integer INTERNAL_ERROR = 500;
+	Integer CONTEST_OPENED = 600;
+	Integer PRESENTATIONS_OPENED = 601;
+	Integer VOTES_OPENED = 602;
+	Integer CONTEST_CLOSED = 603;
 
-    @GET
-    @Path("/users/test")
-    public Response getTest() {
-        return Response.status(200).entity("OK!").build();
-    }
+	@GET
+	@Path("/users/test")
+	public Response getTest() {
+		return Response.status(200).entity("OK!").build();
+	}
 
-    @GET
-    @Path("/users/list")
-    private List<User> getUsersTest() {
-        List<User> list = new ArrayList<User>();
-        list = mgmtUser.loadAllUsers();
-        return list;
-    }
+	@GET
+	@Path("/users/list")
+	private List<User> getUsersTest() {
+		List<User> list = new ArrayList<User>();
+		list = mgmtUser.loadAllUsers();
+		return list;
+	}
 
-    @POST
-    @Path("/users/register")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public CodeBean registerResource(UserBean user) {
-        if (user == null)
-            return new CodeBean(BAD_REQUEST, "Please, insert an user");
-        else {
-            Queries query = new Queries();
-            try {
-            	if(query.checkUserExist(user.getNif()) == true)
-            		return new CodeBean(BAD_REQUEST, "Someone already has that nif. Try another?");
-                query.registerUser(user);
-                return new CodeBean(OK, "User registered correctly");
-            } catch (HibernateException e) {
-                System.err.println(e.getMessage());
-                return new CodeBean(BAD_REQUEST, "Please check parameters");
-            } catch (NoSuchAlgorithmException e) {
-                System.err.println(e.getMessage());
-                return new CodeBean(INTERNAL_ERROR, "Ups, something was wrong");
-            }
-        }
-    }
+	@POST
+	@Path("/users/register")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public StatusDTO registerResource(RegisterDTO user) {
+		// TODO check contest status
+		if (user == null)
+			return new StatusDTO(BAD_REQUEST, "Please, insert an user", "TODO");
+		else {
+			Queries query = new Queries();
+			try {
+				if (query.checkUserExist(user.getNif()) == true)
+					return new StatusDTO(BAD_REQUEST,
+							"Someone already has that nif. Try another?",
+							"TODO");
+				query.registerUser(user);
+				return new StatusDTO(OK, "User registered correctly", "TODO");
+			} catch (HibernateException e) {
+				System.err.println(e.getMessage());
+				return new StatusDTO(BAD_REQUEST, "Please check parameters",
+						"TODO");
+			} catch (NoSuchAlgorithmException e) {
+				System.err.println(e.getMessage());
+				return new StatusDTO(INTERNAL_ERROR,
+						"Ups, something was wrong", "TODO");
+			}
+		}
+	}
 
-    @POST
-    @Path("/users/login")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response loginResource(User user) {
-        if (user == null)
-            return Response.status(400).entity("KO!").build();
-        return Response.status(200).entity("OK!").build();
-    }
+	@GET
+	@Path("/users/login")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public StatusDTO loginResource(@QueryParam("nif") String nif,
+			@QueryParam("pass") String password) {
+		Queries query = new Queries();
+		// TODO check contest status
+		try {
+			if (query.checkUserExist(nif) == true) {
+				if (query.checkUserPassword(nif, password) == false)
+					return new StatusDTO(BAD_REQUEST,
+							"The nif or password you entered is incorrect.",
+							"TODO");
+				return new StatusDTO(OK, "User signed in successfully.", "TODO");
+			}
+			return new StatusDTO(BAD_REQUEST,
+					"The nif or password you entered is incorrect.", "TODO");
 
-    @GET
-    @Path("/users/{user-code}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public UserBean getUserResource(@PathParam("user-code") String userNif) {
-        UserManager userManager = new UserManager();
+		} catch (NoSuchAlgorithmException e) {
+			System.err.println(e.getMessage());
+			return new StatusDTO(INTERNAL_ERROR, "Ups, something was wrong",
+					"TODO");
+		}
+	}
 
-        UserBean user = new UserBean(userManager.findByUserNif(userNif));
-        System.out.println("The user with NIF:" + userNif + " is "
-                + user.getName() + " " + user.getSurname());
-        return user;
+	@GET
+	@Path("/users/{user-code}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public UserDTO getUserResource(@PathParam("user-code") String userNif) {
+		UserManager userManager = new UserManager();
+		User user = userManager.findByUserNif(userNif);
 
-    }
+		if (user != null) {
+			return new UserDTO(user);
+		}
+		return null;
 
-    @GET
-    @Path("/users")
-    @Produces(MediaType.APPLICATION_JSON)
-    public HashSet<User> getUsersResource() {
-        HashSet<User> users = null;
-        return users;
-    }
+	}
 
-    @POST
-    @Path("/photos/upload")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response uploadPhotoResource(Photo image,
-            @DefaultValue("null") @QueryParam("user") String userId) {
-        if (image == null || userId.isEmpty())
-            return Response.status(400).entity("KO!").build();
-        return Response.status(200).entity("OK!").build();
-    }
+	@GET
+	@Path("/users")
+	@Produces(MediaType.APPLICATION_JSON)
+	public HashSet<User> getUsersResource() {
+		HashSet<User> users = null;
+		return users;
+	}
 
-    @GET
-    @Path("/photos")
-    @Produces(MediaType.APPLICATION_JSON)
-    public HashSet<Photo> getPhotosToVoteResource(
-            @DefaultValue("null") @QueryParam("user") String userId) {
-        HashSet<Photo> photos = null;
-        return photos;
-    }
+	@POST
+	@Path("/photos/upload")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response uploadPhotoResource(Photo image,
+			@DefaultValue("null") @QueryParam("user") String userId) {
+		if (image == null || userId.isEmpty())
+			return Response.status(400).entity("KO!").build();
+		return Response.status(200).entity("OK!").build();
+	}
+
+	@GET
+	@Path("/photos")
+	@Produces(MediaType.APPLICATION_JSON)
+	public HashSet<Photo> getPhotosToVoteResource(
+			@DefaultValue("null") @QueryParam("user") String userId) {
+		HashSet<Photo> photos = null;
+		return photos;
+	}
 
 }

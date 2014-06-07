@@ -4,19 +4,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-@XmlRootElement(name = "code")
-public class CodeBean {
+@XmlRootElement(name = "status")
+public class StatusDTO {
 	@JsonProperty("code")
 	Integer code;
 	@JsonProperty("message")
 	String message;
+	@JsonProperty("contest")
+	String contestStatus;
 
-	public CodeBean() {
+	public StatusDTO() {
 		super();
 	}
 
-	public CodeBean(Integer code, String message) {
+	public StatusDTO(Integer code, String message, String contestStatus) {
 		this.code = code;
 		this.message = message;
+		this.contestStatus = contestStatus;
 	}
 }
