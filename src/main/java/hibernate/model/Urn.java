@@ -22,7 +22,7 @@ public class Urn implements Serializable {
 	private Integer id;
 	private String name;
 	private Set<Vote> ListVotes = new HashSet<Vote>();
-	private String contestStatus;
+	private Integer contestStatus;
 
 	public Urn() {
 	}
@@ -52,11 +52,11 @@ public class Urn implements Serializable {
 	}
 
 	@Column(name = "CONTEST_STATUS")
-	public String getContestStatus() {
+	public Integer getContestStatus() {
 		return contestStatus;
 	}
 
-	public void setContestStatus(String contestStatus) {
+	public void setContestStatus(Integer contestStatus) {
 		this.contestStatus = contestStatus;
 	}
 

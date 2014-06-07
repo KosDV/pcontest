@@ -30,14 +30,6 @@ import rest.model.RegisterDTO;
 public class WebResource {
 
 	public UserManager mgmtUser;
-	Integer OK = 200;
-	Integer BAD_REQUEST = 400;
-	Integer UNAUTHORIZED = 401;
-	Integer INTERNAL_ERROR = 500;
-	Integer CONTEST_OPENED = 600;
-	Integer PRESENTATIONS_OPENED = 601;
-	Integer VOTES_OPENED = 602;
-	Integer CONTEST_CLOSED = 603;
 
 	@GET
 	@Path("/users/test")
@@ -58,26 +50,28 @@ public class WebResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public StatusDTO registerResource(RegisterDTO user) {
-		// TODO check contest status
+		Queries query = new Queries();
+		Integer contestStatus = query.checkContestStatus();
 		if (user == null)
-			return new StatusDTO(BAD_REQUEST, "Please, insert an user", "TODO");
+			return new StatusDTO(Status.BAD_REQUEST, "Please, insert an user",
+					contestStatus);
 		else {
-			Queries query = new Queries();
 			try {
 				if (query.checkUserExist(user.getNif()) == true)
-					return new StatusDTO(BAD_REQUEST,
+					return new StatusDTO(Status.BAD_REQUEST,
 							"Someone already has that nif. Try another?",
-							"TODO");
+							contestStatus);
 				query.registerUser(user);
-				return new StatusDTO(OK, "User registered correctly", "TODO");
+				return new StatusDTO(Status.OK, "User registered correctly",
+						contestStatus);
 			} catch (HibernateException e) {
 				System.err.println(e.getMessage());
-				return new StatusDTO(BAD_REQUEST, "Please check parameters",
-						"TODO");
+				return new StatusDTO(Status.BAD_REQUEST,
+						"Please check parameters", contestStatus);
 			} catch (NoSuchAlgorithmException e) {
 				System.err.println(e.getMessage());
-				return new StatusDTO(INTERNAL_ERROR,
-						"Ups, something was wrong", "TODO");
+				return new StatusDTO(Status.INTERNAL_ERROR,
+						"Ups, something was wrong", contestStatus);
 			}
 		}
 	}
@@ -89,22 +83,23 @@ public class WebResource {
 	public StatusDTO loginResource(@QueryParam("nif") String nif,
 			@QueryParam("pass") String password) {
 		Queries query = new Queries();
-		// TODO check contest status
+		Integer contestStatus = query.checkContestStatus();
 		try {
 			if (query.checkUserExist(nif) == true) {
 				if (query.checkUserPassword(nif, password) == false)
-					return new StatusDTO(BAD_REQUEST,
+					return new StatusDTO(Status.BAD_REQUEST,
 							"The nif or password you entered is incorrect.",
-							"TODO");
-				return new StatusDTO(OK, "User signed in successfully.", "TODO");
+							contestStatus);
+				return new StatusDTO(Status.OK, "User signed in successfully.",
+						contestStatus);
 			}
-			return new StatusDTO(BAD_REQUEST,
-					"The nif or password you entered is incorrect.", "TODO");
+			return new StatusDTO(Status.BAD_REQUEST,
+					"The nif or password you entered is incorrect.", contestStatus);
 
 		} catch (NoSuchAlgorithmException e) {
 			System.err.println(e.getMessage());
-			return new StatusDTO(INTERNAL_ERROR, "Ups, something was wrong",
-					"TODO");
+			return new StatusDTO(Status.INTERNAL_ERROR,
+					"Ups, something was wrong", contestStatus);
 		}
 	}
 

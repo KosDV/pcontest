@@ -14,29 +14,17 @@ public class UrnManager implements IUrnManager {
 
 	private UrnDAO urnDAO = new UrnDAO();
 
-	public List<Urn> loadAllUrns() {
-		List<Urn> allUrns = new ArrayList<Urn>();
-		try {
-			HibernateUtil.beginTransaction();
-			allUrns = urnDAO.findAll(Urn.class);
-			HibernateUtil.commitTransaction();
-		} catch (HibernateException ex) {
-			ex.printStackTrace();
-		}
-		return allUrns;
-	}
-
-	public Urn findUrnById(Integer id) {
+	public Urn loadUrn() {
 		Urn urn = null;
 		try {
 			HibernateUtil.beginTransaction();
-			urn = urnDAO.findByUrnId(id);
+			urn = urnDAO.findByUrnId(1);
 			HibernateUtil.commitTransaction();
+			return urn;
 		} catch (HibernateException ex) {
-			ex.printStackTrace();
-			return null;
+			System.err.println(ex.getMessage());
+            throw new HibernateException(ex.getCause());
 		}
-		return urn;
 	}
 
 	public void saveNewUrn(Urn urn) {
@@ -47,6 +35,7 @@ public class UrnManager implements IUrnManager {
 		} catch (HibernateException ex) {
 			System.err.println("ERROR: Saving Urn: " + urn.getName());
 			HibernateUtil.rollbackTransaction();
+			throw new HibernateException(ex.getCause());
 		}
 
 	}
@@ -56,9 +45,10 @@ public class UrnManager implements IUrnManager {
 			HibernateUtil.beginTransaction();
 			urnDAO.update(urn);
 			HibernateUtil.commitTransaction();
-		} catch (HibernateException e) {
+		} catch (HibernateException ex) {
 			System.err.println("ERROR: Updating User: " + urn.getName());
 			HibernateUtil.rollbackTransaction();
+			throw new HibernateException(ex.getCause());
 		}
 
 	}
