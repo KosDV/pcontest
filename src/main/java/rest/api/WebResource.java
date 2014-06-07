@@ -22,8 +22,6 @@ import javax.ws.rs.core.Response;
 
 import org.hibernate.HibernateException;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
-
 import rest.model.UserBean;
 import rest.model.CodeBean;
 
@@ -32,9 +30,9 @@ public class WebResource {
 
     public UserManager mgmtUser;
     Integer OK = 200;
-    Integer ERROR_UNAUTHORIZED = 401;
-    Integer ERROR_BAD_REQUEST = 400;
-    Integer ERROR_INTERNAL = 500;
+    Integer UNAUTHORIZED = 401;
+    Integer BAD_REQUEST = 400;
+    Integer INTERNAL_ERROR = 500;
 
     @GET
     @Path("/users/test")
@@ -55,20 +53,21 @@ public class WebResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public CodeBean registerResource(UserBean user) {
-        if (user.getName() == "")
-            return new CodeBean(ERROR_BAD_REQUEST, "Please, insert a user");
+        if (user == null)
+            return new CodeBean(BAD_REQUEST, "Please, insert an user");
         else {
             Queries query = new Queries();
             try {
+            	if(query.checkUserExist(user.getNif()) == true)
+            		return new CodeBean(BAD_REQUEST, "Someone already has that nif. Try another?");
                 query.registerUser(user);
                 return new CodeBean(OK, "User registered correctly");
             } catch (HibernateException e) {
                 System.err.println(e.getMessage());
-                return new CodeBean(ERROR_BAD_REQUEST,
-                        "Bad parameters or duplicate entry");
+                return new CodeBean(BAD_REQUEST, "Please check parameters");
             } catch (NoSuchAlgorithmException e) {
                 System.err.println(e.getMessage());
-                return new CodeBean(ERROR_INTERNAL, "Ups, something was wrong");
+                return new CodeBean(INTERNAL_ERROR, "Ups, something was wrong");
             }
         }
     }
