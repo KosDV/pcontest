@@ -17,4 +17,5 @@ public class Status {
 	public static Integer DESCRIPTION_REQUIRED = 403;
 	public static Integer FILENAME_REQUIRED = 404;
 	public static Integer USER_ALLREADY_HAS_IMAGE = 405;
+	public static Integer USER_HAS_NOT_PHOTO = 406;
 }

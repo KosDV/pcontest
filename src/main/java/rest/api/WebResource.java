@@ -29,11 +29,10 @@ import rest.model.UserDTO;
 @Path("/web")
 public class WebResource {
 
-	public UserManager mgmtUser;
-
 	@GET
 	@Path("/users/list")
 	private List<User> getUsersTest() {
+		UserManager mgmtUser = new UserManager();
 		List<User> list = new ArrayList<User>();
 		list = mgmtUser.loadAllUsers();
 		return list;
@@ -151,6 +150,35 @@ public class WebResource {
 			System.err.println(e.getMessage());
 			return new StatusDTO(Status.BAD_REQUEST, "Please check parameters",
 					contestStatus);
+		} catch (NoSuchAlgorithmException e) {
+			System.err.println(e.getMessage());
+			return new StatusDTO(Status.INTERNAL_ERROR,
+					"Ups, something was wrong", contestStatus);
+		}
+	}
+
+	@GET
+	@Path("/photos")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Object getUserPhotoResource(@QueryParam("nif") String nif,
+			@QueryParam("pass") String password) {
+		Queries query = new Queries();
+		Integer contestStatus = query.checkContestStatus();
+		try {
+			if (query.checkUserExist(nif) == false
+					|| query.checkUserPassword(nif, password) == false)
+				return new StatusDTO(Status.BAD_REQUEST,
+						"The nif or password you entered is incorrect.",
+						contestStatus);
+			User user = query.getUser(nif);
+			Photo photo = user.getImage();
+			if (photo == null)
+				return new StatusDTO(Status.USER_HAS_NOT_PHOTO,
+						"This user has not uploaded a photo yet.",
+						contestStatus);
+			return new PhotoDTO(photo);
+
 		} catch (NoSuchAlgorithmException e) {
 			System.err.println(e.getMessage());
 			return new StatusDTO(Status.INTERNAL_ERROR,
