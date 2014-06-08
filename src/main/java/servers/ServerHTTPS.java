@@ -19,9 +19,9 @@ public class ServerHTTPS {
 	private static final String KEYSTORE_SERVER_FILE = "keystore_server";
 	private static final String KEYSTORE_SERVER_PWD = "kinakuta";
 	public static final URI BASE_URI = URI.create("https://localhost:4330/api");
+
 	public static void main(String[] args) {
 		try {
-			System.out.println("pContest API server");
 			// Grizzly ssl configuration
 			SSLContextConfigurator sslContext = new SSLContextConfigurator();
 			// set up security context
@@ -46,14 +46,9 @@ public class ServerHTTPS {
 			System.in.read();
 			server.shutdownNow();
 		} catch (IOException ex) {
-			Logger.getLogger(Server.class.getName())
-					.log(Level.SEVERE, null, ex);
+			Logger.getLogger(ServerBackEnd.class.getName()).log(Level.SEVERE,
+					null, ex);
 		}
 
 	}
-
-	public static ResourceConfig createApp() {
-		return new MyApplication();
-	}
-
 }

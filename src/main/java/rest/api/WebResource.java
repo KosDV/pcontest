@@ -94,7 +94,8 @@ public class WebResource {
 						contestStatus);
 			}
 			return new StatusDTO(Status.BAD_REQUEST,
-					"The nif or password you entered is incorrect.", contestStatus);
+					"The nif or password you entered is incorrect.",
+					contestStatus);
 
 		} catch (NoSuchAlgorithmException e) {
 			System.err.println(e.getMessage());
