@@ -15,5 +15,5 @@ target/*
 .classpath
 .project
 .settings/
-
+*.properties
 *.jpg
