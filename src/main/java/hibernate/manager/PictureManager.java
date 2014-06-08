@@ -30,19 +30,17 @@ public class PictureManager implements IPictureManager {
 		return allPictures;
 	}
 
-	public Boolean saveNewPicture(Photo pic, User user) {
+	public void saveNewPicture(Photo pic, User user) {
 		try {
 			HibernateUtil.beginTransaction();
 			user.setImage(pic);
 			pic.setUser(user);
 			userDAO.update(user);
 			HibernateUtil.commitTransaction();
-			return true;
-
-		} catch (HibernateException e) {
+		} catch (HibernateException ex) {
 			HibernateUtil.rollbackTransaction();
-			System.err.println("Error while saving picture: " + pic.getTitle());
-			return false;
+			System.err.println(ex.getMessage());
+			throw new HibernateException(ex.getCause());
 		}
 	}
 
