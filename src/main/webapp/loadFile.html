@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="US-ASCII">
+<title>Insert title here</title>
+<!-- Bootstrap core CSS -->
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="/css/homepage.css" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+
+<link rel="stylesheet"
+	href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+
+<link rel="stylesheet" href="/css/bootstrap-image-gallery.css">
+<link rel="stylesheet" href="css/demo.css">
+
+<link rel="stylesheet" href="css/jquery.fileupload.css">
+<link rel="stylesheet" href="css/jquery.fileupload-ui.css">
+
+
+</head>
+<body>
+
+	<!--------------------- NAVIGATION BAR STARTS --------------------->
+	<nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+
+				<a class="navbar-brand" href="homepage.html">pContest</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="#about" onClick='About()'>About</a></li>
+					<li><a href="#contact" onClick='Contact()'>Contact</a></li>
+					<li class="theList"><a href="index.html">Sign out</a></li>
+					<li><a href="#deadline" onClick='DeadLine()'>Deadline</a></li>
+					<li><a href="#loadPicture" onClick='LoadPicture()'>Load
+							Picture</a></li>
+					<li><a href="#admin" onClick='Admin()'>Admin Page</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- /.container -->
+	</nav>
+
+	<!--------------------- PAGE CONTENT --------------------->
+	<div class="container">
+		<h2>Upload Image</h2>
+		<input id="fileupload" type="file" name="files[]"
+			data-url="localhost:8000/prueba/upload" multiple>
+	</div>
+	
+	<!--------------------- SCRIPT LINKS --------------------->
+	<script
+		src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="jss/jquery.ui.widget.js"></script>
+	<script src="jss/jquery.iframe-transport.js"></script>
+	<script src="jss/jquery.fileupload.js"></script>
+	<script>
+		$(function() {
+			$('#fileupload').fileupload({
+				dataType : 'json',
+				done : function(e, data) {
+					$.each(data.result.files, function(index, file) {
+						$('<p/>').text(file.name).appendTo(document.body);
+					});
+				}
+			});
+		});
+	</script>
+
+	<script>
+		$('#upload').fileupload({
+			progressall : function(e, data) {
+				var progress = parseInt(data.loaded / data.total * 100, 10);
+				$('#progress.bar').css('width', progress + '%');
+			}
+		});
+	</script>
+
+</body>
+</html>

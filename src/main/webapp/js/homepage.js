@@ -203,9 +203,8 @@ function Home() {
 var pathArray = window.location.href.split('#');
 alert("path: " + pathArray[pathArray.length - 1]);
 switch (pathArray[pathArray.length - 1]) {
-case 'loadPicture':
+case "loadPicture":
 	LoadPicture();
-
 default:
 	Home();
 }

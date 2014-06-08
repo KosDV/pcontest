@@ -1,7 +1,8 @@
 body {
 	padding-top: 40px;
 	padding-bottom: 40px;
-	background-color: #009c8b;
+	/* 	background-color: #009c8b; */
+	background-color: #faf7f2;
 }
 
 .fullscreen_bg {
@@ -14,7 +15,8 @@ body {
 	background-position: 50% 50%;
 	background-image:
 		/* 		url('http://static.tumblr.com/5e64c9f719a2c728fbe0a7fa226eac11/vzblw1t/WeSn0hksd/tumblr_static_tumblr_static_road-car-sky-vintage-retro-trash-nature.jpg'); */
-	url('http://lightsinthedark.files.wordpress.com/2012/08/mtsharp_edit.jpg');
+		/* 	url('http://lightsinthedark.files.wordpress.com/2012/08/mtsharp_edit.jpg'); */
+		url('/img/mtsharp_edit.jpg');
 }
 
 .form-signup {
