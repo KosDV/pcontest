@@ -18,24 +18,18 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.hibernate.HibernateException;
 
+import rest.model.PhotoDTO;
+import rest.model.RegisterDTO;
 import rest.model.StatusDTO;
 import rest.model.UserDTO;
-import rest.model.RegisterDTO;
 
 @Path("/web")
 public class WebResource {
 
 	public UserManager mgmtUser;
-
-	@GET
-	@Path("/users/test")
-	public Response getTest() {
-		return Response.status(200).entity("OK!").build();
-	}
 
 	@GET
 	@Path("/users/list")
@@ -85,16 +79,13 @@ public class WebResource {
 		Queries query = new Queries();
 		Integer contestStatus = query.checkContestStatus();
 		try {
-			if (query.checkUserExist(nif) == true) {
-				if (query.checkUserPassword(nif, password) == false)
-					return new StatusDTO(Status.BAD_REQUEST,
-							"The nif or password you entered is incorrect.",
-							contestStatus);
-				return new StatusDTO(Status.OK, "User signed in successfully.",
+			if (query.checkUserExist(nif) == false
+					|| query.checkUserPassword(nif, password) == false)
+				return new StatusDTO(Status.BAD_REQUEST,
+						"The nif or password you entered is incorrect.",
 						contestStatus);
-			}
-			return new StatusDTO(Status.BAD_REQUEST,
-					"The nif or password you entered is incorrect.",
+
+			return new StatusDTO(Status.OK, "User signed in successfully.",
 					contestStatus);
 
 		} catch (NoSuchAlgorithmException e) {
@@ -115,7 +106,56 @@ public class WebResource {
 			return new UserDTO(user);
 		}
 		return null;
+	}
 
+	@POST
+	@Path("/photos/upload")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public StatusDTO uploadPhotoResource(@QueryParam("nif") String nif,
+			@QueryParam("pass") String password, PhotoDTO photo) {
+		Queries query = new Queries();
+		Integer contestStatus = query.checkContestStatus();
+		try {
+			if (photo == null)
+				return new StatusDTO(Status.BAD_REQUEST,
+						"Please, upload a photo", contestStatus);
+			else if (photo.getTitle() == null || photo.getTitle().isEmpty())
+				return new StatusDTO(Status.TITLE_REQUIRED,
+						"Please, insert a title", contestStatus);
+			else if (photo.getDescription() == null
+					|| photo.getDescription().isEmpty())
+				return new StatusDTO(Status.DESCRIPTION_REQUIRED,
+						"Please, insert a description", contestStatus);
+			else if (photo.getFilename() == null
+					|| photo.getFilename().isEmpty())
+				return new StatusDTO(Status.FILENAME_REQUIRED,
+						"There is a problem with the filename!", contestStatus);
+
+			if (query.checkUserExist(nif) == false
+					|| query.checkUserPassword(nif, password) == false)
+				return new StatusDTO(Status.BAD_REQUEST,
+						"The nif or password you entered is incorrect.",
+						contestStatus);
+
+			User user = query.getUser(nif);
+			if (user.getImage() != null)
+				return new StatusDTO(Status.USER_ALLREADY_HAS_IMAGE,
+						"Forbidden! This user allready has an image.",
+						contestStatus);
+
+			query.insertPhoto(photo, user);
+			return new StatusDTO(Status.OK, "Photo added successfully",
+					contestStatus);
+		} catch (HibernateException e) {
+			System.err.println(e.getMessage());
+			return new StatusDTO(Status.BAD_REQUEST, "Please check parameters",
+					contestStatus);
+		} catch (NoSuchAlgorithmException e) {
+			System.err.println(e.getMessage());
+			return new StatusDTO(Status.INTERNAL_ERROR,
+					"Ups, something was wrong", contestStatus);
+		}
 	}
 
 	@GET
@@ -123,18 +163,8 @@ public class WebResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public HashSet<User> getUsersResource() {
 		HashSet<User> users = null;
+		// TODO
 		return users;
-	}
-
-	@POST
-	@Path("/photos/upload")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response uploadPhotoResource(Photo image,
-			@DefaultValue("null") @QueryParam("user") String userId) {
-		if (image == null || userId.isEmpty())
-			return Response.status(400).entity("KO!").build();
-		return Response.status(200).entity("OK!").build();
 	}
 
 	@GET

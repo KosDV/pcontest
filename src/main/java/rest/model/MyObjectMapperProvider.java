@@ -53,58 +53,58 @@ import org.codehaus.jackson.map.introspect.JacksonAnnotationIntrospector;
 import org.codehaus.jackson.xc.JaxbAnnotationIntrospector;
 
 /**
- * TODO javadoc.
  *
  * @author Jakub Podlesak (jakub.podlesak at oracle.com)
  */
 @Provider
 public class MyObjectMapperProvider implements ContextResolver<ObjectMapper> {
 
-    final ObjectMapper defaultObjectMapper;
-    final ObjectMapper combinedObjectMapper;
+	final ObjectMapper defaultObjectMapper;
+	final ObjectMapper combinedObjectMapper;
 
-    public MyObjectMapperProvider() {
-        defaultObjectMapper = createDefaultMapper();
-        combinedObjectMapper = createCombinedObjectMapper();
-    }
+	public MyObjectMapperProvider() {
+		defaultObjectMapper = createDefaultMapper();
+		combinedObjectMapper = createCombinedObjectMapper();
+	}
 
-    public ObjectMapper getContext(Class<?> type) {
+	public ObjectMapper getContext(Class<?> type) {
 
-        if (type == RegisterDTO.class || type == StatusDTO.class || type == UserDTO.class) {
-            return combinedObjectMapper;
-        } else {
-            return defaultObjectMapper;
-        }
-    }
+		if (type == RegisterDTO.class || type == StatusDTO.class
+				|| type == UserDTO.class || type == PhotoDTO.class) {
+			return combinedObjectMapper;
+		} else {
+			return defaultObjectMapper;
+		}
+	}
 
-    private static ObjectMapper createCombinedObjectMapper() {
+	private static ObjectMapper createCombinedObjectMapper() {
 
-        Pair combinedIntrospector = createJaxbJacksonAnnotationIntrospector();
-        ObjectMapper result = new ObjectMapper();
-        result.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, true);
-        result.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
-        result.setDeserializationConfig(result.getDeserializationConfig()
-                .withAnnotationIntrospector(combinedIntrospector));
-        result.setSerializationConfig(result.getSerializationConfig()
-                .withAnnotationIntrospector(combinedIntrospector));
+		Pair combinedIntrospector = createJaxbJacksonAnnotationIntrospector();
+		ObjectMapper result = new ObjectMapper();
+		result.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, true);
+		result.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+		result.setDeserializationConfig(result.getDeserializationConfig()
+				.withAnnotationIntrospector(combinedIntrospector));
+		result.setSerializationConfig(result.getSerializationConfig()
+				.withAnnotationIntrospector(combinedIntrospector));
 
-        return result;
-    }
+		return result;
+	}
 
-    private static ObjectMapper createDefaultMapper() {
+	private static ObjectMapper createDefaultMapper() {
 
-        ObjectMapper result = new ObjectMapper();
-        result.configure(Feature.INDENT_OUTPUT, true);
+		ObjectMapper result = new ObjectMapper();
+		result.configure(Feature.INDENT_OUTPUT, true);
 
-        return result;
-    }
+		return result;
+	}
 
-    private static Pair createJaxbJacksonAnnotationIntrospector() {
+	private static Pair createJaxbJacksonAnnotationIntrospector() {
 
-        AnnotationIntrospector jaxbIntrospector = new JaxbAnnotationIntrospector();
-        AnnotationIntrospector jacksonIntrospector = new JacksonAnnotationIntrospector();
+		AnnotationIntrospector jaxbIntrospector = new JaxbAnnotationIntrospector();
+		AnnotationIntrospector jacksonIntrospector = new JacksonAnnotationIntrospector();
 
-        return new AnnotationIntrospector.Pair(jacksonIntrospector,
-                jaxbIntrospector);
-    }
+		return new AnnotationIntrospector.Pair(jacksonIntrospector,
+				jaxbIntrospector);
+	}
 }

@@ -38,7 +38,7 @@ public class ServerConfigurator {
 	}
 
 	public static void configure() {
-		System.out.println("Balancer configured");
+		System.out.println("Server configured");
 	}
 
 	private static void printConfiguration() {

@@ -8,8 +8,6 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 @XmlRootElement(name = "photo")
 public class PhotoDTO {
-	@JsonProperty("id")
-	Integer Id;
 	@JsonProperty("title")
 	String title;
 	@JsonProperty("description")
@@ -37,6 +35,10 @@ public class PhotoDTO {
 	@JsonProperty("exposureTime")
 	String exposureTime;
 
+	public PhotoDTO() {
+		super();
+	}
+
 	public PhotoDTO(Photo photo) {
 		super();
 		this.title = photo.getTitle();
@@ -56,14 +58,6 @@ public class PhotoDTO {
 
 	public PhotoDTO(String filename) {
 		this.filename = filename;
-	}
-
-	public Integer getId() {
-		return Id;
-	}
-
-	public void setId(Integer id) {
-		Id = id;
 	}
 
 	public String getTitle() {

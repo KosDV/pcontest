@@ -1,7 +1,9 @@
 package rest.api;
 
+import hibernate.manager.PictureManager;
 import hibernate.manager.UrnManager;
 import hibernate.manager.UserManager;
+import hibernate.model.Photo;
 import hibernate.model.Urn;
 import hibernate.model.User;
 
@@ -10,6 +12,7 @@ import java.util.Random;
 
 import org.hibernate.HibernateException;
 
+import rest.model.PhotoDTO;
 import rest.model.RegisterDTO;
 import util.PasswordDigest;
 
@@ -37,8 +40,7 @@ public class Queries {
 
 	public Boolean checkUserPassword(String nif, String password)
 			throws NoSuchAlgorithmException {
-		UserManager usrM = new UserManager();
-		User user = usrM.findByUserNif(nif);
+		User user = getUser(nif);
 		String userDigestedPassword = user.getPassword();
 		Integer randInt = user.getSalt();
 		StringBuilder sb = new StringBuilder(password).append(randInt);
@@ -50,6 +52,26 @@ public class Queries {
 			return true;
 		else
 			return false;
+	}
+
+	public User getUser(String nif) {
+		UserManager usrM = new UserManager();
+		return usrM.findByUserNif(nif);
+
+	}
+
+	public void insertPhoto(PhotoDTO photoDto, User user)
+			throws HibernateException, NoSuchAlgorithmException {
+
+		Photo photo = new Photo(photoDto.getTitle(), photoDto.getDescription(),
+				photoDto.getFilename(), photoDto.getDate(),
+				photoDto.getCoordinates(), photoDto.getCoordinates(),
+				photoDto.getBrand(), photoDto.getModel(), photoDto.getFlash(),
+				photoDto.getISO(), photoDto.getFocalLength(),
+				photoDto.getfNum(), photoDto.getExposureTime());
+
+		PictureManager pictureManager = new PictureManager();
+		pictureManager.saveNewPicture(photo, user);
 	}
 
 	public Boolean checkUserExist(String nif) {

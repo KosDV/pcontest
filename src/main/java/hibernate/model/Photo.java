@@ -50,7 +50,7 @@ public class Photo implements Serializable {
 	public Photo(String title, String description, String filename,
 			String date, String coordinates, String dimensions, String brand,
 			String model, String flash, String iSO, String focalLength,
-			String fNum, String exposureTime, User user) {
+			String fNum, String exposureTime) {
 		super();
 		this.title = title;
 		this.description = description;
@@ -65,7 +65,6 @@ public class Photo implements Serializable {
 		this.focalLength = focalLength;
 		this.fNum = fNum;
 		this.exposureTime = exposureTime;
-		this.user = user;
 	}
 
 	@GenericGenerator(name = "generator", strategy = "foreign",
@@ -99,7 +98,7 @@ public class Photo implements Serializable {
 		this.description = description;
 	}
 
-	@Column(name = "FILENAME")
+	@Column(name = "FILENAME", nullable = false)
 	public String getFilename() {
 		return filename;
 	}
