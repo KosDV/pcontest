@@ -8,7 +8,6 @@ import hibernate.model.Photo;
 import hibernate.model.Urn;
 import hibernate.model.User;
 import hibernate.model.Vote;
-import hibernate.specific.UserDAO;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,11 +16,9 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import util.HibernateUtil;
 import util.Paillier;
 
 public class App {
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void main(String[] args) throws Exception {
 		UserManager userManager = new UserManager();
 		PictureManager pictureManager = new PictureManager();
@@ -44,9 +41,9 @@ public class App {
 		user4.setIsAdmin("YES");
 
 		/** IMAGES **/
-		Photo img1 = new Photo(101, 102, "Img01", "Imatge de prova 1");
-		Photo img2 = new Photo(102, 103, "Img02", "Imatge de prova 2");
-		Photo img3 = new Photo(103, 104, "Img03", "Imatge de prova 3");
+		Photo img1 = new Photo("prueba1", "Imatge de prova 1", "Img01", "");
+		Photo img2 = new Photo("prueba2", "Imatge de prova 2", "Img02", "");
+		Photo img3 = new Photo("prueba2", "Imatge de prova 3", "Img03", "");
 
 		/** VOTES **/
 		Paillier paillier = new Paillier();

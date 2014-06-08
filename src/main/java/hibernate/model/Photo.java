@@ -19,111 +19,193 @@ import org.hibernate.annotations.Parameter;
 @Table(name = "PHOTO", catalog = "kaos")
 public class Photo implements Serializable {
 
-    private Integer id;
-    private Integer width;
-    private Integer height;
-    private String title;
-    private String description;
-    private String coordinates;
-    private String photo_path;
-    private User user;
+	private Integer id;
+	private String title;
+	private String description;
+	private String filename;
+	private String date;
+	private String coordinates;
+	private String dimensions;
+	private String brand;
+	private String model;
+	private String flash;
+	private String ISO;
+	private String focalLength;
+	private String fNum;
+	private String exposureTime;
+	private User user;
 
-    public Photo() {
-    }
-
-    public Photo(Integer width, Integer height, String title,
-            String description, String photo_path, User user) {
-        super();
-        this.width = width;
-        this.height = height;
-        this.title = title;
-        this.description = description;
-        this.user = user;
-        this.photo_path = photo_path;
-    }
-
-    public Photo(Integer width, Integer height, String title,
-            String description) {
-        super();
-        this.width = width;
-        this.height = height;
-        this.title = title;
-        this.description = description;
-    }
-
-    @GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "user"))
-    @Id
-    @GeneratedValue(generator = "generator")
-    @Column(name = "PHOTO_ID", unique = true, nullable = false)
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    @Column(name = "WIDTH")
-    public Integer getWidth() {
-        return width;
-    }
-
-    public void setWidth(Integer width) {
-        this.width = width;
-    }
-
-    @Column(name = "HEIGHT")
-    public Integer getHeight() {
-        return height;
-    }
-
-    public void setHeight(Integer height) {
-        this.height = height;
-    }
-
-    @Column(name = "TITLE", unique = true, nullable = false)
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    @Column(name = "DESCRIPTION", nullable = false)
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Column(name = "COORDINATES")
-    public String getCoordinates() {
-        return coordinates;
-    }
-
-    public void setCoordinates(String coordinates) {
-        this.coordinates = coordinates;
-    }
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-	public String getPhoto_path() {
-		return photo_path;
+	public Photo() {
+		super();
 	}
 
-	public void setPhoto_path(String photo_path) {
-		this.photo_path = photo_path;
+	public Photo(String title, String description, String filename, String date) {
+		super();
+		this.title = title;
+		this.description = description;
+		this.filename = filename;
+		this.date = date;
+	}
+
+	public Photo(String title, String description, String filename,
+			String date, String coordinates, String dimensions, String brand,
+			String model, String flash, String iSO, String focalLength,
+			String fNum, String exposureTime, User user) {
+		super();
+		this.title = title;
+		this.description = description;
+		this.filename = filename;
+		this.date = date;
+		this.coordinates = coordinates;
+		this.dimensions = dimensions;
+		this.brand = brand;
+		this.model = model;
+		this.flash = flash;
+		this.ISO = iSO;
+		this.focalLength = focalLength;
+		this.fNum = fNum;
+		this.exposureTime = exposureTime;
+		this.user = user;
+	}
+
+	@GenericGenerator(name = "generator", strategy = "foreign",
+			parameters = @Parameter(name = "property", value = "user"))
+	@Id
+	@GeneratedValue(generator = "generator")
+	@Column(name = "PHOTO_ID", unique = true, nullable = false)
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	@Column(name = "TITLE", nullable = false)
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	@Column(name = "DESCRIPTION", nullable = false)
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Column(name = "FILENAME")
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	@Column(name = "DATE")
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	@Column(name = "COORDINATES")
+	public String getCoordinates() {
+		return coordinates;
+	}
+
+	public void setCoordinates(String coordinates) {
+		this.coordinates = coordinates;
+	}
+
+	@Column(name = "DIMENSIONS")
+	public String getDimensions() {
+		return dimensions;
+	}
+
+	public void setDimensions(String dimensions) {
+		this.dimensions = dimensions;
+	}
+
+	@Column(name = "BRAND")
+	public String getBrand() {
+		return brand;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+	@Column(name = "MODEL")
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+	@Column(name = "FLASH")
+	public String getFlash() {
+		return flash;
+	}
+
+	public void setFlash(String flash) {
+		this.flash = flash;
+	}
+
+	@Column(name = "ISO")
+	public String getISO() {
+		return ISO;
+	}
+
+	public void setISO(String iSO) {
+		ISO = iSO;
+	}
+
+	@Column(name = "FOCAL_LENGTH")
+	public String getFocalLength() {
+		return focalLength;
+	}
+
+	public void setFocalLength(String focalLength) {
+		this.focalLength = focalLength;
+	}
+
+	@Column(name = "FNUM")
+	public String getfNum() {
+		return fNum;
+	}
+
+	public void setfNum(String fNum) {
+		this.fNum = fNum;
+	}
+
+	@Column(name = "EXPOSURE_TIME")
+	public String getExposureTime() {
+		return exposureTime;
+	}
+
+	public void setExposureTime(String exposureTime) {
+		this.exposureTime = exposureTime;
+	}
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@PrimaryKeyJoinColumn
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }
