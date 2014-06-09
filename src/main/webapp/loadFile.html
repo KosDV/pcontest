@@ -4,28 +4,11 @@
 <meta charset="US-ASCII">
 <title>Insert title here</title>
 <!-- Bootstrap core CSS -->
-<link href="/css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/bootstrap.css" rel="stylesheet">
 <!-- Custom styles for this template -->
 <link href="/css/homepage.css" rel="stylesheet">
-
-<!-- <link rel="stylesheet" href="css/style.css"> -->
-
-<link rel="stylesheet" href="css/jquery.Jcrop.css">
-<!-- <link rel="stylesheet" href="css/demo2.css"> -->
-
-<!-- <link rel="stylesheet" -->
-<!-- 	href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css"> -->
-
-<!-- <link rel="stylesheet" href="/css/bootstrap-image-gallery.css"> -->
-<!-- <link rel="stylesheet" href="css/demo.css"> -->
-
-<!-- <link rel="stylesheet" href="css/jquery.fileupload.css"> -->
-<!-- <link rel="stylesheet" href="css/jquery.fileupload-ui.css"> -->
-
-
 </head>
 <body>
-
 	<!--------------------- NAVIGATION BAR STARTS --------------------->
 	<nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
 		<div class="container">
@@ -36,54 +19,45 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-
-				<a class="navbar-brand" href="homepage.html">pContest</a>
+				<a class="navbar-brand" href="homepage.html"><span
+					class="glyphicon glyphicon-home"></span></a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="#about" onClick='About()'>About</a></li>
-					<li><a href="#contact" onClick='Contact()'>Contact</a></li>
-					<li class="theList"><a href="index.html">Sign out</a></li>
-					<li><a href="#deadline" onClick='DeadLine()'>Deadline</a></li>
-					<li><a href="#loadPicture" onClick='LoadPicture()'>Load
-							Picture</a></li>
-					<li><a href="#admin" onClick='Admin()'>Admin Page</a></li>
+					<li><a href="#user" onClick='User()'>Profile</a></li>
+				</ul>
+				<ul class="nav navbar-nav">
+					<li><a href="#about" onClick='About()'>pContest</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="index.html"><span
+							class="glyphicon glyphicon-off"></span></a></li>
 				</ul>
 			</div>
 		</div>
-		<!-- /.container -->
 	</nav>
-
+	<!--------------------- PAGE HEADER STARTS --------------------->
+	<div class="container">
+		<h1>pContest 2014</h1>
+		<blockquote>
+			<p>Capturing moments..</p>
+		</blockquote>
+	</div>
 	<!--------------------- PAGE CONTENT --------------------->
 	<div class="container">
 		<h2>Select an image file</h2>
 		<form class="load-image-form" role="form" id="load-image-form">
 			<p>
 				<input type="file" id="file-input">
-				<button id="send-btn" class="btn btn-lg btn-primary btn-block"
-				type="submit">Send</button>
+				<button id="send-btn" class="btn btn-primary" type="submit">Send</button>
 			</p>
 			<p>
 		</form>
 		Or <strong>drag &amp; drop</strong> an image file onto this webpage.
 		</p>
-		<br>
-		<h2>Result</h2>
-		<p id="actions" style="display: none;">
-			<button type="button" id="edit">Edit</button>
-			<button type="button" id="crop">Crop</button>
-		</p>
-		<div id="result" class="result">
-			<p>
-				This demo works only in browsers with support for the <a
-					href="https://developer.mozilla.org/en/DOM/window.URL">URL</a> or <a
-					href="https://developer.mozilla.org/en/DOM/FileReader">FileReader</a>
-				API.
-			</p>
-		</div>
-		<br>
+		<br> <br>
 		<div id="exif" class="exif" style="display: none;">
 			<h2>Exif meta data</h2>
 			<p id="thumbnail" class="thumbnail" style="display: none;"></p>
@@ -92,19 +66,16 @@
 	</div>
 
 	<!--------------------- SCRIPT LINKS --------------------->
-	<script src="js/load-image.js"></script>
-	<script src="js/load-image-ios.js"></script>
-	<script src="js/load-image-orientation.js"></script>
-	<script src="js/load-image-meta.js"></script>
-	<script src="js/load-image-exif.js"></script>
-	<script src="js/load-image-exif-map.js"></script>
+	<script src="js/loadFile/load-image.js"></script>
+	<script src="js/loadFile/load-image-orientation.js"></script>
+	<script src="js/loadFile/load-image-meta.js"></script>
+	<script src="js/loadFile/load-image-exif.js"></script>
+	<script src="js/loadFile/load-image-exif-map.js"></script>
 	<script type="text/javascript" src="js/upload.js"></script>
 	<script type="text/javascript" src="js/api.js"></script>
 	<script
 		src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="js/jquery.Jcrop.js"></script>
 	<script src="js/demo.js"></script>
-
-
 </body>
 </html>

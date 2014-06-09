@@ -200,11 +200,11 @@ function Home() {
 	document.getElementById("contingut-pagina").innerHTML = html;
 }
 
-var pathArray = window.location.href.split('#');
-alert("path: " + pathArray[pathArray.length - 1]);
-switch (pathArray[pathArray.length - 1]) {
-case "loadPicture":
-	LoadPicture();
-default:
-	Home();
-}
+//var pathArray = window.location.href.split('#');
+//alert("path: " + pathArray[pathArray.length - 1]);
+//switch (pathArray[pathArray.length - 1]) {
+//case "loadPicture":
+//	LoadPicture();
+//default:
+//	Home();
+//}

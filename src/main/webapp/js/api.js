@@ -44,7 +44,9 @@ function loginUser(nif, password, callback, callbackError) {
 }
 
 function uploadPhoto(nif, passw, photo, callback, callbackError) {
-	var url = "http://localhost:8000/api/web/photos/upload";
+	var url = API_BASE_URL + 'web/photos/upload?nif=' + nif + '&pass='
+			+ password;
+
 	$.support.cors = true
 	$.ajax({
 		url : url,
