@@ -1,3 +1,6 @@
+var API_BASE_URL = "https://localhost:4330/api";
+//var API_BASE_URL = "http://localhost:8000/api";
+
 $('#signin-form').submit(function(e) {
 	e.preventDefault();
 
@@ -8,7 +11,7 @@ $('#signin-form').submit(function(e) {
 });
 // LOG IN
 function loginUser(nif, password, callback, callbackError) {
-	var url = "http://localhost:8000/api/web/users/login" + '?nif=' + nif
+	var url = API_BASE_URL + "/web/users/login" + '?nif=' + nif
 			+ '&pass=' + password;
 
 	$.ajax({
