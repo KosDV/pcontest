@@ -16,4 +16,4 @@ target/*
 .project
 .settings/
 *.properties
-*.jpg
+src/main/webapp/photos/*
