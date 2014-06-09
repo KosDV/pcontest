@@ -30,14 +30,14 @@ public class App {
 		urnManager.saveNewUrn(urn);
 		/** USERS **/
 		User user1 = new User("Anna", "Andujar", "15/07/1990", "ana@kaos.com",
-				"1234", "477");
+				"1234", "47728934R");
 		user1.setVoted("YES");
 		User user2 = new User("Pilar", "Macias", "15/07/1989",
-				"pilar@kaos.com", "1234", "478");
+				"pilar@kaos.com", "1234", "47728935R");
 		User user3 = new User("Nadim", "El Taha", "15/07/1988",
-				"nadim@kaos.com", "1234", "479");
+				"nadim@kaos.com", "1234", "47728936R");
 		User user4 = new User("kosmin", "DV", "01/01/1970", "kosmin@kaos.com",
-				"1234", "480");
+				"1234", "48000000P");
 		user4.setIsAdmin("YES");
 
 		/** IMAGES **/

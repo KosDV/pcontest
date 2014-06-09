@@ -106,12 +106,5 @@ function registerUserSuccess(data, status, jqxhr) {
 }
 
 function registerUserError(jqxhr, options, error) {
-	if (jqxhr.status == 409) {
-		usernameExists = true;
-		$('#signup-form').addClass('error');
-		alert("El usuario ya existe");
-	} else {
-		var response = $.parseJSON(jqxhr.responseText);
-		alert("Error." + response.errorMessage);
-	}
+	alert("Connection to the server failed");
 }
