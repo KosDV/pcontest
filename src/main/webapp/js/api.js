@@ -1,4 +1,6 @@
-var API_BASE_URL = "http://localhost:8000/api";
+var API_BASE_URL = "https://localhost:4330/api";
+//var API_BASE_URL = "http://localhost:8000/api";
+
 // REGISTRAR USUARIO
 function registerUser(user, callback, callbackError) {
 	var url = API_BASE_URL + '/web/users/register';
@@ -23,7 +25,7 @@ function registerUser(user, callback, callbackError) {
 }
 
 function loginUser(nif, password, callback, callbackError) {
-	var url = API_BASE_URL + 'web/users/login?nif=' + nif + '&pass=' + password;
+	var url = API_BASE_URL + '/web/users/login?nif=' + nif + '&pass=' + password;
 
 	$.support.cors = true
 	$.ajax({
