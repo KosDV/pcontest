@@ -14,6 +14,7 @@ public class ServerConfigurator {
 	private static final String baseWebUrl;
 	private static final String webPath;
 	private static final String webUrlPath;
+	private static final String photoUrlNIO;
 
 	static {
 		Properties prop = new Properties();
@@ -32,9 +33,9 @@ public class ServerConfigurator {
 		baseWebUrl = prop.getProperty("baseWebUrl");
 		webPath = prop.getProperty("webPath");
 		webUrlPath = prop.getProperty("webUrlPath");
+		photoUrlNIO = prop.getProperty("photoUrlNIO");
 
 		printConfiguration();
-
 	}
 
 	public static void configure() {
@@ -83,6 +84,10 @@ public class ServerConfigurator {
 
 	public static String getWeburlpath() {
 		return webUrlPath;
+	}
+
+	public static String getPhotourlnio() {
+		return photoUrlNIO;
 	}
 
 }
