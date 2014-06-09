@@ -4,7 +4,7 @@ $('#signin-form').submit(function(e) {
 	var nif = $('#nif').val();
 	var password = $('#password').val();
 
-	loginUser(nif, password, loginUserSuccess, loginUserError);
+	loginUser(nif, password, callback, callbackError);
 });
 // LOG IN
 function loginUser(nif, password, callback, callbackError) {
