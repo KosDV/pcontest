@@ -8,16 +8,19 @@
 <!-- Custom styles for this template -->
 <link href="/css/homepage.css" rel="stylesheet">
 
-<link rel="stylesheet" href="css/style.css">
+<!-- <link rel="stylesheet" href="css/style.css"> -->
 
-<link rel="stylesheet"
-	href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+<link rel="stylesheet" href="css/jquery.Jcrop.css">
+<!-- <link rel="stylesheet" href="css/demo2.css"> -->
 
-<link rel="stylesheet" href="/css/bootstrap-image-gallery.css">
-<link rel="stylesheet" href="css/demo.css">
+<!-- <link rel="stylesheet" -->
+<!-- 	href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css"> -->
 
-<link rel="stylesheet" href="css/jquery.fileupload.css">
-<link rel="stylesheet" href="css/jquery.fileupload-ui.css">
+<!-- <link rel="stylesheet" href="/css/bootstrap-image-gallery.css"> -->
+<!-- <link rel="stylesheet" href="css/demo.css"> -->
+
+<!-- <link rel="stylesheet" href="css/jquery.fileupload.css"> -->
+<!-- <link rel="stylesheet" href="css/jquery.fileupload-ui.css"> -->
 
 
 </head>
@@ -55,38 +58,53 @@
 
 	<!--------------------- PAGE CONTENT --------------------->
 	<div class="container">
-		<h2>Upload Image</h2>
-		<input id="fileupload" type="file" name="files[]"
-			data-url="localhost:8000/prueba/upload" multiple>
+		<h2>Select an image file</h2>
+		<form class="load-image-form" role="form" id="load-image-form">
+			<p>
+				<input type="file" id="file-input">
+				<button id="send-btn" class="btn btn-lg btn-primary btn-block"
+				type="submit">Send</button>
+			</p>
+			<p>
+		</form>
+		Or <strong>drag &amp; drop</strong> an image file onto this webpage.
+		</p>
+		<br>
+		<h2>Result</h2>
+		<p id="actions" style="display: none;">
+			<button type="button" id="edit">Edit</button>
+			<button type="button" id="crop">Crop</button>
+		</p>
+		<div id="result" class="result">
+			<p>
+				This demo works only in browsers with support for the <a
+					href="https://developer.mozilla.org/en/DOM/window.URL">URL</a> or <a
+					href="https://developer.mozilla.org/en/DOM/FileReader">FileReader</a>
+				API.
+			</p>
+		</div>
+		<br>
+		<div id="exif" class="exif" style="display: none;">
+			<h2>Exif meta data</h2>
+			<p id="thumbnail" class="thumbnail" style="display: none;"></p>
+			<table></table>
+		</div>
 	</div>
-	
-	<!--------------------- SCRIPT LINKS --------------------->
-	<script
-		src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script src="jss/jquery.ui.widget.js"></script>
-	<script src="jss/jquery.iframe-transport.js"></script>
-	<script src="jss/jquery.fileupload.js"></script>
-	<script>
-		$(function() {
-			$('#fileupload').fileupload({
-				dataType : 'json',
-				done : function(e, data) {
-					$.each(data.result.files, function(index, file) {
-						$('<p/>').text(file.name).appendTo(document.body);
-					});
-				}
-			});
-		});
-	</script>
 
-	<script>
-		$('#upload').fileupload({
-			progressall : function(e, data) {
-				var progress = parseInt(data.loaded / data.total * 100, 10);
-				$('#progress.bar').css('width', progress + '%');
-			}
-		});
-	</script>
+	<!--------------------- SCRIPT LINKS --------------------->
+	<script src="js/load-image.js"></script>
+	<script src="js/load-image-ios.js"></script>
+	<script src="js/load-image-orientation.js"></script>
+	<script src="js/load-image-meta.js"></script>
+	<script src="js/load-image-exif.js"></script>
+	<script src="js/load-image-exif-map.js"></script>
+	<script type="text/javascript" src="js/upload.js"></script>
+	<script type="text/javascript" src="js/api.js"></script>
+	<script
+		src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="js/jquery.Jcrop.js"></script>
+	<script src="js/demo.js"></script>
+
 
 </body>
 </html>
