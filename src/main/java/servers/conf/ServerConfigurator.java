@@ -14,7 +14,8 @@ public class ServerConfigurator {
 	private static final String baseWebUrl;
 	private static final String webPath;
 	private static final String webUrlPath;
-	private static final String photoUrlNIO;
+	private static final String keystoreServer;
+	private static final String keystorePassword;
 
 	static {
 		Properties prop = new Properties();
@@ -33,8 +34,8 @@ public class ServerConfigurator {
 		baseWebUrl = prop.getProperty("baseWebUrl");
 		webPath = prop.getProperty("webPath");
 		webUrlPath = prop.getProperty("webUrlPath");
-		photoUrlNIO = prop.getProperty("photoUrlNIO");
-
+		keystoreServer = prop.getProperty("keystoreServer");
+		keystorePassword = prop.getProperty("keystorePassword");
 		printConfiguration();
 	}
 
@@ -86,8 +87,12 @@ public class ServerConfigurator {
 		return webUrlPath;
 	}
 
-	public static String getPhotourlnio() {
-		return photoUrlNIO;
+	public static String getKeystoreServer() {
+		return keystoreServer;
+	}
+
+	public static String getKeystorepassword() {
+		return keystorePassword;
 	}
 
 }

@@ -1,5 +1,4 @@
 var API_BASE_URL = "https://localhost:4330/api";
-//var API_BASE_URL = "http://localhost:8000/api";
 
 $('#signin-form').submit(function(e) {
 	e.preventDefault();
