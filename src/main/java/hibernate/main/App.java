@@ -41,9 +41,9 @@ public class App {
 		user4.setIsAdmin("YES");
 
 		/** IMAGES **/
-		Photo img1 = new Photo("prueba1", "Imatge de prova 1", "Img01", "");
-		Photo img2 = new Photo("prueba2", "Imatge de prova 2", "Img02", "");
-		Photo img3 = new Photo("prueba2", "Imatge de prova 3", "Img03", "");
+		Photo img1 = new Photo("prueba1", "Imatge de prova 1", "Img01", "", 0, "");
+		Photo img2 = new Photo("prueba2", "Imatge de prova 2", "Img02", "", 0, "");
+		Photo img3 = new Photo("prueba2", "Imatge de prova 3", "Img03", "", 0, "");
 
 		/** VOTES **/
 		Paillier paillier = new Paillier();

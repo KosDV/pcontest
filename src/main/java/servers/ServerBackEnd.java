@@ -6,10 +6,13 @@ import java.net.URI;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.grizzly.http.server.ServerConfiguration;
+import org.glassfish.grizzly.http.server.StaticHttpHandler;
 import org.glassfish.grizzly.ssl.SSLContextConfigurator;
 import org.glassfish.grizzly.ssl.SSLEngineConfigurator;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import rest.api.WebResource;
@@ -33,8 +36,9 @@ public class ServerBackEnd {
 	    sslContext.setKeyStorePass(KEYSTORE_SERVER_PWD);
 
 	    ResourceConfig rc = new ResourceConfig();
-	    rc.registerClasses(WebResource.class, MyObjectMapperProvider.class,
-		    JacksonFeature.class, CorsSupportFilter.class);
+	    rc.registerClasses(WebResource.class, MultiPartFeature.class,
+		    MyObjectMapperProvider.class, JacksonFeature.class,
+		    CorsSupportFilter.class);
 
 	    final HttpServer server = GrizzlyHttpServerFactory
 		    .createHttpServer(
@@ -42,8 +46,14 @@ public class ServerBackEnd {
 			    rc,
 			    true,
 			    new SSLEngineConfigurator(sslContext)
-				    .setClientMode(false).setNeedClientAuth(
-					    false));
+			    .setClientMode(false).setNeedClientAuth(
+				    false));
+
+	    final ServerConfiguration config = server.getServerConfiguration();
+	    StaticHttpHandler staticHttpHandlerPhotos = new StaticHttpHandler(
+		    ServerConfigurator.getPhotopath());
+	    config.addHttpHandler(staticHttpHandlerPhotos,
+		    ServerConfigurator.getPhotourlpath());
 
 	    System.out.println(String
 		    .format("Application started.%nHit enter to stop it..."));
