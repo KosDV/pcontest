@@ -1,15 +1,24 @@
-$('#fileupload').change(function(evt){
-	var files = evt.target.files; // FileList object
+$(document).ready(function() {
+	var nif = $.cookie('nif');
+	var pass = $.cookie('password');
+
+	alert(nif + ", " + pass);
+
+	$('#nif_user').val($.cookie('nif'));
+	$('#password_user').val($.cookie('password'));
+});
+
+// $('#upload').submit(function(e) {
+// e.preventDefault();
+// var URL = "https://localhost:4430/api/web/photos/upload";
+// });
+
+$('#fileupload').change(function(evt) {
+	var files = evt.target.files;
 	var f = files[0];
 	var fileName = f.name;
 	var fileType = f.type;
-	alert('Name: ' + fileName + ' Type: ' + fileType);
 
-	if (f.type !== 'image/jpeg') {
-		alert('Error!');
+	if (f.type !== 'image/jpeg')
 		$('#fileupload').val('');
-	} else {
-		alert('OK!');
-		// TODO: send user to homepage.html after checking everything OK
-	}
 });

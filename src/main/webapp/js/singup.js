@@ -70,6 +70,9 @@ $('#signup-form').submit(function(e) {
 	var email = $('#email').val();
 	var password = $('#password').val();
 
+	$.cookie('nif', $('#nif').val());
+	$.cookie('password', $('#password').val());
+
 	if (usernameOK && surnameOK && idOK && birthOK && emailOK && passwordOK) {
 		var data = new Object();
 		data.name = name;
