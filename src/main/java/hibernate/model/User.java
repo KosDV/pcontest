@@ -27,123 +27,125 @@ public class User implements Serializable {
     private Integer salt;
     private String nif;
     private Photo image;
-    private String voted = "NO"; // YES NO
-    private String isAdmin = "NO"; // YES NO
+    private Boolean voted;
+    private Boolean isAdmin;
 
     public User() {
 
     }
 
     public User(String name, String surname, String birth, String email,
-            String password, String nif) {
-        super();
-        this.name = name;
-        this.surname = surname;
-        this.birth = birth;
-        this.email = email;
-        this.password = password;
-        this.nif = nif;
+	    String password, String nif) {
+	super();
+	this.name = name;
+	this.surname = surname;
+	this.birth = birth;
+	this.email = email;
+	this.password = password;
+	this.nif = nif;
+	this.voted = false;
+	this.isAdmin = false;
     }
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "USER_ID", unique = true, nullable = false)
     public Integer getId() {
-        return id;
+	return id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+	this.id = id;
     }
 
     @Column(name = "NAME", nullable = false)
     public String getName() {
-        return name;
+	return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     @Column(name = "SURNAME", nullable = false)
     public String getSurname() {
-        return surname;
+	return surname;
     }
 
     public void setSurname(String surname) {
-        this.surname = surname;
+	this.surname = surname;
     }
 
     @Column(name = "BIRTH", nullable = false)
     public String getBirth() {
-        return birth;
+	return birth;
     }
 
     public void setBirth(String birth) {
-        this.birth = birth;
+	this.birth = birth;
     }
 
     @Column(name = "EMAIL", unique = true, nullable = false)
     public String getEmail() {
-        return email;
+	return email;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+	this.email = email;
     }
 
     @Column(name = "PASSWORD", nullable = false)
     public String getPassword() {
-        return password;
+	return password;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+	this.password = password;
     }
 
     @Column(name = "NIF", unique = true, nullable = false)
     public String getNif() {
-        return nif;
+	return nif;
     }
 
     public void setNif(String nif) {
-        this.nif = nif;
+	this.nif = nif;
     }
 
     @Column(name = "VOTED", nullable = false)
-    public String getVoted() {
-        return voted;
+    public Boolean getVoted() {
+	return voted;
     }
 
-    public void setVoted(String voted) {
-        this.voted = voted;
+    public void setVoted(Boolean voted) {
+	this.voted = voted;
     }
 
     @Column(name = "isADMIN", nullable = false)
-    public String getIsAdmin() {
-        return isAdmin;
+    public Boolean getIsAdmin() {
+	return isAdmin;
     }
 
-    public void setIsAdmin(String isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setIsAdmin(Boolean isAdmin) {
+	this.isAdmin = isAdmin;
     }
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
     public Photo getImage() {
-        return image;
+	return image;
     }
 
     public void setImage(Photo image) {
-        this.image = image;
+	this.image = image;
     }
 
     @Column(name = "SALT")
     public Integer getSalt() {
-        return salt;
+	return salt;
     }
 
     public void setSalt(Integer randInt) {
-        this.salt = randInt;
+	this.salt = randInt;
     }
 
 }

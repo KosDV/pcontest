@@ -31,14 +31,14 @@ public class App {
 		/** USERS **/
 		User user1 = new User("Anna", "Andujar", "15/07/1990", "ana@kaos.com",
 				"1234", "47728934R");
-		user1.setVoted("YES");
+		user1.setVoted(true);
 		User user2 = new User("Pilar", "Macias", "15/07/1989",
 				"pilar@kaos.com", "1234", "47728935R");
 		User user3 = new User("Nadim", "El Taha", "15/07/1988",
 				"nadim@kaos.com", "1234", "47728936R");
 		User user4 = new User("kosmin", "DV", "01/01/1970", "kosmin@kaos.com",
 				"1234", "48000000P");
-		user4.setIsAdmin("YES");
+		user4.setIsAdmin(true);
 
 		/** IMAGES **/
 		Photo img1 = new Photo("prueba1", "Imatge de prova 1", "Img01", "", 0, "");

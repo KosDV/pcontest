@@ -23,7 +23,7 @@ public class RegisterDTO {
     @JsonProperty("image")
     String image;
     @JsonProperty("voted")
-    String voted = "NO"; // YES NO
+    Boolean voted = false; // YES NO
     @JsonProperty("password")
     String password;
 
@@ -90,11 +90,11 @@ public class RegisterDTO {
         this.nif = nif;
     }
 
-    public String getVoted() {
+    public Boolean getVoted() {
         return voted;
     }
 
-    public void setVoted(String voted) {
+    public void setVoted(Boolean voted) {
         this.voted = voted;
     }
 
