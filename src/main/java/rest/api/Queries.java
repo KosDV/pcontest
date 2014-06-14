@@ -86,6 +86,16 @@ public class Queries {
 	return false;
     }
 
+    public Boolean checkUserVoted(User user) {
+	return user.getVoted();
+    }
+
+    public Boolean checkUserVotedByNif(String nif) {
+	UserManager usrM = new UserManager();
+	User user = usrM.findByUserNif(nif);
+	return user.getVoted();
+    }
+
     public Integer checkContestStatus() {
 	UrnManager urnM = new UrnManager();
 	Urn urn = urnM.loadUrn();
