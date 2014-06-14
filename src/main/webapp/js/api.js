@@ -1,6 +1,5 @@
 var API_BASE_URL = "https://localhost:4330/api";
 
-// REGISTRAR USUARIO
 function registerUser(user, callback, callbackError) {
 	var url = API_BASE_URL + '/web/users/register';
 	$.support.cors = true
@@ -44,7 +43,7 @@ function loginUser(nif, password, callback, callbackError) {
 	});
 }
 
-function uploadPhoto(nif, passw, photo, callback, callbackError) {
+function uploadPhoto(nif, password, photo, callback, callbackError) {
 	var url = API_BASE_URL + 'web/photos/upload?nif=' + nif + '&pass='
 			+ password;
 

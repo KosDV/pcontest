@@ -102,7 +102,6 @@ function registerUserSuccess(data, status, jqxhr) {
 	} else {
 		alert(msg);
 	}
-
 }
 
 function registerUserError(jqxhr, options, error) {

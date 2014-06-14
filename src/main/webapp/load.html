@@ -2,10 +2,8 @@
 <html>
 <head>
 <meta charset="US-ASCII">
-<title>Insert title here</title>
-<!-- Bootstrap core CSS -->
+<title>pContest</title>
 <link href="/css/bootstrap.css" rel="stylesheet">
-<!-- Custom styles for this template -->
 <link href="/css/homepage.css" rel="stylesheet">
 </head>
 <body>
@@ -22,8 +20,6 @@
 				<a class="navbar-brand" href="homepage.html"><span
 					class="glyphicon glyphicon-home"></span></a>
 			</div>
-
-			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
 					<li><a href="#user" onClick='User()'>Profile</a></li>
@@ -47,16 +43,16 @@
 	</div>
 	<!--------------------- PAGE CONTENT --------------------->
 	<div class="container">
-		<h4>Upload your picture</h4>
-		<input type="file" id="fileupload" name="files[]" multiple />
-		<button id="send-btn" class="btn btn-primary" type="submit">Go!</button>
+		<form action="" method="post" enctype="multipart/form-data">
+			<legend>Upload your picture</legend>
+			<input type="file" id="fileupload" name="files" size="45" /> <input
+				type="text" id="photo_title" name="title" placeholder="Title"
+				size="45" required autofocus /><br> <input type="text"
+				id="photo_desc" name="desc" placeholder="Description" size="45"
+				required autofocus /><br>
+			<button id="send-btn" class="btn btn-primary" type="submit">Go!</button>
+		</form>
 		<br> <br>
-
-		<div id="exif" class="exif" style="display: none;">
-			<h4>Exif meta data</h4>
-			<p id="thumbnail" class="thumbnail" style="display: none;"></p>
-			<table></table>
-		</div>
 	</div>
 
 	<!--------------------- FOOTER --------------------->
@@ -68,16 +64,8 @@
 
 	<!--------------------- SCRIPTS --------------------->
 	<script
-		src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 	<script src="js/loadFile/load.js"></script>
-	<script src="js/loadFile/load-image.js"></script>
-	<script src="js/loadFile/load-image-orientation.js"></script>
-	<script src="js/loadFile/load-image-meta.js"></script>
-	<script src="js/loadFile/load-image-exif.js"></script>
-	<script src="js/loadFile/load-image-exif-map.js"></script>
-	
-	<!-- 	<script src="js/loadFile/jquery.fileupload.js"></script> -->
 	<script src="js/homepage.js"></script>
-
 </body>
 </html>
