@@ -12,14 +12,17 @@ public class StatusDTO {
 	String message;
 	@JsonProperty("contest")
 	Integer contestStatus;
+	@JsonProperty("photo")
+	Boolean photoStatus;
 
 	public StatusDTO() {
 		super();
 	}
 
-	public StatusDTO(Integer code, String message, Integer contestStatus) {
+	public StatusDTO(Integer code, String message, Integer contestStatus, Boolean photoStatus) {
 		this.code = code;
 		this.message = message;
 		this.contestStatus = contestStatus;
+		this.photoStatus = photoStatus;
 	}
 }

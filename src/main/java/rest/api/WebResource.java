@@ -62,24 +62,24 @@ public class WebResource {
 	Integer contestStatus = query.checkContestStatus();
 	if (user == null)
 	    return new StatusDTO(Status.BAD_REQUEST, "Please, insert an user",
-		    contestStatus);
+		    contestStatus, false);
 	else {
 	    try {
 		if (query.checkUserExist(user.getNif()) == true)
 		    return new StatusDTO(Status.BAD_REQUEST,
 			    "Someone already has that nif. Try another?",
-			    contestStatus);
+			    contestStatus, false);
 		query.registerUser(user);
 		return new StatusDTO(Status.OK, "User registered correctly",
-			contestStatus);
+			contestStatus, false);
 	    } catch (HibernateException e) {
 		System.err.println(e.getMessage());
 		return new StatusDTO(Status.BAD_REQUEST,
-			"Please check parameters", contestStatus);
+			"Please check parameters", contestStatus, false);
 	    } catch (NoSuchAlgorithmException e) {
 		System.err.println(e.getMessage());
 		return new StatusDTO(Status.INTERNAL_ERROR,
-			"Ups, something was wrong", contestStatus);
+			"Ups, something was wrong", contestStatus, false);
 	    }
 	}
     }
@@ -97,15 +97,15 @@ public class WebResource {
 		    || query.checkUserPassword(nif, password) == false)
 		return new StatusDTO(Status.BAD_REQUEST,
 			"The nif or password you entered is incorrect.",
-			contestStatus);
+			contestStatus, false);
 
 	    return new StatusDTO(Status.OK, "User signed in successfully.",
-		    contestStatus);
+		    contestStatus, query.checkUserHasPhotoByUserNif(nif));
 
 	} catch (NoSuchAlgorithmException e) {
 	    System.err.println(e.getMessage());
 	    return new StatusDTO(Status.INTERNAL_ERROR,
-		    "Ups, something was wrong", contestStatus);
+		    "Ups, something was wrong", contestStatus, false);
 	}
     }
 
@@ -142,29 +142,33 @@ public class WebResource {
 		    || query.checkUserPassword(nif, password) == false)
 		return new StatusDTO(Status.BAD_REQUEST,
 			"The nif or password you entered is incorrect.",
-			contestStatus);
+			contestStatus, false);
 
 	    User user = query.getUser(nif);
+	    Boolean photoStatus = query.checkUserHasPhoto(user);
+
 	    if (user.getImage() != null)
 		return new StatusDTO(Status.USER_ALLREADY_HAS_IMAGE,
 			"Forbidden! This user allready has an image.",
-			contestStatus);
+			contestStatus, photoStatus);
 
 	    if (photoS == null)
 		return new StatusDTO(Status.BAD_REQUEST,
-			"Please, upload a photo", contestStatus);
+			"Please, upload a photo", contestStatus, photoStatus);
 	    // TODO check that file is an image jpeg, check size
 
 	    else if (photoDetail.getFileName() == null
 		    || photoDetail.getFileName().length() < 4)
 		return new StatusDTO(Status.FILENAME_REQUIRED,
-			"There is a problem with the filename!", contestStatus);
+			"There is a problem with the filename!", contestStatus,
+			photoStatus);
 	    else if (title == null || title.isEmpty())
 		return new StatusDTO(Status.TITLE_REQUIRED,
-			"Please, insert a title", contestStatus);
+			"Please, insert a title", contestStatus, photoStatus);
 	    else if (description == null || description.isEmpty())
 		return new StatusDTO(Status.DESCRIPTION_REQUIRED,
-			"Please, insert a description", contestStatus);
+			"Please, insert a description", contestStatus,
+			photoStatus);
 	    // TODO obtain metadata, check that image is already in the server
 	    System.out.println("photo size: " + fileSize);
 	    System.out.println("photo type: " + photoDetail.getType());
@@ -186,7 +190,8 @@ public class WebResource {
 		PhotoUtil.writeToFile(photoS, fileLocation, fileSize);
 	    } catch (IOException e) {
 		return new StatusDTO(Status.PHOTO_NOT_UPLOADED,
-			"This file cannot be uploaded", contestStatus);
+			"This file cannot be uploaded", contestStatus,
+			photoStatus);
 	    }
 
 	    StringBuilder urlBuilder = new StringBuilder(
@@ -223,16 +228,17 @@ public class WebResource {
 	    // TODO add metadata
 
 	    query.insertPhoto(photo, user);
+	    photoStatus = query.checkUserHasPhotoByUserNif(nif);
 	    return new StatusDTO(Status.OK, "Photo added successfully",
-		    contestStatus);
+		    contestStatus, photoStatus);
 	} catch (HibernateException e) {
 	    System.err.println(e.getMessage());
 	    return new StatusDTO(Status.BAD_REQUEST, "Please check parameters",
-		    contestStatus);
+		    contestStatus, false);
 	} catch (NoSuchAlgorithmException e) {
 	    System.err.println(e.getMessage());
 	    return new StatusDTO(Status.INTERNAL_ERROR,
-		    "Ups, something was wrong", contestStatus);
+		    "Ups, something was wrong", contestStatus, false);
 	}
     }
 
@@ -249,19 +255,19 @@ public class WebResource {
 		    || query.checkUserPassword(nif, password) == false)
 		return new StatusDTO(Status.BAD_REQUEST,
 			"The nif or password you entered is incorrect.",
-			contestStatus);
+			contestStatus, false);
 	    User user = query.getUser(nif);
 	    Photo photo = user.getImage();
 	    if (photo == null)
 		return new StatusDTO(Status.USER_DONT_UPLOADED_PHOTO,
 			"This user has not uploaded a photo yet.",
-			contestStatus);
+			contestStatus, false);
 	    return new PhotoDTO(photo);
 
 	} catch (NoSuchAlgorithmException e) {
 	    System.err.println(e.getMessage());
 	    return new StatusDTO(Status.INTERNAL_ERROR,
-		    "Ups, something was wrong", contestStatus);
+		    "Ups, something was wrong", contestStatus, false);
 	}
     }
 

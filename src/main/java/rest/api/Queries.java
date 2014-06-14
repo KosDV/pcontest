@@ -72,6 +72,20 @@ public class Queries {
 	return true;
     }
 
+    public Boolean checkUserHasPhoto(User user) {
+	if (user.getImage() != null)
+	    return true;
+	return false;
+    }
+
+    public Boolean checkUserHasPhotoByUserNif(String nif) {
+	UserManager usrM = new UserManager();
+	User user = usrM.findByUserNif(nif);
+	if (user.getImage() != null)
+	    return true;
+	return false;
+    }
+
     public Integer checkContestStatus() {
 	UrnManager urnM = new UrnManager();
 	Urn urn = urnM.loadUrn();
