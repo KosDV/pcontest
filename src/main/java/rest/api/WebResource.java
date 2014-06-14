@@ -4,6 +4,7 @@ import hibernate.manager.UserManager;
 import hibernate.model.Photo;
 import hibernate.model.User;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.NoSuchAlgorithmException;
@@ -33,6 +34,12 @@ import rest.model.UserDTO;
 import servers.conf.ServerConfigurator;
 import util.Digest;
 import util.PhotoUtil;
+
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.imaging.ImageProcessingException;
+import com.drew.metadata.Directory;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.Tag;
 
 @Path("/web")
 public class WebResource {
@@ -187,6 +194,23 @@ public class WebResource {
 		    .append(fileLocation);
 	    String imageURL = urlBuilder.toString();
 	    System.out.println("IMAGEURL: " + imageURL);
+
+	    try {
+		Metadata metadata = ImageMetadataReader.readMetadata(
+			(BufferedInputStream) photoS, false);
+		for (Directory directory : metadata.getDirectories()) {
+		    for (Tag tag : directory.getTags()) {
+			System.out.println(tag);
+		    }
+		}
+
+	    } catch (ImageProcessingException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    } catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
 
 	    Photo photo = new Photo();
 	    photo.setTitle(title);
