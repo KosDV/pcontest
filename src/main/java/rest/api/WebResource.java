@@ -235,7 +235,6 @@ public class WebResource {
 	    return new StatusDTO(Status.INTERNAL_ERROR,
 		    "Ups, something was wrong", contestStatus, false);
 	}
->>>>>>> Fixes photo Upload
     }
 
     @GET
