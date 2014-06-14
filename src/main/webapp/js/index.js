@@ -16,11 +16,19 @@ function callback(data, status, jqxhr) {
 	alert("Response: " + JSON.stringify(data) + " Status: " + status);
 
 	var code = JSON.stringify(data.status.code);
+	var contestStatus = JSON.stringify(data.status.contest);
+	var photo = JSON.stringify(data.status.photo)
 	var msg = JSON.stringify(data.status.message);
 
 	if (code == 200) {
-		alert("Login OK");
-		window.location.replace("homepage.html");
+		if (photo == true) {
+			alert("You have already uploaded a picture");
+			window.location.replace("homepage.html");
+		} else {
+			alert("Please, upload a picture first");
+			window.location.replace("load.html");
+		}
+		
 	} else {
 		alert(msg);
 	}

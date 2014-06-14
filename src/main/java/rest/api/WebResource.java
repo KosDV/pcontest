@@ -4,9 +4,7 @@ import hibernate.manager.UserManager;
 import hibernate.model.Photo;
 import hibernate.model.User;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.NoSuchAlgorithmException;
@@ -36,13 +34,6 @@ import rest.model.UserDTO;
 import servers.conf.ServerConfigurator;
 import util.Digest;
 import util.PhotoUtil;
-
-import com.drew.imaging.ImageMetadataReader;
-import com.drew.imaging.ImageProcessingException;
-import com.drew.metadata.Directory;
-import com.drew.metadata.Metadata;
-import com.drew.metadata.Tag;
-import com.sun.org.apache.bcel.internal.classfile.Field;
 
 @Path("/web")
 public class WebResource {
