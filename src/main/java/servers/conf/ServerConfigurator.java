@@ -6,93 +6,99 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class ServerConfigurator {
-	private static final String propertiesFilePath = "conf";
-	private static final String propertiesFileName = "server.properties";
-	private static final String baseApiUrl;
-	private static final String photoPath;
-	private static final String photoUrlPath;
-	private static final String baseWebUrl;
-	private static final String webPath;
-	private static final String webUrlPath;
-	private static final String keystoreServer;
-	private static final String keystorePassword;
+    private static final String propertiesFilePath = "conf";
+    private static final String propertiesFileName = "server.properties";
+    private static final String baseApiUrl;
+    private static final String photoPath;
+    private static final String photoUrlPath;
+    private static final String baseWebUrl;
+    private static final String webPath;
+    private static final String webUrlPath;
+    private static final String keystoreServer;
+    private static final String keystorePassword;
+    private static final String basePhotoUrl;
 
-	static {
-		Properties prop = new Properties();
-		try {
-			prop.load(new FileInputStream(propertiesFilePath + "/"
-					+ propertiesFileName));
-		} catch (FileNotFoundException e) {
-			System.err.println(e.getMessage());
-		} catch (IOException e) {
-			System.err.println(e.getMessage());
-		}
-
-		baseApiUrl = prop.getProperty("baseApiUrl");
-		photoPath = prop.getProperty("photoPath");
-		photoUrlPath = prop.getProperty("photoUrlPath");
-		baseWebUrl = prop.getProperty("baseWebUrl");
-		webPath = prop.getProperty("webPath");
-		webUrlPath = prop.getProperty("webUrlPath");
-		keystoreServer = prop.getProperty("keystoreServer");
-		keystorePassword = prop.getProperty("keystorePassword");
-		printConfiguration();
+    static {
+	Properties prop = new Properties();
+	try {
+	    prop.load(new FileInputStream(propertiesFilePath + "/"
+		    + propertiesFileName));
+	} catch (FileNotFoundException e) {
+	    System.err.println(e.getMessage());
+	} catch (IOException e) {
+	    System.err.println(e.getMessage());
 	}
 
-	public static void configure() {
-		System.out.println("Server configured");
-	}
+	baseApiUrl = prop.getProperty("baseApiUrl");
+	photoPath = prop.getProperty("photoPath");
+	photoUrlPath = prop.getProperty("photoUrlPath");
+	basePhotoUrl = prop.getProperty("basePhotoUrl");
+	baseWebUrl = prop.getProperty("baseWebUrl");
+	webPath = prop.getProperty("webPath");
+	webUrlPath = prop.getProperty("webUrlPath");
+	keystoreServer = prop.getProperty("keystoreServer");
+	keystorePassword = prop.getProperty("keystorePassword");
+	printConfiguration();
+    }
 
-	private static void printConfiguration() {
-		System.out
-				.println("############## Print Server configuration ###########");
-		System.out.println("baseApiUrl " + baseApiUrl);
-		System.out.println("photoPath " + photoPath);
-		System.out.println("photoUrlPath " + photoUrlPath);
-		System.out.println("baseWebUrl " + baseWebUrl);
-		System.out.println("webPath " + webPath);
-		System.out.println("webUrlPath " + webUrlPath);
-		System.out.println("#############################################");
-	}
+    public static void configure() {
+	System.out.println("Server configured");
+    }
 
-	public static String getPropertiesfilepath() {
-		return propertiesFilePath;
-	}
+    private static void printConfiguration() {
+	System.out
+		.println("############## Print Server configuration ###########");
+	System.out.println("baseApiUrl " + baseApiUrl);
+	System.out.println("photoPath " + photoPath);
+	System.out.println("photoUrlPath " + photoUrlPath);
+	System.out.println("basePhotoUrl" + basePhotoUrl);
+	System.out.println("baseWebUrl " + baseWebUrl);
+	System.out.println("webPath " + webPath);
+	System.out.println("webUrlPath " + webUrlPath);
+	System.out.println("#############################################");
+    }
 
-	public static String getPropertiesfilename() {
-		return propertiesFileName;
-	}
+    public static String getPropertiesfilepath() {
+	return propertiesFilePath;
+    }
 
-	public static String getBaseapiurl() {
-		return baseApiUrl;
-	}
+    public static String getPropertiesfilename() {
+	return propertiesFileName;
+    }
 
-	public static String getPhotopath() {
-		return photoPath;
-	}
+    public static String getBaseapiurl() {
+	return baseApiUrl;
+    }
 
-	public static String getPhotourlpath() {
-		return photoUrlPath;
-	}
+    public static String getPhotopath() {
+	return photoPath;
+    }
 
-	public static String getBaseweburl() {
-		return baseWebUrl;
-	}
+    public static String getPhotourlpath() {
+	return photoUrlPath;
+    }
 
-	public static String getWebpath() {
-		return webPath;
-	}
+    public static String getBaseweburl() {
+	return baseWebUrl;
+    }
 
-	public static String getWeburlpath() {
-		return webUrlPath;
-	}
+    public static String getWebpath() {
+	return webPath;
+    }
 
-	public static String getKeystoreServer() {
-		return keystoreServer;
-	}
+    public static String getWeburlpath() {
+	return webUrlPath;
+    }
 
-	public static String getKeystorepassword() {
-		return keystorePassword;
-	}
+    public static String getKeystoreServer() {
+	return keystoreServer;
+    }
 
+    public static String getKeystorepassword() {
+	return keystorePassword;
+    }
+
+    public static String getBasephotourl() {
+	return basePhotoUrl;
+    }
 }

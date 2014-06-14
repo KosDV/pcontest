@@ -5,6 +5,8 @@ import hibernate.model.Photo;
 import hibernate.model.User;
 
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.NoSuchAlgorithmException;
@@ -40,6 +42,7 @@ import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.Tag;
+import com.sun.org.apache.bcel.internal.classfile.Field;
 
 @Path("/web")
 public class WebResource {
@@ -127,122 +130,112 @@ public class WebResource {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public StatusDTO uploadPhotoResource(@FormDataParam("nif") String nif,
-            @FormDataParam("pass") String password,
-            @FormDataParam("file") InputStream photoS,
-            @FormDataParam("file") FormDataContentDisposition photoDetail,
-            @FormDataParam("title") String title,
-            @FormDataParam("description") String description) {
-        
-        System.out.println(password + ", " + nif);
-        
-        String filename = photoDetail.getFileName();
-        Integer fileSize = (int) photoDetail.getSize();
+	    @FormDataParam("pass") String password,
+	    @FormDataParam("file") InputStream photoS,
+	    @FormDataParam("file") FormDataContentDisposition photoDetail,
+	    @FormDataParam("title") String title,
+	    @FormDataParam("description") String description) {
+	String filename = photoDetail.getFileName();
+	Integer fileSize = (int) photoDetail.getSize();
 
-        Queries query = new Queries();
-        Integer contestStatus = query.checkContestStatus();
-        try {
-            if (query.checkUserExist(nif) == false
-                    || query.checkUserPassword(nif, password) == false)
-                return new StatusDTO(Status.BAD_REQUEST,
-                        "The nif or password you entered is incorrect.",
-                        contestStatus, false);
+	Queries query = new Queries();
+	Integer contestStatus = query.checkContestStatus();
+	try {
+	    if (query.checkUserExist(nif) == false
+		    || query.checkUserPassword(nif, password) == false)
+		return new StatusDTO(Status.BAD_REQUEST,
+			"The nif or password you entered is incorrect.",
+			contestStatus, false);
 
-            User user = query.getUser(nif);
-            Boolean photoStatus = query.checkUserHasPhoto(user);
+	    User user = query.getUser(nif);
+	    Boolean photoStatus = query.checkUserHasPhoto(user);
 
-            if (user.getImage() != null)
-                return new StatusDTO(Status.USER_ALLREADY_HAS_IMAGE,
-                        "Forbidden! This user allready has an image.",
-                        contestStatus, photoStatus);
+	    if (user.getImage() != null)
+		return new StatusDTO(Status.USER_ALLREADY_HAS_IMAGE,
+			"Forbidden! This user allready has an image.",
+			contestStatus, photoStatus);
 
-            if (photoS == null)
-                return new StatusDTO(Status.BAD_REQUEST,
-                        "Please, upload a photo", contestStatus, photoStatus);
-            // TODO check that file is an image jpeg, check size
+	    if (photoS == null)
+		return new StatusDTO(Status.BAD_REQUEST,
+			"Please, upload a photo", contestStatus, photoStatus);
+	    // TODO check that file is an image jpeg, check size
 
-            else if (photoDetail.getFileName() == null
-                    || photoDetail.getFileName().length() < 4)
-                return new StatusDTO(Status.FILENAME_REQUIRED,
-                        "There is a problem with the filename!", contestStatus,
-                        photoStatus);
-            else if (title == null || title.isEmpty())
-                return new StatusDTO(Status.TITLE_REQUIRED,
-                        "Please, insert a title", contestStatus, photoStatus);
-            else if (description == null || description.isEmpty())
-                return new StatusDTO(Status.DESCRIPTION_REQUIRED,
-                        "Please, insert a description", contestStatus,
-                        photoStatus);
-            // TODO obtain metadata, check that image is already in the server
-            System.out.println("photo size: " + fileSize);
-            System.out.println("photo type: " + photoDetail.getType());
-            System.out.println("photo fileName: " + filename);
-            System.out.println("photo name: " + photoDetail.getName());
+	    else if (photoDetail.getFileName() == null
+		    || photoDetail.getFileName().length() < 4)
+		return new StatusDTO(Status.FILENAME_REQUIRED,
+			"There is a problem with the filename!", contestStatus,
+			photoStatus);
+	    else if (title == null || title.isEmpty())
+		return new StatusDTO(Status.TITLE_REQUIRED,
+			"Please, insert a title", contestStatus, photoStatus);
+	    else if (description == null || description.isEmpty())
+		return new StatusDTO(Status.DESCRIPTION_REQUIRED,
+			"Please, insert a description", contestStatus,
+			photoStatus);
+	    // TODO check if image is already in the server
+	    System.out.println("photo size: " + fileSize);
+	    System.out.println("photo type: " + photoDetail.getType());
+	    System.out.println("photo fileName: " + filename);
+	    System.out.println("photo name: " + photoDetail.getName());
 
-            Random randomGenerator = new Random();
-            Integer salt = randomGenerator.nextInt();
-            StringBuilder pathRand = new StringBuilder(filename).append(salt);
-            String pathDigested = Digest.generateSHA2(pathRand.toString());
+	    Random randomGenerator = new Random();
+	    Integer salt = randomGenerator.nextInt();
+	    StringBuilder pathRand = new StringBuilder(filename).append(salt);
+	    String pathDigested = Digest.generateSHA2(pathRand.toString());
+	    System.out.println("Path digested: " + pathDigested);
+	    // pathDigested="a";
+	    StringBuilder pathLocationBuilder = new StringBuilder(
+		    ServerConfigurator.getPhotopath());
+	    pathLocationBuilder.append(pathDigested).append(File.separator);
+	    String pathLocation = pathLocationBuilder.toString();
+	    System.out.println("FILEPATH_DIGESTED: " + pathLocation);
+	    File newDir = new File(pathLocation);
+	    boolean succes = newDir.mkdir();
+	    System.out.println("mkdir: " + succes);
 
-            StringBuilder fileLocationBuilder = new StringBuilder(
-                    ServerConfigurator.getPhotopath());
-            fileLocationBuilder.append(pathDigested).append("/");
-            String fileLocation = fileLocationBuilder.toString();
-            System.out.println("FILEPATH_DIGESTED: " + fileLocation);
+	    StringBuilder fileLocation = new StringBuilder(pathLocationBuilder);
+	    fileLocation.append(filename);
+	    File newFile = new File(fileLocation.toString());
+	    try {
+		PhotoUtil.writeToFile(photoS, newFile);
+	    } catch (IOException e) {
+		return new StatusDTO(Status.PHOTO_NOT_UPLOADED,
+			"This file cannot be uploaded", contestStatus,
+			photoStatus);
+	    }
+	    System.out.println("entra");
+	    StringBuilder urlBuilder = new StringBuilder(
+		    ServerConfigurator.getBasephotourl());
+	    urlBuilder.append(File.separator).append(pathDigested)
+		    .append(File.separator).append(filename);
+	    String imageURL = urlBuilder.toString();
+	    System.out.println("IMAGEURL: " + imageURL);
 
-            try {
-                PhotoUtil.writeToFile(photoS, fileLocation, fileSize);
-            } catch (IOException e) {
-                return new StatusDTO(Status.PHOTO_NOT_UPLOADED,
-                        "This file cannot be uploaded", contestStatus,
-                        photoStatus);
-            }
+	    // TODO get metadata from exif
 
-            StringBuilder urlBuilder = new StringBuilder(
-                    ServerConfigurator.getBaseapiurl());
-            urlBuilder.append(ServerConfigurator.getPhotourlpath()).append("/")
-                    .append(fileLocation);
-            String imageURL = urlBuilder.toString();
-            System.out.println("IMAGEURL: " + imageURL);
+	    Photo photo = new Photo();
+	    photo.setTitle(title);
+	    photo.setDescription(description);
+	    photo.setFilename(filename);
+	    // TODO add DATE
+	    photo.setSalt(salt);
+	    photo.setUrl(imageURL);
+	    // TODO add metadata
 
-            try {
-                Metadata metadata = ImageMetadataReader.readMetadata(
-                        (BufferedInputStream) photoS, false);
-                for (Directory directory : metadata.getDirectories()) {
-                    for (Tag tag : directory.getTags()) {
-                        System.out.println(tag);
-                    }
-                }
-
-            } catch (ImageProcessingException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            Photo photo = new Photo();
-            photo.setTitle(title);
-            photo.setDescription(description);
-            photo.setFilename(filename);
-            // TODO add DATE
-            photo.setSalt(salt);
-            photo.setUrl(imageURL);
-            // TODO add metadata
-
-            query.insertPhoto(photo, user);
-            photoStatus = query.checkUserHasPhotoByUserNif(nif);
-            return new StatusDTO(Status.OK, "Photo added successfully",
-                    contestStatus, photoStatus);
-        } catch (HibernateException e) {
-            System.err.println(e.getMessage());
-            return new StatusDTO(Status.BAD_REQUEST, "Please check parameters",
-                    contestStatus, false);
-        } catch (NoSuchAlgorithmException e) {
-            System.err.println(e.getMessage());
-            return new StatusDTO(Status.INTERNAL_ERROR,
-                    "Ups, something was wrong", contestStatus, false);
-        }
+	    query.insertPhoto(photo, user);
+	    photoStatus = query.checkUserHasPhotoByUserNif(nif);
+	    return new StatusDTO(Status.OK, "Photo added successfully",
+		    contestStatus, photoStatus);
+	} catch (HibernateException e) {
+	    System.err.println(e.getMessage());
+	    return new StatusDTO(Status.BAD_REQUEST, "Please check parameters",
+		    contestStatus, false);
+	} catch (NoSuchAlgorithmException e) {
+	    System.err.println(e.getMessage());
+	    return new StatusDTO(Status.INTERNAL_ERROR,
+		    "Ups, something was wrong", contestStatus, false);
+	}
+>>>>>>> Fixes photo Upload
     }
 
     @GET
