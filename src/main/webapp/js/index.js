@@ -21,7 +21,7 @@ function callback(data, status, jqxhr) {
 	var msg = JSON.stringify(data.status.message);
 
 	if (code == 200) {
-		if (photo == true) {
+		if (photo) {
 			alert("You have already uploaded a picture");
 			window.location.replace("homepage.html");
 		} else {
