@@ -154,6 +154,7 @@ public class WebResource {
 		return new StatusDTO(Status.BAD_REQUEST,
 			"Please, upload a photo", contestStatus);
 	    // TODO check that file is an image jpeg, check size
+
 	    else if (photoDetail.getFileName() == null
 		    || photoDetail.getFileName().length() < 4)
 		return new StatusDTO(Status.FILENAME_REQUIRED,
