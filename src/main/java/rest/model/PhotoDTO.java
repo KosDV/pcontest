@@ -34,6 +34,8 @@ public class PhotoDTO {
 	String fNum;
 	@JsonProperty("exposureTime")
 	String exposureTime;
+	@JsonProperty("url")
+	String url;
 
 	public PhotoDTO() {
 		super();
@@ -54,6 +56,7 @@ public class PhotoDTO {
 		this.focalLength = photo.getFocalLength();
 		this.fNum = photo.getfNum();
 		this.exposureTime = photo.getExposureTime();
+		this.url = photo.getUrl();
 	}
 
 	public PhotoDTO(String filename) {

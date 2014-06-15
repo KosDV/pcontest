@@ -1,14 +1,14 @@
 package util;
 
-import hibernate.model.Photo;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
+
+import rest.model.PhotoDTO;
 
 public class PhotoUtil {
     public static void writeToFile(InputStream photoS, File location)
@@ -27,13 +27,13 @@ public class PhotoUtil {
 
 	INSTANCE;
 
-	private HashMap<Integer, HashSet<Photo>> photosToVoteByUser = new HashMap<Integer, HashSet<Photo>>();
+	private HashMap<Integer, List<PhotoDTO>> photosToVoteByUser = new HashMap<Integer, List<PhotoDTO>>();
 
-	public void add(Integer userId, HashSet<Photo> photosToVote) {
+	public void add(Integer userId, List<PhotoDTO> photosToVote) {
 	    photosToVoteByUser.put(userId, photosToVote);
 	}
 
-	public HashSet<Photo> get(Integer userId) {
+	public List<PhotoDTO> get(Integer userId) {
 	    return photosToVoteByUser.get(userId);
 	}
 
