@@ -148,4 +148,15 @@ public class Queries {
 	return photosDTO;
     }
 
+    public Integer getNumUsersVoted() {
+	UserManager usrM = new UserManager();
+	List<User> userList = usrM.loadAllUsers();
+	int count = 0;
+	for (int i = 0; i < userList.size(); i++) {
+	    if (userList.get(i).getVoted())
+		count++;
+	}
+	return count;
+    }
+
 }

@@ -271,9 +271,7 @@ public class WebResource {
 			"Forbidden! This user has already voted.",
 			contestStatus, userHasPhoto, userVoted);
 
-	    List<PhotoDTO> photos = query.getPhotosToVote(user.getId());
-
-	    return photos;
+	    return query.getPhotosToVote(user.getId());
 	} catch (HibernateException e) {
 	    System.err.println(e.getMessage());
 	    return new StatusDTO(Status.BAD_REQUEST, "Please check parameters",
@@ -305,6 +303,7 @@ public class WebResource {
 		return new StatusDTO(Status.USER_HAS_NOT_UPLOADED_PHOTO,
 			"This user has not upload an image.", contestStatus,
 			false, query.checkUserVoted(user));
+
 	    return new PhotoDTO(user.getImage());
 
 	} catch (NoSuchAlgorithmException e) {
