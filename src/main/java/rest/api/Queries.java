@@ -23,7 +23,7 @@ import util.PhotoUtil;
 public class Queries {
 
     public void registerUser(RegisterDTO userBean) throws HibernateException,
-    NoSuchAlgorithmException {
+	    NoSuchAlgorithmException {
 	Random randomGenerator = new Random();
 	Integer randInt = randomGenerator.nextInt();
 
@@ -63,7 +63,7 @@ public class Queries {
     }
 
     public void insertPhoto(Photo photo, User user) throws HibernateException,
-    NoSuchAlgorithmException {
+	    NoSuchAlgorithmException {
 
 	PictureManager pictureManager = new PictureManager();
 	pictureManager.saveNewPicture(photo, user);
@@ -125,16 +125,24 @@ public class Queries {
     }
 
     public List<PhotoDTO> getPhotosToVote(Integer userId) {
-	if (PhotoUtil.Singleton.INSTANCE.get(userId) == null){
+	if (PhotoUtil.Singleton.INSTANCE.get(userId) == null) {
 	    List<PhotoDTO> sortedPhotoList = convertToDTO(getSortedPhotoList(userId));
 	    PhotoUtil.Singleton.INSTANCE.add(userId, sortedPhotoList);
 	}
 	return PhotoUtil.Singleton.INSTANCE.get(userId);
     }
 
-    private List<PhotoDTO> convertToDTO(List<Photo> photos){
+    public Boolean removePhotosToVote(Integer userId) {
+	if (PhotoUtil.Singleton.INSTANCE.get(userId) != null) {
+	    PhotoUtil.Singleton.INSTANCE.remove(userId);
+	    return true;
+	}
+	return false;
+    }
+
+    private List<PhotoDTO> convertToDTO(List<Photo> photos) {
 	List<PhotoDTO> photosDTO = new ArrayList<PhotoDTO>();
-	for(int i = 0; i< photos.size(); i++){
+	for (int i = 0; i < photos.size(); i++) {
 	    photosDTO.add(new PhotoDTO(photos.get(i)));
 	}
 	return photosDTO;
