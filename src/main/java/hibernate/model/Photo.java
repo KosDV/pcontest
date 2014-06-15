@@ -104,7 +104,7 @@ public class Photo implements Serializable {
 	this.description = description;
     }
 
-    @Column(name = "FILENAME", nullable = false, unique = true)
+    @Column(name = "FILENAME", nullable = false)
     public String getFilename() {
 	return filename;
     }
