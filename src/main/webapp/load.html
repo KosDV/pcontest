@@ -43,18 +43,18 @@
 	</div>
 	<!--------------------- PAGE CONTENT --------------------->
 	<div class="container">
-		<form action="https://localhost:4430/api/web/photos/upload" method="post" enctype="multipart/form-data" id="upload">
+		<form name="multiform" id="upload"
+			action="https://localhost:4430/api/web/photos/upload" method="POST"
+			enctype="multipart/form-data">
 			<legend>Upload your picture</legend>
 			<input type="file" id="fileupload" name="file" size="45" /> <input
 				type="text" id="photo_title" name="title" placeholder="Title"
 				size="45" required autofocus /><br> <input type="text"
-				id="photo_desc" name="description" placeholder="Description" size="45"
-				required autofocus />
-				<input type="hidden"
-				id="nif_user" name="nif" type="hidden"/>
-				<input type="hidden"
-				id="password_user" name="pass" type="hidden"/><br>
-			<button id="send-btn" class="btn btn-primary" type="submit">Go!</button>
+				id="photo_desc" name="description" placeholder="Description"
+				size="45" required autofocus /> <input type="hidden" id="nif_user"
+				name="nif" type="hidden" /> <input type="hidden" id="password_user"
+				name="pass" type="hidden" /><br>
+			<button class="btn btn-primary" type="submit">Go!</button>
 		</form>
 		<br> <br>
 	</div>
@@ -69,8 +69,8 @@
 	<!--------------------- SCRIPTS --------------------->
 	<script
 		src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-	<script src="js/loadFile/load.js"></script>
-	<script src="js/homepage.js"></script>
+	<script src="js/load.js"></script>
 	<script src="js/jquery.cookie.js"></script>
+	<script src="js/api.js"></script>
 </body>
 </html>

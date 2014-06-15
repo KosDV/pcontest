@@ -1,17 +1,13 @@
 $(document).ready(function() {
+	alert("Entra al load.js");
 	var nif = $.cookie('nif');
 	var pass = $.cookie('password');
 
 	alert(nif + ", " + pass);
 
-	$('#nif_user').val($.cookie('nif'));
-	$('#password_user').val($.cookie('password'));
+	$('#nif_user').val(nif);
+	$('#password_user').val(pass);
 });
-
-// $('#upload').submit(function(e) {
-// e.preventDefault();
-// var URL = "https://localhost:4430/api/web/photos/upload";
-// });
 
 $('#fileupload').change(function(evt) {
 	var files = evt.target.files;
@@ -22,3 +18,38 @@ $('#fileupload').change(function(evt) {
 	if (f.type !== 'image/jpeg')
 		$('#fileupload').val('');
 });
+
+$('#upload').submit(function(e) {
+	e.preventDefault();
+
+	var formObj = $(this);
+	var formUrl = formObj.attr("action");
+	var formData = new FormData(this);
+
+	$.ajax({
+		url : formUrl,
+		type : 'POST',
+		data : formData,
+		mimeType : "multipart/form-data",
+		contentType : false,
+		cache : false,
+		processData : false,
+		success : function(data, textStatus, jqXHR) {
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+		}
+	});
+	e.preventDefault();
+	e.unbind();
+});
+$('#upload').submit();
+
+function callbackLoadError(jqXHR, options, error) {
+	alert("Connection to the server failed");
+}
+
+function callbackLoad(data, status, jqxhr) {
+	alert("Connection OK");
+	alert("Està al load js");
+	window.location.replace("main.html");
+}

@@ -81,32 +81,37 @@ $('#signup-form').submit(function(e) {
 		data.birth = birth;
 		data.email = email;
 		data.password = password;
-		alert(JSON.stringify({
+		alert("Dades del signup: " + JSON.stringify({
 			"user" : data
 		}));
 		registerUser(JSON.stringify({
 			"user" : data
-		}), registerUserSuccess, registerUserError);
+		}), callbackRegUser, callbackRegUserError);
 	} else {
 		alert("Error al introducir los datos!");
 	}
 });
 
-function registerUserSuccess(data, status, jqxhr) {
-	alert("Connection OK");
-	alert("Response: " + JSON.stringify(data) + " Status: " + status);
-
+function callbackRegUser(data, status, jqxhr) {
+	alert("Entra al callbackRegUser");
 	var code = JSON.stringify(data.status.code);
+	var photo = JSON.stringify(data.status.photo);
 	var msg = JSON.stringify(data.status.message);
 
 	if (code == 200) {
-		alert("User registered!");
-		window.location.replace("homepage.html#loadPicture");
+		if (photo === true) {
+			alert("You have already uploaded a picture");
+			window.location.replace("homepage.html");
+		} else {
+			alert("Please, upload a picture first");
+			window.location.replace("load.html");
+		}
 	} else {
-		alert(msg);
+		alert("Signup msg: " + msg);
 	}
 }
 
-function registerUserError(jqxhr, options, error) {
+function callbackRegUserError(jqxhr, options, error) {
+	alert("Entra al callbackRegUserError");
 	alert("Connection to the server failed");
 }
