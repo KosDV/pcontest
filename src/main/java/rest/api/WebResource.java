@@ -95,7 +95,7 @@ public class WebResource {
 	    if (query.checkUserExist(nif) == false
 		    || query.checkUserPassword(nif, password) == false)
 		return new StatusDTO(Status.BAD_REQUEST,
-			"The nif or password you entered is incorrect.",
+			"The nif or password you entered are not correct",
 			contestStatus, false, false);
 
 	    return new StatusDTO(Status.OK, "User signed in successfully.",
@@ -144,7 +144,7 @@ public class WebResource {
 	    if (query.checkUserExist(nif) == false
 		    || query.checkUserPassword(nif, password) == false)
 		return new StatusDTO(Status.BAD_REQUEST,
-			"The nif or password you entered is incorrect.",
+			"The nif or password you entered are not correct",
 			contestStatus, false, false);
 
 	    User user = query.getUser(nif);
@@ -254,12 +254,16 @@ public class WebResource {
 	    if (query.checkUserExist(nif) == false
 		    || query.checkUserPassword(nif, password) == false)
 		return new StatusDTO(Status.BAD_REQUEST,
-			"The nif or password you entered is incorrect.",
+			"The nif or password you entered are not correct",
 			contestStatus, false, false);
 
 	    User user = query.getUser(nif);
 	    Boolean userHasPhoto = query.checkUserHasPhoto(user);
 	    Boolean userVoted = query.checkUserVoted(user);
+	    if(!query.checkRelationBetweenUsersPhotosUploaded())
+		return new StatusDTO(Status.PHOTOS_UPLOADED_AND_USERS_DIFFERENT,
+			"Forbidden! There are a corruption case here.",
+			contestStatus, userHasPhoto, userVoted);
 
 	    if (!userHasPhoto)
 		return new StatusDTO(Status.USER_HAS_NOT_UPLOADED_PHOTO,
@@ -271,7 +275,14 @@ public class WebResource {
 			"Forbidden! This user has already voted.",
 			contestStatus, userHasPhoto, userVoted);
 
-	    return query.getPhotosToVote(user.getId());
+	    List<PhotoDTO> listPhotosToVote = query.getPhotosToVote(user
+		    .getId());
+	    if (listPhotosToVote == null)
+		return new StatusDTO(Status.NOT_ENOUGH_PARTICIPANTS,
+			"There are not enough participants", contestStatus,
+			userHasPhoto, userVoted);
+	    return listPhotosToVote;
+
 	} catch (HibernateException e) {
 	    System.err.println(e.getMessage());
 	    return new StatusDTO(Status.BAD_REQUEST, "Please check parameters",
@@ -281,7 +292,6 @@ public class WebResource {
 	    return new StatusDTO(Status.INTERNAL_ERROR,
 		    "Ups, something was wrong", contestStatus, false, false);
 	}
-
     }
 
     @GET
@@ -296,7 +306,7 @@ public class WebResource {
 	    if (query.checkUserExist(nif) == false
 		    || query.checkUserPassword(nif, password) == false)
 		return new StatusDTO(Status.BAD_REQUEST,
-			"The nif or password you entered is incorrect.",
+			"The nif or password you entered are not correct",
 			contestStatus, false, false);
 	    User user = query.getUser(nif);
 	    if (!query.checkUserHasPhoto(user))

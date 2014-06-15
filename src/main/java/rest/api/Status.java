@@ -16,6 +16,8 @@ public class Status {
 	public static Integer USER_HAS_NOT_VOTED = 606;
 	public static Integer VOTES_CLOSED = 607;
 	public static Integer PRESENTATIONS_CLOSED = 608;
+	public static Integer NOT_ENOUGH_PARTICIPANTS = 609;
+	public static Integer PHOTOS_UPLOADED_AND_USERS_DIFFERENT = 610;
 	/* Photos */
 	public static Integer TITLE_REQUIRED = 402;
 	public static Integer DESCRIPTION_REQUIRED = 403;

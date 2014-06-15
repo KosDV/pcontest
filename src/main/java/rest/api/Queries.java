@@ -110,7 +110,7 @@ public class Queries {
 	    return urn.getContestStatus();
     }
 
-    private List<Photo> getSortedPhotoList(Integer userId) {
+    private List<Photo> getShuffledPhotoList(Integer userId) {
 	PictureManager picM = new PictureManager();
 	List<Photo> allPhotos = picM.loadAllPictures();
 
@@ -124,9 +124,40 @@ public class Queries {
 	return allPhotos;
     }
 
+    private List<Photo> getPercentagePhotoList(List<Photo> shuffledPhotoList) {
+	Integer shuffledPhotoListSize = shuffledPhotoList.size();
+	Float twentyFivePercent = (float) (shuffledPhotoListSize * 0.25);
+	System.out.println("25%: " + twentyFivePercent);
+
+	Integer roundedNumPhotos = Math.round(twentyFivePercent);
+	System.out.println("Shuffled photo size: " + shuffledPhotoListSize);
+	System.out.println("25% rounded: " + roundedNumPhotos);
+	if (shuffledPhotoListSize < 5)
+	    return null;
+	else if (shuffledPhotoListSize >= 5 && roundedNumPhotos < 5){
+	    List<Photo> photosToVote = new ArrayList<Photo>();
+	    for (int i = 0; i < 5; i++) {
+		photosToVote.add(shuffledPhotoList.get(i));
+	    }
+	    System.out.println("returned size: " + photosToVote.size());
+	    return photosToVote;
+	}
+	else {
+	    List<Photo> photosToVote = new ArrayList<Photo>();
+	    for (int i = 0; i < roundedNumPhotos; i++) {
+		photosToVote.add(shuffledPhotoList.get(i));
+	    }
+	    System.out.println("returned size: " + photosToVote.size());
+	    return photosToVote;
+	}
+    }
+
     public List<PhotoDTO> getPhotosToVote(Integer userId) {
 	if (PhotoUtil.Singleton.INSTANCE.get(userId) == null) {
-	    List<PhotoDTO> sortedPhotoList = convertToDTO(getSortedPhotoList(userId));
+	    List<Photo> photosToAdd = getPercentagePhotoList(getShuffledPhotoList(userId));
+	    if (photosToAdd == null)
+		return null;
+	    List<PhotoDTO> sortedPhotoList = convertToDTO(photosToAdd);
 	    PhotoUtil.Singleton.INSTANCE.add(userId, sortedPhotoList);
 	}
 	return PhotoUtil.Singleton.INSTANCE.get(userId);
@@ -148,15 +179,26 @@ public class Queries {
 	return photosDTO;
     }
 
-    public Integer getNumUsersVoted() {
+    public Integer getNumUsersUploadImage() {
 	UserManager usrM = new UserManager();
 	List<User> userList = usrM.loadAllUsers();
 	int count = 0;
 	for (int i = 0; i < userList.size(); i++) {
-	    if (userList.get(i).getVoted())
+	    if (userList.get(i).getImage() != null)
 		count++;
 	}
 	return count;
     }
 
+    public Integer getNumPhotosUploaded() {
+	PictureManager picM = new PictureManager();
+	List<Photo> allPhotos = picM.loadAllPictures();
+	return allPhotos.size();
+    }
+
+    public Boolean checkRelationBetweenUsersPhotosUploaded() {
+	if (getNumUsersUploadImage() != getNumPhotosUploaded())
+	    return false;
+	return true;
+    }
 }
