@@ -1,11 +1,11 @@
 package hibernate.main;
 
 import hibernate.manager.PictureManager;
-import hibernate.manager.UrnManager;
+import hibernate.manager.ContestManager;
 import hibernate.manager.UserManager;
 import hibernate.manager.VoteManager;
 import hibernate.model.Photo;
-import hibernate.model.Urn;
+import hibernate.model.Contest;
 import hibernate.model.User;
 import hibernate.model.Vote;
 
@@ -16,18 +16,20 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import rest.api.Status;
+import util.DateUtil;
 import util.PaillierUtil;
 
 public class App {
 	public static void main(String[] args) throws Exception {
 		UserManager userManager = new UserManager();
 		PictureManager pictureManager = new PictureManager();
-		UrnManager urnManager = new UrnManager();
+		ContestManager contestManager = new ContestManager();
 		VoteManager voteManager = new VoteManager();
 
 		/** URN **/
-		Urn urn = new Urn("Prueba");
-		urnManager.saveNewUrn(urn);
+		Contest contest = new Contest(Status.CONTEST_OPENED, DateUtil.getCurrentDate());
+		contestManager.saveNewUrn(contest);
 		/** USERS **/
 		User user1 = new User("Anna", "Andujar", "15/07/1990", "ana@kaos.com",
 				"1234", "47728934R");
@@ -60,9 +62,6 @@ public class App {
 		Vote vote2 = new Vote();
 		vote2.setEncryptedVote(c2.toString());
 
-		urn.getListVotes().add(vote1);
-		urn.getListVotes().add(vote2);
-
 		/** TRANSACTIONS **/
 		userManager.saveNewUser(user1);
 		userManager.saveNewUser(user2);
@@ -74,8 +73,8 @@ public class App {
 		pictureManager.saveNewPicture(img3, user1);
 
 		// TODO add User_ID field to set user.voted = true
-		voteManager.saveNewVote(vote1, urn);
-		voteManager.saveNewVote(vote2, urn);
+		voteManager.saveNewVote(vote1);
+		voteManager.saveNewVote(vote2);
 
 		List<User> users = new ArrayList<User>();
 		List<Photo> images = new ArrayList<Photo>();

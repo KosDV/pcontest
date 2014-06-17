@@ -6,11 +6,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
@@ -19,7 +16,6 @@ import javax.persistence.Table;
 public class Vote implements Serializable {
     private Integer id;
     private String encryptedVote;
-    private Urn urn;
 
     public Vote() {
     }
@@ -47,15 +43,4 @@ public class Vote implements Serializable {
     public void setEncryptedVote(String encryptedVote) {
         this.encryptedVote = encryptedVote;
     }
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "URN_ID", nullable = false)
-    public Urn getUrn() {
-        return urn;
-    }
-
-    public void setUrn(Urn urn) {
-        this.urn = urn;
-    }
-
 }

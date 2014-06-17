@@ -1,55 +1,48 @@
 package hibernate.manager;
 
-import hibernate.model.Photo;
-import hibernate.model.User;
-import hibernate.specific.PictureDAO;
-import hibernate.specific.UserDAO;
-
-import java.util.ArrayList;
-import java.util.List;
+import hibernate.model.Contest;
+import hibernate.specific.ContestDAO;
 
 import org.hibernate.HibernateException;
 
 import util.HibernateUtil;
 
-public class PictureManager implements IPictureManager {
+public class ContestManager implements IContestManager {
 
-    private PictureDAO pictureDAO = new PictureDAO();
-    private UserDAO userDAO = new UserDAO();
+    private ContestDAO contestDAO = new ContestDAO();
 
-    public List<Photo> loadAllPictures() {
+    public Contest loadUrn() {
 	try {
 	    HibernateUtil.beginTransaction();
-	    List<Photo> allPictures = pictureDAO.findAll(Photo.class);
+	    Contest contest = contestDAO.findByUrnId(1);
 	    HibernateUtil.commitTransaction();
-	    return allPictures;
+	    return contest;
 	} catch (HibernateException ex) {
-	    System.err.println(ex.getMessage());
+	    
 	    throw new HibernateException(ex.getCause());
 	}
     }
 
-    public void saveNewPicture(Photo pic, User user) {
+    public void saveNewUrn(Contest contest) {
 	try {
 	    HibernateUtil.beginTransaction();
-	    user.setImage(pic);
-	    pic.setUser(user);
-	    userDAO.update(user);
+	    contestDAO.save(contest);
 	    HibernateUtil.commitTransaction();
 	} catch (HibernateException ex) {
 	    HibernateUtil.rollbackTransaction();
 	    System.err.println(ex.getMessage());
 	    throw new HibernateException(ex.getCause());
 	}
+
     }
 
-    public Photo findPictureById(Integer id) {
+    public void updateUrn(Contest contest) {
 	try {
 	    HibernateUtil.beginTransaction();
-	    Photo pic = pictureDAO.findByPictureById(id);
+	    contestDAO.update(contest);
 	    HibernateUtil.commitTransaction();
-	    return pic;
 	} catch (HibernateException ex) {
+	    HibernateUtil.rollbackTransaction();
 	    System.err.println(ex.getMessage());
 	    throw new HibernateException(ex.getCause());
 	}
