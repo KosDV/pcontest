@@ -9,12 +9,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -31,8 +29,9 @@ import rest.model.PhotoDTO;
 import rest.model.RegisterDTO;
 import rest.model.StatusDTO;
 import rest.model.UserDTO;
+import rest.model.VoteDTO;
 import servers.conf.ServerConfigurator;
-import util.Digest;
+import util.DigestUtil;
 import util.PhotoUtil;
 
 @Path("/web")
@@ -179,7 +178,7 @@ public class WebResource {
 	    Random randomGenerator = new Random();
 	    Integer salt = randomGenerator.nextInt();
 	    StringBuilder pathRand = new StringBuilder(filename).append(salt);
-	    String pathDigested = Digest.generateSHA2(pathRand.toString());
+	    String pathDigested = DigestUtil.generateSHA2(pathRand.toString());
 
 	    StringBuilder pathLocationBuilder = new StringBuilder(
 		    ServerConfigurator.getPhotopath());
@@ -260,8 +259,9 @@ public class WebResource {
 	    User user = query.getUser(nif);
 	    Boolean userHasPhoto = query.checkUserHasPhoto(user);
 	    Boolean userVoted = query.checkUserVoted(user);
-	    if(!query.checkRelationBetweenUsersPhotosUploaded())
-		return new StatusDTO(Status.PHOTOS_UPLOADED_AND_USERS_DIFFERENT,
+	    if (!query.checkRelationBetweenUsersPhotosUploaded())
+		return new StatusDTO(
+			Status.PHOTOS_UPLOADED_AND_USERS_DIFFERENT,
 			"Forbidden! There are a corruption case here.",
 			contestStatus, userHasPhoto, userVoted);
 
@@ -323,22 +323,71 @@ public class WebResource {
 	}
     }
 
-    @GET
-    @Path("/users")
+    @POST
+    @Path("/vote")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public HashSet<User> getUsersResource() {
-	HashSet<User> users = null;
-	// TODO
-	return users;
-    }
+    public StatusDTO voteResource(@QueryParam("nif") String nif,
+	    @QueryParam("pass") String password, VoteDTO voteDTO) {
+	Queries query = new Queries();
+	Integer contestStatus = query.checkContestStatus();
+	// if (contestStatus != Status.VOTES_OPENED)
+	// return new StatusDTO(Status.VOTES_CLOSED,
+	// "Votes closed!.", contestStatus, false, false);
+	try {
+	    if (query.checkUserExist(nif) == false
+		    || query.checkUserPassword(nif, password) == false)
+		return new StatusDTO(Status.BAD_REQUEST,
+			"The nif or password you entered are not correct",
+			contestStatus, false, false);
 
-    @GET
-    @Path("/photos")
-    @Produces(MediaType.APPLICATION_JSON)
-    public HashSet<Photo> getPhotosToVoteResource(
-	    @DefaultValue("null") @QueryParam("user") String userId) {
-	HashSet<Photo> photos = null;
-	return photos;
+	    User user = query.getUser(nif);
+	    Boolean userHasPhoto = query.checkUserHasPhoto(user);
+	    Boolean userVoted = query.checkUserVoted(user);
+
+	    if (!userHasPhoto)
+		return new StatusDTO(Status.USER_HAS_NOT_UPLOADED_PHOTO,
+			"Forbidden! This user has not uploaded an image.",
+			contestStatus, userHasPhoto, userVoted);
+
+	    if (userVoted)
+		return new StatusDTO(Status.USER_HAS_ALREADY_VOTED,
+			"Forbidden! This user has already voted.",
+			contestStatus, userHasPhoto, userVoted);
+
+	    if (!query.checkRelationBetweenUsersPhotosUploaded())
+		return new StatusDTO(
+			Status.PHOTOS_UPLOADED_AND_USERS_DIFFERENT,
+			"Forbidden! There are a corruption case here.",
+			contestStatus, userHasPhoto, userVoted);
+
+	    if (!query.insertVote(voteDTO))
+		return new StatusDTO(Status.VOTE_CANNOT_BE_SUBMITTED,
+			"Vote cannot be submitted.", contestStatus,
+			userHasPhoto, userVoted);
+
+	    if (!query.setUserVoted(user))
+		return new StatusDTO(Status.INTERNAL_ERROR,
+			"Cannot update user status to voted", contestStatus,
+			userHasPhoto, userVoted);
+
+	    if (!query.unlinkUserPhotosToVote(user.getId()))
+		return new StatusDTO(
+			Status.INTERNAL_ERROR,
+			"Cannot unlink this user with his list of photos to vote",
+			contestStatus, userHasPhoto, userVoted);
+
+	    return new StatusDTO(Status.OK, "User voted successfully",
+		    contestStatus, userHasPhoto, userVoted);
+	} catch (HibernateException e) {
+	    System.err.println(e.getMessage());
+	    return new StatusDTO(Status.BAD_REQUEST, "Please check parameters",
+		    contestStatus, false, false);
+	} catch (NoSuchAlgorithmException e) {
+	    System.err.println(e.getMessage());
+	    return new StatusDTO(Status.INTERNAL_ERROR,
+		    "Ups, something was wrong", contestStatus, false, false);
+	}
     }
 
 }

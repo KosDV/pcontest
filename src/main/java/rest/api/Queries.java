@@ -1,11 +1,12 @@
 package rest.api;
 
+import hibernate.manager.ContestManager;
 import hibernate.manager.PictureManager;
-import hibernate.manager.UrnManager;
 import hibernate.manager.UserManager;
+import hibernate.model.Contest;
 import hibernate.model.Photo;
-import hibernate.model.Urn;
 import hibernate.model.User;
+import hibernate.model.Vote;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -17,8 +18,10 @@ import org.hibernate.HibernateException;
 
 import rest.model.PhotoDTO;
 import rest.model.RegisterDTO;
+import rest.model.VoteDTO;
 import util.DigestUtil;
 import util.PhotoUtil;
+import util.VoteUtil;
 
 public class Queries {
 
@@ -102,8 +105,8 @@ public class Queries {
     }
 
     public Integer checkContestStatus() {
-	UrnManager urnM = new UrnManager();
-	Urn urn = urnM.loadUrn();
+	ContestManager urnM = new ContestManager();
+	Contest urn = urnM.loadUrn();
 	if (urn == null || urn.getContestStatus() == null)
 	    return Status.CONTEST_NOT_CREATED;
 	else
@@ -134,15 +137,14 @@ public class Queries {
 	System.out.println("25% rounded: " + roundedNumPhotos);
 	if (shuffledPhotoListSize < 5)
 	    return null;
-	else if (shuffledPhotoListSize >= 5 && roundedNumPhotos < 5){
+	else if (shuffledPhotoListSize >= 5 && roundedNumPhotos < 5) {
 	    List<Photo> photosToVote = new ArrayList<Photo>();
 	    for (int i = 0; i < 5; i++) {
 		photosToVote.add(shuffledPhotoList.get(i));
 	    }
 	    System.out.println("returned size: " + photosToVote.size());
 	    return photosToVote;
-	}
-	else {
+	} else {
 	    List<Photo> photosToVote = new ArrayList<Photo>();
 	    for (int i = 0; i < roundedNumPhotos; i++) {
 		photosToVote.add(shuffledPhotoList.get(i));
@@ -163,7 +165,7 @@ public class Queries {
 	return PhotoUtil.Singleton.INSTANCE.get(userId);
     }
 
-    public Boolean removePhotosToVote(Integer userId) {
+    public Boolean unlinkUserPhotosToVote(Integer userId) {
 	if (PhotoUtil.Singleton.INSTANCE.get(userId) != null) {
 	    PhotoUtil.Singleton.INSTANCE.remove(userId);
 	    return true;
@@ -200,5 +202,26 @@ public class Queries {
 	if (getNumUsersUploadImage() != getNumPhotosUploaded())
 	    return false;
 	return true;
+    }
+
+    public Boolean insertVote(VoteDTO voteDTO) {
+	try {
+	    Vote vote = new Vote(voteDTO.getVoteEncrypted());
+
+	    VoteUtil.Urn.INSTANCE.add(vote);
+	    return true;
+	} catch (HibernateException ex) {
+	    return false;
+	}
+    }
+
+    public Boolean setUserVoted(User user) {
+	try {
+	    UserManager usrM = new UserManager();
+	    usrM.updateUser(user);
+	    return true;
+	} catch (HibernateException ex) {
+	    return false;
+	}
     }
 }

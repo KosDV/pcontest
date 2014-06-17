@@ -14,6 +14,8 @@ public class PhotoDTO {
 	String description;
 	@JsonProperty("fileName")
 	String filename;
+	@JsonProperty("id")
+	Integer id;
 	@JsonProperty("date")
 	String date;
 	@JsonProperty("latLng")
@@ -46,6 +48,7 @@ public class PhotoDTO {
 		this.title = photo.getTitle();
 		this.description = photo.getDescription();
 		this.filename = photo.getFilename();
+		this.id = photo.getId();
 		this.date = photo.getDate();
 		this.coordinates = photo.getCoordinates();
 		this.dimensions = photo.getDimensions();
@@ -165,5 +168,21 @@ public class PhotoDTO {
 
 	public void setExposureTime(String exposureTime) {
 		this.exposureTime = exposureTime;
+	}
+
+	public Integer getId() {
+	    return id;
+	}
+
+	public void setId(Integer id) {
+	    this.id = id;
+	}
+
+	public String getUrl() {
+	    return url;
+	}
+
+	public void setUrl(String url) {
+	    this.url = url;
 	}
 }
