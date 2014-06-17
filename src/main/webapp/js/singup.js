@@ -97,14 +97,14 @@ function callbackRegUser(data, status, jqxhr) {
 	var code = JSON.stringify(data.status.code);
 	var photo = JSON.stringify(data.status.photo);
 	var msg = JSON.stringify(data.status.message);
-
+	alert(photo + eval(photo));
 	if (code == 200) {
-		if (photo === true) {
-			alert("You have already uploaded a picture");
-			window.location.replace("homepage.html");
-		} else {
+		if (!eval(photo)) {
 			alert("Please, upload a picture first");
 			window.location.replace("load.html");
+		} else {
+			alert("You have already uploaded a picture");
+			window.location.replace("homepage.html");
 		}
 	} else {
 		alert("Signup msg: " + msg);
