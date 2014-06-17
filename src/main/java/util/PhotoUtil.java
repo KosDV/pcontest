@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import rest.model.PhotoDTO;
 
@@ -27,7 +28,7 @@ public class PhotoUtil {
 
 	INSTANCE;
 
-	private HashMap<Integer, List<PhotoDTO>> photosToVoteByUser = new HashMap<Integer, List<PhotoDTO>>();
+	private ConcurrentHashMap<Integer, List<PhotoDTO>> photosToVoteByUser = new ConcurrentHashMap<Integer, List<PhotoDTO>>();
 
 	public void add(Integer userId, List<PhotoDTO> photosToVote) {
 	    photosToVoteByUser.put(userId, photosToVote);

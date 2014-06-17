@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 import org.apache.commons.codec.binary.Base64;
 
-public class Digest {
+public class DigestUtil {
     public static String generateSHA2(String stringToDigest)
 	    throws NoSuchAlgorithmException {
 	MessageDigest md = MessageDigest.getInstance("SHA-512");
