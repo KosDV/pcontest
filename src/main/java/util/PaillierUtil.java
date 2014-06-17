@@ -15,9 +15,8 @@ package util;
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.io.UnsupportedEncodingException;
-import java.math.*;
-import java.util.*;
+import java.math.BigInteger;
+import java.util.Random;
 
 /**
  * Paillier Cryptosystem <br>
@@ -36,7 +35,7 @@ import java.util.*;
  * @author Kun Liu (kunliu1@cs.umbc.edu)
  * @version 1.0
  */
-public class Paillier {
+public class PaillierUtil {
 
 	/**
 	 * p and q are two large primes. lambda = lcm(p-1, q-1) =
@@ -71,7 +70,7 @@ public class Paillier {
 	 *            this constructor is proportional to the value of this
 	 *            parameter.
 	 */
-	public Paillier(int bitLengthVal, int certainty) {
+	public PaillierUtil(int bitLengthVal, int certainty) {
 		KeyGeneration(bitLengthVal, certainty);
 	}
 
@@ -79,7 +78,7 @@ public class Paillier {
 	 * Constructs an instance of the Paillier cryptosystem with 512 bits of
 	 * modulus and at least 1-2^(-64) certainty of primes generation.
 	 */
-	public Paillier() {
+	public PaillierUtil() {
 		KeyGeneration(256 , 64);
 	}
 

@@ -17,7 +17,7 @@ import org.hibernate.HibernateException;
 
 import rest.model.PhotoDTO;
 import rest.model.RegisterDTO;
-import util.Digest;
+import util.DigestUtil;
 import util.PhotoUtil;
 
 public class Queries {
@@ -29,7 +29,7 @@ public class Queries {
 
 	String password = userBean.getPassword();
 	StringBuilder passRand = new StringBuilder(password).append(randInt);
-	String passwordDigested = Digest.generateSHA2(passRand.toString());
+	String passwordDigested = DigestUtil.generateSHA2(passRand.toString());
 	System.out.println("passwordDigested: " + passwordDigested);
 
 	User user = new User(userBean.getName(), userBean.getSurname(),
@@ -47,7 +47,7 @@ public class Queries {
 	String userDigestedPassword = user.getPassword();
 	Integer randInt = user.getSalt();
 	StringBuilder sb = new StringBuilder(password).append(randInt);
-	String paramDigestedPassword = Digest.generateSHA2(sb.toString());
+	String paramDigestedPassword = DigestUtil.generateSHA2(sb.toString());
 	System.out.println("SYSTEM PASS: " + userDigestedPassword);
 	System.out.println("PARAM PASS: " + paramDigestedPassword);
 	if (paramDigestedPassword.equals(userDigestedPassword))

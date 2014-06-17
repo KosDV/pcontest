@@ -16,7 +16,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import util.Paillier;
+import util.PaillierUtil;
 
 public class App {
 	public static void main(String[] args) throws Exception {
@@ -46,7 +46,7 @@ public class App {
 		Photo img3 = new Photo("prueba2", "Imatge de prova 3", "Img03", "", 0, "");
 
 		/** VOTES **/
-		Paillier paillier = new Paillier();
+		PaillierUtil paillier = new PaillierUtil();
 		String m1 = "010101";
 		BigInteger m1Big = new BigInteger(m1);
 		BigInteger c1 = paillier.Encryption(m1Big);
