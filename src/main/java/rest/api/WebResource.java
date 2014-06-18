@@ -355,28 +355,39 @@ public class WebResource {
 			"Forbidden! This user has already voted.",
 			contestStatus, userHasPhoto, userVoted);
 
+	    if (!query.checkUserGeneratePhotoList(user.getId()))
+		return new StatusDTO(Status.VOTE_WITHOUT_PHOTO_LIST,
+			"Forbidden! This user want to vote illegaly.",
+			contestStatus, userHasPhoto, userVoted);
+
 	    if (!query.checkRelationBetweenUsersPhotosUploaded())
 		return new StatusDTO(
 			Status.PHOTOS_UPLOADED_AND_USERS_DIFFERENT,
 			"Forbidden! There are a corruption case here.",
 			contestStatus, userHasPhoto, userVoted);
 
-	    if (!query.insertVote(voteDTO))
+	    Integer submittedVoteId = query.insertVote(voteDTO);
+	    if (submittedVoteId == -1)
 		return new StatusDTO(Status.VOTE_CANNOT_BE_SUBMITTED,
 			"Vote cannot be submitted.", contestStatus,
 			userHasPhoto, userVoted);
 
-	    if (!query.setUserVoted(user))
+	    if (!query.setUserVoted(user)) {
+		query.deleteVote(submittedVoteId);
 		return new StatusDTO(Status.INTERNAL_ERROR,
 			"Cannot update user status to voted", contestStatus,
 			userHasPhoto, userVoted);
+	    }
 
-	    if (!query.unlinkUserPhotosToVote(user.getId()))
+	    if (!query.unlinkUserPhotosToVote(user.getId())) {
+		query.deleteVote(submittedVoteId);
 		return new StatusDTO(
 			Status.INTERNAL_ERROR,
 			"Cannot unlink this user with his list of photos to vote",
 			contestStatus, userHasPhoto, userVoted);
+	    }
 
+	    userVoted = true;
 	    return new StatusDTO(Status.OK, "User voted successfully",
 		    contestStatus, userHasPhoto, userVoted);
 	} catch (HibernateException e) {

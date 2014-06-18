@@ -204,11 +204,19 @@ public class Queries {
 	return true;
     }
 
-    public Boolean insertVote(VoteDTO voteDTO) {
+    public Integer insertVote(VoteDTO voteDTO) {
 	try {
 	    Vote vote = new Vote(voteDTO.getVoteEncrypted());
+	    return VoteUtil.Urn.INSTANCE.add(vote);
+	} catch (HibernateException ex) {
+	    return -1;
+	}
+    }
 
-	    VoteUtil.Urn.INSTANCE.add(vote);
+    public Boolean deleteVote(Integer voteId) {
+	try {
+	    Vote vote = VoteUtil.Urn.INSTANCE.get(voteId);
+	    VoteUtil.Urn.INSTANCE.remove(vote);
 	    return true;
 	} catch (HibernateException ex) {
 	    return false;
@@ -218,10 +226,18 @@ public class Queries {
     public Boolean setUserVoted(User user) {
 	try {
 	    UserManager usrM = new UserManager();
+	    user.setVoted(true);
 	    usrM.updateUser(user);
 	    return true;
 	} catch (HibernateException ex) {
 	    return false;
 	}
+    }
+
+    public Boolean checkUserGeneratePhotoList(Integer userId) {
+	if (PhotoUtil.Singleton.INSTANCE.get(userId) == null)
+	    return false;
+	return true;
+
     }
 }

@@ -27,5 +27,6 @@ public class Status {
     public static Integer PHOTO_CANNOT_BE_UPLOADED = 706;
     /* Votes */
     public static Integer VOTE_CANNOT_BE_SUBMITTED = 800;
+    public static Integer VOTE_WITHOUT_PHOTO_LIST = 801;
 
 }

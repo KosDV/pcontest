@@ -25,6 +25,18 @@ public class VoteManager implements IVoteManager {
 
     }
 
+    public Vote findById(Integer voteId) {
+	try {
+	    HibernateUtil.beginTransaction();
+	    Vote vote = voteDAO.findByVoteId(voteId);
+	    HibernateUtil.commitTransaction();
+	    return vote;
+	} catch (HibernateException ex) {
+	    System.err.println(ex.getMessage());
+	    throw new HibernateException(ex.getCause());
+	}
+    }
+
     public Boolean saveNewVote(Vote vote) {
 	try {
 	    HibernateUtil.beginTransaction();
@@ -39,13 +51,24 @@ public class VoteManager implements IVoteManager {
 	}
     }
 
-    public void deleteAllVotes() {
+    public void deleteAllVotes(List<Vote> votes) {
 	try {
 	    HibernateUtil.beginTransaction();
-	    List<Vote> votes = loadAllVotes();
 	    for (int i = 0; i < votes.size(); i++) {
 		voteDAO.delete(votes.get(i));
 	    }
+	    HibernateUtil.commitTransaction();
+	} catch (HibernateException ex) {
+	    HibernateUtil.rollbackTransaction();
+	    System.err.println(ex.getMessage());
+	    throw new HibernateException(ex.getCause());
+	}
+    }
+
+    public void deleteVote(Vote vote) {
+	try {
+	    HibernateUtil.beginTransaction();
+	    voteDAO.delete(vote);
 	    HibernateUtil.commitTransaction();
 	} catch (HibernateException ex) {
 	    HibernateUtil.rollbackTransaction();
