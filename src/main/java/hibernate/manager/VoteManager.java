@@ -3,7 +3,6 @@ package hibernate.manager;
 import hibernate.model.Vote;
 import hibernate.specific.VoteDAO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;

@@ -10,10 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "VOTE", catalog = "kaos")
 public class Vote implements Serializable {
+
+    private static final long serialVersionUID = -5434924865680870555L;
     private Integer id;
     private String encryptedVote;
 

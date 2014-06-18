@@ -9,9 +9,9 @@ import util.HibernateUtil;
 
 @SuppressWarnings("serial")
 public class ContestDAO extends GenericContestDAO<Contest, Integer> implements IContestDAO {
-	public Contest findByUrnId(Integer id) {
+	public Contest findByContestId(Integer id) {
 		Contest contest = null;
-		String hql = "from Urn urn where urn.id = :id";
+		String hql = "from Contest contest where contest.id = :id";
 		Query query = HibernateUtil.getSession().createQuery(hql)
 				.setParameter("id", id);
 		contest = findOne(query);

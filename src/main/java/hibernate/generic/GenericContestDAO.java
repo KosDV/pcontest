@@ -8,8 +8,8 @@ import org.hibernate.Session;
 
 import util.HibernateUtil;
 
-public class GenericContestDAO<T, URN_ID extends Serializable> implements
-		IGenericContestDAO<T, URN_ID> {
+public class GenericContestDAO<T, CONTEST_ID extends Serializable> implements
+		IGenericContestDAO<T, CONTEST_ID> {
 
 	protected Session getSession() {
 		return HibernateUtil.getSession();

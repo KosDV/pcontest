@@ -26,6 +26,9 @@ public class Contest implements Serializable {
     private Integer numCensus;
     private Date date;
 
+    public Contest() {
+    }
+
     public Contest(Integer contestStatus, Date date) {
 	this.contestStatus = contestStatus;
 	this.date = date;

@@ -105,12 +105,12 @@ public class Queries {
     }
 
     public Integer checkContestStatus() {
-	ContestManager urnM = new ContestManager();
-	Contest urn = urnM.loadUrn();
-	if (urn == null || urn.getContestStatus() == null)
+	ContestManager contestM = new ContestManager();
+	Contest contest = contestM.loadContest();
+	if (contest == null || contest.getContestStatus() == null)
 	    return Status.CONTEST_NOT_CREATED;
 	else
-	    return urn.getContestStatus();
+	    return contest.getContestStatus();
     }
 
     private List<Photo> getShuffledPhotoList(Integer userId) {

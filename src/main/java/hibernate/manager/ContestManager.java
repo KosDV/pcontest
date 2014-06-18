@@ -11,10 +11,10 @@ public class ContestManager implements IContestManager {
 
     private ContestDAO contestDAO = new ContestDAO();
 
-    public Contest loadUrn() {
+    public Contest loadContest() {
 	try {
 	    HibernateUtil.beginTransaction();
-	    Contest contest = contestDAO.findByUrnId(1);
+	    Contest contest = contestDAO.findByContestId(1);
 	    HibernateUtil.commitTransaction();
 	    return contest;
 	} catch (HibernateException ex) {
@@ -23,7 +23,7 @@ public class ContestManager implements IContestManager {
 	}
     }
 
-    public void saveNewUrn(Contest contest) {
+    public void saveNewContest(Contest contest) {
 	try {
 	    HibernateUtil.beginTransaction();
 	    contestDAO.save(contest);
@@ -36,7 +36,7 @@ public class ContestManager implements IContestManager {
 
     }
 
-    public void updateUrn(Contest contest) {
+    public void updateContest(Contest contest) {
 	try {
 	    HibernateUtil.beginTransaction();
 	    contestDAO.update(contest);

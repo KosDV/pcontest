@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.hibernate.Query;
 
-public interface IGenericContestDAO<T, URN_ID> extends Serializable {
+public interface IGenericContestDAO<T, CONTEST_ID> extends Serializable {
 	public void save(T entity);
 
 	public void merge(T entity);

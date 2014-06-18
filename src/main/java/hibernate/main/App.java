@@ -29,7 +29,7 @@ public class App {
 
 		/** URN **/
 		Contest contest = new Contest(Status.CONTEST_OPENED, DateUtil.getCurrentDate());
-		contestManager.saveNewUrn(contest);
+		contestManager.saveNewContest(contest);
 		/** USERS **/
 		User user1 = new User("Anna", "Andujar", "15/07/1990", "ana@kaos.com",
 				"1234", "47728934R");

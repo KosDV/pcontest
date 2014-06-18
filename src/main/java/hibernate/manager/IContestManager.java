@@ -2,14 +2,12 @@ package hibernate.manager;
 
 import hibernate.model.Contest;
 
-import java.util.List;
-
 public interface IContestManager {
 
-	public Contest loadUrn();
+    public Contest loadContest();
 
-	public void saveNewUrn(Contest urn);
+    public void saveNewContest(Contest contest);
 
-	public void updateUrn(Contest urn);
+    public void updateContest(Contest contest);
 
 }

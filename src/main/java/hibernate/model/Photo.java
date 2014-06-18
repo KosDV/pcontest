@@ -213,6 +213,7 @@ public class Photo implements Serializable {
 	this.user = user;
     }
 
+    @Column(name = "SALT")
     public Integer getSalt() {
 	return salt;
     }
@@ -221,6 +222,7 @@ public class Photo implements Serializable {
 	this.salt = salt;
     }
 
+    @Column(name = "URL")
     public String getUrl() {
 	return url;
     }
