@@ -29,13 +29,7 @@ public class VoteManager implements IVoteManager {
     public Boolean saveNewVote(Vote vote) {
 	try {
 	    HibernateUtil.beginTransaction();
-	    List<Vote> votes;
 
-	    votes = loadAllVotes();
-	    if (votes == null) {
-		votes = new ArrayList<Vote>(0);
-	    }
-	    votes.add(vote);
 	    voteDAO.save(vote);
 	    HibernateUtil.commitTransaction();
 	    return true;
