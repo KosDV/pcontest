@@ -2,11 +2,8 @@ package api.model;
 
 import hibernate.model.Photo;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 import org.codehaus.jackson.annotate.JsonProperty;
 
-@XmlRootElement(name = "photo")
 public class PhotoDTO {
 	@JsonProperty("title")
 	String title;
