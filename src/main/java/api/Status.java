@@ -1,4 +1,4 @@
-package rest.api;
+package api;
 
 public class Status {
     /* Generic */

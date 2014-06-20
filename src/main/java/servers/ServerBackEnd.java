@@ -15,8 +15,8 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
-import rest.api.WebResource;
-import rest.model.MyObjectMapperProvider;
+import api.WebResource;
+import api.model.MyObjectMapperProvider;
 import servers.conf.ServerConfigurator;
 
 public class ServerBackEnd {

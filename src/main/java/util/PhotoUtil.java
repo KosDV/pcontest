@@ -8,7 +8,7 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import rest.model.PhotoDTO;
+import api.model.PhotoDTO;
 
 public class PhotoUtil {
     public static void writeToFile(InputStream photoS, File location)

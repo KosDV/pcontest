@@ -1,4 +1,4 @@
-package rest.model;
+package api.model;
 
 import hibernate.model.Photo;
 

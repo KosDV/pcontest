@@ -1,4 +1,4 @@
-package rest.api;
+package api;
 
 import hibernate.manager.PictureManager;
 import hibernate.manager.UserManager;
@@ -15,9 +15,9 @@ import java.util.Random;
 
 import org.hibernate.HibernateException;
 
-import rest.model.PhotoDTO;
-import rest.model.RegisterDTO;
-import rest.model.VoteDTO;
+import api.model.PhotoDTO;
+import api.model.RegisterDTO;
+import api.model.VoteDTO;
 import util.ContestUtil;
 import util.DigestUtil;
 import util.PhotoUtil;

@@ -1,4 +1,4 @@
-package rest.api;
+package api;
 
 import hibernate.manager.UserManager;
 import hibernate.model.Photo;
@@ -26,12 +26,12 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.hibernate.HibernateException;
 
-import rest.model.ContestDTO;
-import rest.model.PhotoDTO;
-import rest.model.RegisterDTO;
-import rest.model.StatusDTO;
-import rest.model.UserDTO;
-import rest.model.VoteDTO;
+import api.model.ContestDTO;
+import api.model.PhotoDTO;
+import api.model.RegisterDTO;
+import api.model.StatusDTO;
+import api.model.UserDTO;
+import api.model.VoteDTO;
 import servers.conf.ServerConfigurator;
 import util.DigestUtil;
 import util.PhotoUtil;

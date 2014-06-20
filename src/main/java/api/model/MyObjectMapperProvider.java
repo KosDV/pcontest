@@ -1,4 +1,4 @@
-package rest.model;
+package api.model;
 
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
