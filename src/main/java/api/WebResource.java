@@ -56,7 +56,7 @@ public class WebResource {
 	Queries query = new Queries();
 	Integer contestStatus = query.checkContestStatus();
 	if (contestStatus != Status.PRESENTATIONS_OPENED.intValue())
-	    return new StatusDTO(Status.BAD_REQUEST, "Registration is closed.",
+	    return new StatusDTO(Status.PRESENTATIONS_CLOSED, "Registration is closed.",
 		    contestStatus, false, false);
 
 	if (user == null)
