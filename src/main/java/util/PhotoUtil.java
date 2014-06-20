@@ -23,7 +23,7 @@ public class PhotoUtil {
 	out.close();
     }
 
-    public enum Singleton {
+    public enum ListToVote {
 
 	INSTANCE;
 

@@ -18,7 +18,7 @@ public class ContestManager implements IContestManager {
 	    HibernateUtil.commitTransaction();
 	    return contest;
 	} catch (HibernateException ex) {
-	    
+
 	    throw new HibernateException(ex.getCause());
 	}
     }
@@ -46,7 +46,5 @@ public class ContestManager implements IContestManager {
 	    System.err.println(ex.getMessage());
 	    throw new HibernateException(ex.getCause());
 	}
-
     }
-
 }

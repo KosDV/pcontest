@@ -48,4 +48,5 @@ public class VoteUtil {
 		+ individualLength + " Total Length");
 	return totalLength;
     }
+
 }

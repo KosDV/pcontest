@@ -1,6 +1,5 @@
 package rest.api;
 
-import hibernate.manager.ContestManager;
 import hibernate.manager.PictureManager;
 import hibernate.manager.UserManager;
 import hibernate.model.Contest;
@@ -19,6 +18,7 @@ import org.hibernate.HibernateException;
 import rest.model.PhotoDTO;
 import rest.model.RegisterDTO;
 import rest.model.VoteDTO;
+import util.ContestUtil;
 import util.DigestUtil;
 import util.PhotoUtil;
 import util.VoteUtil;
@@ -86,7 +86,7 @@ public class Queries {
 	return false;
     }
 
-    public Boolean checkUserHasPhotoByUserNif(String nif) {
+    public Boolean checkUserHasPhoto(String nif) {
 	UserManager usrM = new UserManager();
 	User user = usrM.findByUserNif(nif);
 	if (user.getImage() != null)
@@ -98,19 +98,34 @@ public class Queries {
 	return user.getVoted();
     }
 
-    public Boolean checkUserVotedByNif(String nif) {
+    public Boolean checkUserVoted(String nif) {
 	UserManager usrM = new UserManager();
 	User user = usrM.findByUserNif(nif);
 	return user.getVoted();
     }
 
+    public Boolean checkUserIsAdmin(User user) {
+	if (user.getIsAdmin())
+	    return true;
+	return false;
+    }
+
     public Integer checkContestStatus() {
-	ContestManager contestM = new ContestManager();
-	Contest contest = contestM.loadContest();
+	Contest contest = ContestUtil.Singleton.INSTANCE.get();
 	if (contest == null || contest.getContestStatus() == null)
 	    return Status.CONTEST_NOT_CREATED;
 	else
 	    return contest.getContestStatus();
+    }
+
+    public Boolean updateContestStatus(Integer newStatus) {
+	try {
+	    Contest contest = ContestUtil.Singleton.INSTANCE.get();
+	    ContestUtil.Singleton.INSTANCE.updateStatus(newStatus, contest);
+	    return true;
+	} catch (HibernateException ex) {
+	    return false;
+	}
     }
 
     private List<Photo> getShuffledPhotoList(Integer userId) {
@@ -155,19 +170,19 @@ public class Queries {
     }
 
     public List<PhotoDTO> getPhotosToVote(Integer userId) {
-	if (PhotoUtil.Singleton.INSTANCE.get(userId) == null) {
+	if (PhotoUtil.ListToVote.INSTANCE.get(userId) == null) {
 	    List<Photo> photosToAdd = getPercentagePhotoList(getShuffledPhotoList(userId));
 	    if (photosToAdd == null)
 		return null;
 	    List<PhotoDTO> sortedPhotoList = convertToDTO(photosToAdd);
-	    PhotoUtil.Singleton.INSTANCE.add(userId, sortedPhotoList);
+	    PhotoUtil.ListToVote.INSTANCE.add(userId, sortedPhotoList);
 	}
-	return PhotoUtil.Singleton.INSTANCE.get(userId);
+	return PhotoUtil.ListToVote.INSTANCE.get(userId);
     }
 
     public Boolean unlinkUserPhotosToVote(Integer userId) {
-	if (PhotoUtil.Singleton.INSTANCE.get(userId) != null) {
-	    PhotoUtil.Singleton.INSTANCE.remove(userId);
+	if (PhotoUtil.ListToVote.INSTANCE.get(userId) != null) {
+	    PhotoUtil.ListToVote.INSTANCE.remove(userId);
 	    return true;
 	}
 	return false;
@@ -235,7 +250,7 @@ public class Queries {
     }
 
     public Boolean checkUserGeneratePhotoList(Integer userId) {
-	if (PhotoUtil.Singleton.INSTANCE.get(userId) == null)
+	if (PhotoUtil.ListToVote.INSTANCE.get(userId) == null)
 	    return false;
 	return true;
 
