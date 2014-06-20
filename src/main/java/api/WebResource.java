@@ -26,15 +26,16 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.hibernate.HibernateException;
 
+import servers.conf.ServerConfigurator;
+import util.DigestUtil;
+import util.PhotoUtil;
 import api.model.ContestDTO;
 import api.model.PhotoDTO;
+import api.model.PhotosDTO;
 import api.model.RegisterDTO;
 import api.model.StatusDTO;
 import api.model.UserDTO;
 import api.model.VoteDTO;
-import servers.conf.ServerConfigurator;
-import util.DigestUtil;
-import util.PhotoUtil;
 
 @Path("/web")
 public class WebResource {
@@ -56,8 +57,8 @@ public class WebResource {
 	Queries query = new Queries();
 	Integer contestStatus = query.checkContestStatus();
 	if (contestStatus != Status.PRESENTATIONS_OPENED.intValue())
-	    return new StatusDTO(Status.PRESENTATIONS_CLOSED, "Registration is closed.",
-		    contestStatus, false, false);
+	    return new StatusDTO(Status.PRESENTATIONS_CLOSED,
+		    "Registration is closed.", contestStatus, false, false);
 
 	if (user == null)
 	    return new StatusDTO(Status.BAD_REQUEST, "Please, insert an user",
@@ -281,7 +282,16 @@ public class WebResource {
 		return new StatusDTO(Status.NOT_ENOUGH_PARTICIPANTS,
 			"There are not enough participants", contestStatus,
 			userHasPhoto, userVoted);
-	    return listPhotosToVote;
+
+	    Integer individualVoteLength = query
+		    .getIndividualVoteLength(listPhotosToVote.size());
+	    Integer totalVoteLength = query.getTotalVoteLength(
+		    listPhotosToVote.size(), individualVoteLength);
+
+	    PhotosDTO photos = new PhotosDTO(listPhotosToVote,
+		    individualVoteLength, totalVoteLength);
+
+	    return photos;
 
 	} catch (HibernateException e) {
 	    System.err.println(e.getMessage());

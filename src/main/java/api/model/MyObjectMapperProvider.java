@@ -71,7 +71,8 @@ public class MyObjectMapperProvider implements ContextResolver<ObjectMapper> {
 
 	if (type == RegisterDTO.class || type == StatusDTO.class
 		|| type == UserDTO.class || type == PhotoDTO.class
-		|| type == VoteDTO.class || type == ContestDTO.class) {
+		|| type == VoteDTO.class || type == ContestDTO.class
+		|| type == PhotosDTO.class) {
 	    return combinedObjectMapper;
 	} else {
 	    return defaultObjectMapper;

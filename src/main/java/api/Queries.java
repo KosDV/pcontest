@@ -255,4 +255,17 @@ public class Queries {
 	return true;
 
     }
+
+    public Integer getIndividualVoteLength(int numPhotos) {
+	if (numPhotos < 1)
+	    return -1;
+	return (int) (Math.log10(numPhotos) + 1);
+    }
+
+    public Integer getTotalVoteLength(int numPhotos, int individualLength) {
+	Integer totalLength = numPhotos * individualLength;
+	System.out.println("Num Photos: " + numPhotos + " Indidual Length: "
+		+ individualLength + " Total Length");
+	return totalLength;
+    }
 }

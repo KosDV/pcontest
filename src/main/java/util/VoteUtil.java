@@ -35,18 +35,4 @@ public class VoteUtil {
 	    voteMgr.deleteVote(vote);
 	}
     }
-
-    public Integer individualVoteLength(int numPhotos) {
-	if (numPhotos < 1)
-	    return -1;
-	return (int) (Math.log10(numPhotos) + 1);
-    }
-
-    public Integer totalVoteLength(int numPhotos, int individualLength) {
-	Integer totalLength = numPhotos * individualLength;
-	System.out.println("Num Photos: " + numPhotos + " Indidual Length: "
-		+ individualLength + " Total Length");
-	return totalLength;
-    }
-
 }
