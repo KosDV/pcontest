@@ -3,12 +3,16 @@ package hibernate.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,7 +23,7 @@ public class Contest implements Serializable {
 
     private static final long serialVersionUID = -5645445270624904864L;
     private Integer id;
-    private String results; // Probably we move this column into a new class.
+    private List<Results> results = new ArrayList<Results>(0);
     private Integer contestStatus;
     private Integer numVotes;
     private Integer numPhotos;
@@ -54,12 +58,12 @@ public class Contest implements Serializable {
 	this.contestStatus = contestStatus;
     }
 
-    @Column(name = "CONTEST_RESULTS")
-    public String getResults() {
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "contest")
+    public List<Results> getResults() {
 	return results;
     }
 
-    public void setResults(String results) {
+    public void setResults(List<Results> results) {
 	this.results = results;
     }
 
