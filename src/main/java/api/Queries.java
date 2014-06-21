@@ -7,6 +7,7 @@ import hibernate.model.Photo;
 import hibernate.model.User;
 import hibernate.model.Vote;
 
+import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,13 +16,14 @@ import java.util.Random;
 
 import org.hibernate.HibernateException;
 
+import util.ContestUtil;
+import util.DigestUtil;
+import util.PaillierUtil;
+import util.PhotoUtil;
+import util.VoteUtil;
 import api.model.PhotoDTO;
 import api.model.RegisterDTO;
 import api.model.VoteDTO;
-import util.ContestUtil;
-import util.DigestUtil;
-import util.PhotoUtil;
-import util.VoteUtil;
 
 public class Queries {
 
@@ -228,6 +230,15 @@ public class Queries {
 	}
     }
 
+    public Integer insertVote(String encryptedVote) {
+	try {
+	    Vote vote = new Vote(encryptedVote);
+	    return VoteUtil.Urn.INSTANCE.add(vote);
+	} catch (HibernateException ex) {
+	    return -1;
+	}
+    }
+
     public Boolean deleteVote(Integer voteId) {
 	try {
 	    Vote vote = VoteUtil.Urn.INSTANCE.get(voteId);
@@ -267,5 +278,32 @@ public class Queries {
 	System.out.println("Num Photos: " + numPhotos + " Indidual Length: "
 		+ individualLength + " Total Length");
 	return totalLength;
+    }
+
+    public String encryptVote(String vote) {
+	PaillierUtil paillier = new PaillierUtil();
+	return paillier.Encryption(new BigInteger(vote)).toString();
+    }
+
+    public List<Vote> getEncryptedVotes() {
+	try {
+	    return VoteUtil.Urn.INSTANCE.getAll();
+	} catch (HibernateException ex) {
+	    return null;
+	}
+    }
+
+    public String getSumDecryptedVotes(List<Vote> encryptedVotes) {
+	PaillierUtil paillier = new PaillierUtil();
+
+	BigInteger product = new BigInteger(encryptedVotes.get(0)
+		.getEncryptedVote());
+	for (int i = 1; i < encryptedVotes.size(); i++) {
+	    product = product.multiply(new BigInteger(encryptedVotes.get(i)
+		    .getEncryptedVote()));
+	}
+	product = product.mod(paillier.nsquare);
+
+	return paillier.Decryption(product).toString();
     }
 }
