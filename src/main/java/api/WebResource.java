@@ -3,6 +3,7 @@ package api;
 import hibernate.manager.UserManager;
 import hibernate.model.Photo;
 import hibernate.model.User;
+import hibernate.model.Vote;
 
 import java.io.File;
 import java.io.IOException;
@@ -377,8 +378,11 @@ public class WebResource {
 			Status.PHOTOS_UPLOADED_AND_USERS_ARE_DIFFERENT,
 			"Forbidden! There are a corruption case here.",
 			contestStatus, userHasPhoto, userVoted);
-
-	    Integer submittedVoteId = query.insertVote(voteDTO);
+	    // only for testing, in production votes should be encrypted by the client
+	    String encryptedVote = query
+		    .encryptVote(voteDTO.getVoteEncrypted());
+	    // in production use insertVote(VoteDTO voteDTO) instead insertVote(String vote)
+	    Integer submittedVoteId = query.insertVote(encryptedVote);
 	    if (submittedVoteId == -1)
 		return new StatusDTO(Status.VOTE_CANNOT_BE_SUBMITTED,
 			"Vote cannot be submitted.", contestStatus,
@@ -463,10 +467,13 @@ public class WebResource {
     @GET
     @Path("/contest")
     @Produces(MediaType.APPLICATION_JSON)
-    public StatusDTO StatusDTO(@QueryParam("nif") String nif,
+    public StatusDTO getResults(@QueryParam("nif") String nif,
 	    @QueryParam("pass") String password) {
 	Queries query = new Queries();
 	Integer contestStatus = query.checkContestStatus();
+	if (contestStatus != Status.VOTES_OPENED.intValue())
+	    return new StatusDTO(Status.VOTES_CLOSED, "Check contest state.",
+		    contestStatus, false, false);
 	try {
 	    if (!query.checkUserExist(nif)
 		    || !query.checkUserPassword(nif, password))
@@ -480,8 +487,17 @@ public class WebResource {
 			"Forbidden! User unauthorized.", contestStatus, false,
 			false);
 
-	    // TODO all
-	    return new StatusDTO(Status.OK, "Status updated succesfully",
+	    List<Vote> encryptedVotes = query.getEncryptedVotes();
+	    if (encryptedVotes.isEmpty())
+		return new StatusDTO(Status.BAD_REQUEST, "There are no votes.",
+			contestStatus, false, false);
+
+	    String votesDecrypted = query.getSumDecryptedVotes(encryptedVotes);
+	    System.out.println("votes Decripted: " + votesDecrypted);
+
+
+	    // TODO resto + cambiar estado del concurso al final.
+	    return new StatusDTO(Status.OK, "Method not finished yet",
 		    contestStatus, false, false);
 	} catch (HibernateException e) {
 	    System.err.println(e.getMessage());
