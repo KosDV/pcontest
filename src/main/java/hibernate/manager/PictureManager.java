@@ -5,7 +5,6 @@ import hibernate.model.User;
 import hibernate.specific.PictureDAO;
 import hibernate.specific.UserDAO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;

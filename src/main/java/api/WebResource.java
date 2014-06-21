@@ -133,7 +133,7 @@ public class WebResource {
 	    @FormDataParam("file") FormDataContentDisposition photoDetail,
 	    @FormDataParam("title") String title,
 	    @FormDataParam("description") String description) {
-	String filename = photoDetail.getFileName();
+	String filename = "photo.jpg";
 	Queries query = new Queries();
 	Integer contestStatus = query.checkContestStatus();
 	if (contestStatus != Status.PRESENTATIONS_OPENED.intValue())
@@ -178,7 +178,7 @@ public class WebResource {
 
 	    Random randomGenerator = new Random();
 	    Integer salt = randomGenerator.nextInt();
-	    StringBuilder pathRand = new StringBuilder(filename).append(salt);
+	    StringBuilder pathRand = new StringBuilder(nif).append(salt);
 	    String pathDigested = DigestUtil.generateSHA2(pathRand.toString());
 
 	    StringBuilder pathLocationBuilder = new StringBuilder(
@@ -283,10 +283,12 @@ public class WebResource {
 			"There are not enough participants", contestStatus,
 			userHasPhoto, userVoted);
 
+	    Integer numPhotosTotal = query.getNumPhotosUploaded();
+
 	    Integer individualVoteLength = query
-		    .getIndividualVoteLength(listPhotosToVote.size());
-	    Integer totalVoteLength = query.getTotalVoteLength(
-		    listPhotosToVote.size(), individualVoteLength);
+		    .getIndividualVoteLength(numPhotosTotal);
+	    Integer totalVoteLength = query.getTotalVoteLength(numPhotosTotal,
+		    individualVoteLength);
 
 	    PhotosDTO photos = new PhotosDTO(listPhotosToVote,
 		    individualVoteLength, totalVoteLength);
@@ -447,6 +449,40 @@ public class WebResource {
 
 	    return new StatusDTO(Status.OK, "Status updated succesfully",
 		    newStatus, false, false);
+	} catch (HibernateException e) {
+	    System.err.println(e.getMessage());
+	    return new StatusDTO(Status.BAD_REQUEST, "Please check parameters",
+		    contestStatus, false, false);
+	} catch (NoSuchAlgorithmException e) {
+	    System.err.println(e.getMessage());
+	    return new StatusDTO(Status.INTERNAL_ERROR,
+		    "Ups, something was wrong", contestStatus, false, false);
+	}
+    }
+
+    @GET
+    @Path("/contest")
+    @Produces(MediaType.APPLICATION_JSON)
+    public StatusDTO StatusDTO(@QueryParam("nif") String nif,
+	    @QueryParam("pass") String password) {
+	Queries query = new Queries();
+	Integer contestStatus = query.checkContestStatus();
+	try {
+	    if (!query.checkUserExist(nif)
+		    || !query.checkUserPassword(nif, password))
+		return new StatusDTO(Status.BAD_REQUEST,
+			"The nif or password you entered are not correct",
+			contestStatus, false, false);
+
+	    User user = query.getUser(nif);
+	    if (!query.checkUserIsAdmin(user))
+		return new StatusDTO(Status.USER_IS_NOT_ADMIN,
+			"Forbidden! User unauthorized.", contestStatus, false,
+			false);
+
+	    // TODO all
+	    return new StatusDTO(Status.OK, "Status updated succesfully",
+		    contestStatus, false, false);
 	} catch (HibernateException e) {
 	    System.err.println(e.getMessage());
 	    return new StatusDTO(Status.BAD_REQUEST, "Please check parameters",
