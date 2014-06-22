@@ -8,6 +8,7 @@ import hibernate.model.Vote;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,8 @@ import javax.ws.rs.core.MediaType;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.hibernate.HibernateException;
+
+import com.sun.corba.se.spi.activation.Server;
 
 import servers.conf.ServerConfigurator;
 import util.DigestUtil;
@@ -290,9 +293,10 @@ public class WebResource {
 		    .getIndividualVoteLength(numPhotosTotal);
 	    Integer totalVoteLength = query.getTotalVoteLength(numPhotosTotal,
 		    individualVoteLength);
-
+	    BigInteger n = new BigInteger(ServerConfigurator.getN());
+	    BigInteger g = new BigInteger(ServerConfigurator.getG());
 	    PhotosDTO photos = new PhotosDTO(listPhotosToVote,
-		    individualVoteLength, totalVoteLength);
+		    individualVoteLength, totalVoteLength, n, g);
 
 	    return photos;
 
@@ -378,10 +382,12 @@ public class WebResource {
 			Status.PHOTOS_UPLOADED_AND_USERS_ARE_DIFFERENT,
 			"Forbidden! There are a corruption case here.",
 			contestStatus, userHasPhoto, userVoted);
-	    // only for testing, in production votes should be encrypted by the client
+	    // only for testing, in production votes should be encrypted by the
+	    // client
 	    String encryptedVote = query
 		    .encryptVote(voteDTO.getVoteEncrypted());
-	    // in production use insertVote(VoteDTO voteDTO) instead insertVote(String vote)
+	    // in production use insertVote(VoteDTO voteDTO) instead
+	    // insertVote(String vote)
 	    Integer submittedVoteId = query.insertVote(encryptedVote);
 	    if (submittedVoteId == -1)
 		return new StatusDTO(Status.VOTE_CANNOT_BE_SUBMITTED,
@@ -494,7 +500,6 @@ public class WebResource {
 
 	    String votesDecrypted = query.getSumDecryptedVotes(encryptedVotes);
 	    System.out.println("votes Decripted: " + votesDecrypted);
-
 
 	    // TODO resto + cambiar estado del concurso al final.
 	    return new StatusDTO(Status.OK, "Method not finished yet",

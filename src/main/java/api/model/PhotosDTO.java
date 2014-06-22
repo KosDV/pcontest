@@ -1,5 +1,6 @@
 package api.model;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -14,6 +15,12 @@ public class PhotosDTO {
     @JsonProperty("total-vote-length")
     Integer totalVoteLength;
 
+    @JsonProperty("n")
+    BigInteger n;
+
+    @JsonProperty("g")
+    BigInteger g;
+
     @JsonProperty("listPhotosToVote")
     List<PhotoDTO> listPhotosToVote;
 
@@ -26,6 +33,16 @@ public class PhotosDTO {
 	this.listPhotosToVote = listPhotosToVote;
 	this.individualVoteLength = individualVoteLength;
 	this.totalVoteLength = totalVoteLength;
+    }
+
+    public PhotosDTO(List<PhotoDTO> listPhotosToVote,
+	    Integer individualVoteLength, Integer totalVoteLength,
+	    BigInteger n, BigInteger g) {
+	this.listPhotosToVote = listPhotosToVote;
+	this.individualVoteLength = individualVoteLength;
+	this.totalVoteLength = totalVoteLength;
+	this.n = n;
+	this.g = g;
     }
 
     public Integer getIndividualVoteLength() {
@@ -50,5 +67,21 @@ public class PhotosDTO {
 
     public void setListPhotosToVote(List<PhotoDTO> listPhotosToVote) {
 	this.listPhotosToVote = listPhotosToVote;
+    }
+
+    public BigInteger getN() {
+	return n;
+    }
+
+    public void setN(BigInteger n) {
+	this.n = n;
+    }
+
+    public BigInteger getG() {
+	return g;
+    }
+
+    public void setG(BigInteger g) {
+	this.g = g;
     }
 }
