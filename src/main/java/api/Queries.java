@@ -4,6 +4,7 @@ import hibernate.manager.PictureManager;
 import hibernate.manager.UserManager;
 import hibernate.model.Contest;
 import hibernate.model.Photo;
+import hibernate.model.Results;
 import hibernate.model.User;
 import hibernate.model.Vote;
 
@@ -28,7 +29,7 @@ import api.model.VoteDTO;
 public class Queries {
 
     public void registerUser(RegisterDTO userBean) throws HibernateException,
-	    NoSuchAlgorithmException {
+    NoSuchAlgorithmException {
 	Random randomGenerator = new Random();
 	Integer randInt = randomGenerator.nextInt();
 
@@ -68,7 +69,7 @@ public class Queries {
     }
 
     public void insertPhoto(Photo photo, User user) throws HibernateException,
-	    NoSuchAlgorithmException {
+    NoSuchAlgorithmException {
 
 	PictureManager pictureManager = new PictureManager();
 	pictureManager.saveNewPicture(photo, user);
@@ -123,7 +124,8 @@ public class Queries {
     public Boolean updateContestStatus(Integer newStatus) {
 	try {
 	    Contest contest = ContestUtil.Singleton.INSTANCE.get();
-	    ContestUtil.Singleton.INSTANCE.updateStatus(newStatus, contest);
+	    ContestUtil.Singleton.INSTANCE.updateContestStatus(newStatus,
+		    contest);
 	    return true;
 	} catch (HibernateException ex) {
 	    return false;
@@ -276,7 +278,7 @@ public class Queries {
     public Integer getTotalVoteLength(int numPhotos, int individualLength) {
 	Integer totalLength = numPhotos * individualLength;
 	System.out.println("Num Photos: " + numPhotos + " Indidual Length: "
-		+ individualLength + " Total Length");
+		+ individualLength + " Total Length: "+totalLength);
 	return totalLength;
     }
 
@@ -295,7 +297,7 @@ public class Queries {
 
     public String getSumDecryptedVotes(List<Vote> encryptedVotes) {
 	PaillierUtil paillier = new PaillierUtil();
-
+	System.out.println("EncryptedVotes size: " + encryptedVotes.size());
 	BigInteger product = new BigInteger(encryptedVotes.get(0)
 		.getEncryptedVote());
 	for (int i = 1; i < encryptedVotes.size(); i++) {
@@ -305,5 +307,50 @@ public class Queries {
 	product = product.mod(paillier.nsquare);
 
 	return paillier.Decryption(product).toString();
+    }
+
+    public List<Results> insertResults(String decryptedVotes,
+	    Integer individualLength, Integer totalLength) {
+
+	System.out.println("Decrypted votes length: " + decryptedVotes.length()
+		+ " totalLength: " + totalLength);
+
+	Contest contest = ContestUtil.Singleton.INSTANCE.get();
+	List<Results> results = new ArrayList<Results>();
+	Results result;
+	int start = 0;
+	int end = individualLength;
+	int photoId = 1;
+	while (true) {
+	    System.out.println("start=>" + start + "; end=>" + end
+		    + " photoId=>" + photoId);
+	    System.out.println("photoId: " + photoId + " votes: "
+		    + new Integer(decryptedVotes.substring(start, end)));
+	    result = new Results(photoId, new Integer(decryptedVotes.substring(
+		    start, end)), contest);
+	    try {
+		ContestUtil.Singleton.INSTANCE.addResult(result);
+	    } catch (HibernateException ex) {
+		return null;
+	    }
+	    results.add(result);
+	    System.out.println("results size=>" + results.size());
+	    start = start + individualLength;
+	    end = end + individualLength;
+	    photoId++;
+	    if (end == totalLength)
+		break;
+	}
+	return results;
+    }
+
+    public Boolean closeContest(Integer census, Integer numPhotos, Integer numVotes, List<Results> results){
+	try{
+	    Contest contest = ContestUtil.Singleton.INSTANCE.get();
+	    ContestUtil.Singleton.INSTANCE.closeContest(census, numPhotos, numVotes, results, contest);
+	    return true;
+	} catch (HibernateException ex) {
+	    return false;
+	}
     }
 }

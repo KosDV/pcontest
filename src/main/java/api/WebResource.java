@@ -2,6 +2,7 @@ package api;
 
 import hibernate.manager.UserManager;
 import hibernate.model.Photo;
+import hibernate.model.Results;
 import hibernate.model.User;
 import hibernate.model.Vote;
 
@@ -27,8 +28,6 @@ import javax.ws.rs.core.MediaType;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.hibernate.HibernateException;
-
-import com.sun.corba.se.spi.activation.Server;
 
 import servers.conf.ServerConfigurator;
 import util.DigestUtil;
@@ -498,10 +497,42 @@ public class WebResource {
 		return new StatusDTO(Status.BAD_REQUEST, "There are no votes.",
 			contestStatus, false, false);
 
+	    Integer census = query.getNumUsersUploadImage();
+
+	    Integer numVotes = encryptedVotes.size();
+
+	    if (numVotes > census)
+		return new StatusDTO(Status.VOTES_MORE_THAN_CENSUS,
+			"There are more votes than participants!.",
+			contestStatus, false, false);
+
 	    String votesDecrypted = query.getSumDecryptedVotes(encryptedVotes);
 	    System.out.println("votes Decripted: " + votesDecrypted);
 
-	    // TODO resto + cambiar estado del concurso al final.
+	    Integer numPhotos = query.getNumPhotosUploaded();
+
+	    Integer individualLength = query.getIndividualVoteLength(numPhotos);
+
+	    Integer totalLength = query.getTotalVoteLength(numPhotos,
+		    individualLength);
+
+	    if (votesDecrypted.length() != totalLength)
+		return new StatusDTO(Status.VOTES_DECRYPTED_WRONG_SIZE,
+			"There are a problem with submitted votes",
+			contestStatus, false, false);
+
+	    List<Results> results = query.insertResults(votesDecrypted,
+		    individualLength, totalLength);
+	    if (results.isEmpty())
+		return new StatusDTO(Status.CANNOT_INSERT_RESULTS,
+			"Results cannot be inserted successfully",
+			contestStatus, false, false);
+
+	    if (!query.closeContest(census, numPhotos, numVotes, results))
+		return new StatusDTO(Status.CANNOT_CLOSE_CONTEST,
+			"Contest cannot be closed", contestStatus, false, false);
+
+	    contestStatus = query.checkContestStatus();
 	    return new StatusDTO(Status.OK, "Method not finished yet",
 		    contestStatus, false, false);
 	} catch (HibernateException e) {

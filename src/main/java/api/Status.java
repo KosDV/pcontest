@@ -22,6 +22,9 @@ public class Status {
     public static Integer USER_IS_NOT_ADMIN = 611;
     public static Integer STATUS_COULD_NOT_BE_UPDATED = 612;
     public static Integer STATUS_NOT_CORRECT = 613;
+    public static Integer CANNOT_INSERT_RESULTS = 614;
+    public static Integer CANNOT_CLOSE_CONTEST = 615;
+    public static Integer VOTES_MORE_THAN_CENSUS = 616;
     /* Photos */
     public static Integer TITLE_REQUIRED = 701;
     public static Integer DESCRIPTION_REQUIRED = 702;
@@ -32,5 +35,5 @@ public class Status {
     /* Votes */
     public static Integer VOTE_CANNOT_BE_SUBMITTED = 800;
     public static Integer VOTE_WITHOUT_PHOTO_LIST = 801;
-
+    public static Integer VOTES_DECRYPTED_WRONG_SIZE = 802;
 }

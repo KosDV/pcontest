@@ -29,6 +29,7 @@ public class Results implements Serializable {
     public Results(Integer photoId, Integer votes, Contest contest) {
 	this.photoId = photoId;
 	this.votes = votes;
+	this.contest = contest;
     }
 
     @Id
