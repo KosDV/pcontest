@@ -98,7 +98,7 @@ public class WebResource {
 	try {
 	    if (!query.checkUserExist(nif)
 		    || !query.checkUserPassword(nif, password))
-		return new StatusDTO(Status.BAD_REQUEST,
+		return new StatusDTO(Status.UNAUTHORIZED,
 			"The nif or password you entered are not correct",
 			contestStatus, false, false);
 
@@ -146,7 +146,7 @@ public class WebResource {
 	try {
 	    if (!query.checkUserExist(nif)
 		    || !query.checkUserPassword(nif, password))
-		return new StatusDTO(Status.BAD_REQUEST,
+		return new StatusDTO(Status.UNAUTHORIZED,
 			"The nif or password you entered are not correct",
 			contestStatus, false, false);
 
@@ -155,7 +155,7 @@ public class WebResource {
 	    Boolean userVoted = query.checkUserVoted(user);
 
 	    if (userHasPhoto)
-		return new StatusDTO(Status.USER_ALLREADY_HAS_IMAGE,
+		return new StatusDTO(Status.USER_HAS_ALLREADY_UPLOADED_PHOTO,
 			"Forbidden! This user allready has an image.",
 			contestStatus, userHasPhoto, userVoted);
 
@@ -256,18 +256,13 @@ public class WebResource {
 	try {
 	    if (query.checkUserExist(nif) == false
 		    || query.checkUserPassword(nif, password) == false)
-		return new StatusDTO(Status.BAD_REQUEST,
+		return new StatusDTO(Status.UNAUTHORIZED,
 			"The nif or password you entered are not correct",
 			contestStatus, false, false);
 
 	    User user = query.getUser(nif);
 	    Boolean userHasPhoto = query.checkUserHasPhoto(user);
 	    Boolean userVoted = query.checkUserVoted(user);
-	    if (!query.checkUserExist(nif)
-		    || !query.checkUserPassword(nif, password))
-		return new StatusDTO(Status.BAD_REQUEST,
-			"The nif or password you entered are not correct",
-			contestStatus, false, false);
 
 	    if (!userHasPhoto)
 		return new StatusDTO(Status.USER_HAS_NOT_UPLOADED_PHOTO,
@@ -321,7 +316,7 @@ public class WebResource {
 	try {
 	    if (!query.checkUserExist(nif)
 		    || !query.checkUserPassword(nif, password))
-		return new StatusDTO(Status.BAD_REQUEST,
+		return new StatusDTO(Status.UNAUTHORIZED,
 			"The nif or password you entered are not correct",
 			contestStatus, false, false);
 	    User user = query.getUser(nif);
@@ -353,7 +348,7 @@ public class WebResource {
 	try {
 	    if (!query.checkUserExist(nif)
 		    || !query.checkUserPassword(nif, password))
-		return new StatusDTO(Status.BAD_REQUEST,
+		return new StatusDTO(Status.UNAUTHORIZED,
 			"The nif or password you entered are not correct",
 			contestStatus, false, false);
 
@@ -372,7 +367,7 @@ public class WebResource {
 			contestStatus, userHasPhoto, userVoted);
 
 	    if (!query.checkUserGeneratePhotoList(user.getId()))
-		return new StatusDTO(Status.VOTE_WITHOUT_PHOTO_LIST,
+		return new StatusDTO(Status.USER_TRY_VOTE_PHOTO_NOT_LISTED,
 			"Forbidden! This user want to vote illegaly.",
 			contestStatus, userHasPhoto, userVoted);
 
@@ -433,7 +428,7 @@ public class WebResource {
 	try {
 	    if (!query.checkUserExist(nif)
 		    || !query.checkUserPassword(nif, password))
-		return new StatusDTO(Status.BAD_REQUEST,
+		return new StatusDTO(Status.UNAUTHORIZED,
 			"The nif or password you entered are not correct",
 			contestStatus, false, false);
 
@@ -469,7 +464,7 @@ public class WebResource {
 	}
     }
 
-    @GET
+    @POST
     @Path("/contest")
     @Produces(MediaType.APPLICATION_JSON)
     public StatusDTO closeContest(@QueryParam("nif") String nif,
@@ -482,7 +477,7 @@ public class WebResource {
 	try {
 	    if (!query.checkUserExist(nif)
 		    || !query.checkUserPassword(nif, password))
-		return new StatusDTO(Status.BAD_REQUEST,
+		return new StatusDTO(Status.UNAUTHORIZED,
 			"The nif or password you entered are not correct",
 			contestStatus, false, false);
 
@@ -502,7 +497,7 @@ public class WebResource {
 	    Integer numVotes = encryptedVotes.size();
 
 	    if (numVotes > census)
-		return new StatusDTO(Status.VOTES_MORE_THAN_CENSUS,
+		return new StatusDTO(Status.MORE_VOTES_THAN_CENSUS,
 			"There are more votes than participants!.",
 			contestStatus, false, false);
 

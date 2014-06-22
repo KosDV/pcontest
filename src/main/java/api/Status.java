@@ -24,16 +24,16 @@ public class Status {
     public static Integer STATUS_NOT_CORRECT = 613;
     public static Integer CANNOT_INSERT_RESULTS = 614;
     public static Integer CANNOT_CLOSE_CONTEST = 615;
-    public static Integer VOTES_MORE_THAN_CENSUS = 616;
+    public static Integer MORE_VOTES_THAN_CENSUS = 616;
     /* Photos */
     public static Integer TITLE_REQUIRED = 701;
     public static Integer DESCRIPTION_REQUIRED = 702;
     public static Integer FILENAME_REQUIRED = 703;
-    public static Integer USER_ALLREADY_HAS_IMAGE = 704;
+    public static Integer USER_HAS_ALLREADY_UPLOADED_PHOTO = 704;
     public static Integer USER_HAS_NOT_UPLOADED_PHOTO = 705;
     public static Integer PHOTO_CANNOT_BE_UPLOADED = 706;
     /* Votes */
     public static Integer VOTE_CANNOT_BE_SUBMITTED = 800;
-    public static Integer VOTE_WITHOUT_PHOTO_LIST = 801;
+    public static Integer USER_TRY_VOTE_PHOTO_NOT_LISTED = 801;
     public static Integer VOTES_DECRYPTED_WRONG_SIZE = 802;
 }
