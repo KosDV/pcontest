@@ -30,9 +30,9 @@ $('#upload').submit(function(e) {
 	$.ajax({
 		url : formUrl,
 		type : 'POST',
-		data : formData,
-		mimeType : "multipart/form-data",
-		contentType : false,
+		data : formData, // Data to be sent in the body of the request for POST requests.
+		dataType: "json", // Specifies the type of data expected in the response.
+		contentType : false, // Specifies the HTTP Content-Type header for the request.
 		cache : false,
 		processData : false,
 		crossDomain : true,
@@ -56,7 +56,7 @@ function callbackLoad(data, status, jqxhr) {
 	var msg = JSON.stringify(data.status.message);
 	var photo = JSON.stringify(data.status.photo);
 
-	alert(code + ", " + msg + ", " + photo);
+	alert("WOLOLO: " + code + ", " + msg + ", " + photo);
 
 	window.location.replace("information.html");
 }
