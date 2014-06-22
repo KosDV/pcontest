@@ -34,15 +34,14 @@ $('#upload').submit(function(e) {
 		contentType : false,
 		cache : false,
 		processData : false,
-		success : function(data, textStatus, jqXHR) {
+		success : function(data, status, jqxhr) {
+			callbackLoad(data, status, jqxhr);
 		},
-		error : function(jqXHR, textStatus, errorThrown) {
+		error : function(jqXHR, options, error) {
+			callbackLoadError(jqXHR, options, error);
 		}
 	});
-	e.preventDefault();
-	e.unbind();
 });
-$('#upload').submit();
 
 function callbackLoadError(jqXHR, options, error) {
 	alert("Connection to the server failed");

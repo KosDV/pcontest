@@ -19,8 +19,6 @@ function callback(data, status, jqxhr) {
 	// var photo = JSON.stringify(data.status.photo);
 	// var msg = JSON.stringify(data.status.message);
 
-	alert(data.title);
-
 	loadPictures();
 }
 
@@ -46,3 +44,15 @@ function loadPictures() {
 												+ '</b><input type="checkbox" name="input"></p></h5></div>');
 					});
 }
+
+// LOG OUT
+$('#log_out').click(function(e) {
+	e.preventDefault();
+	$.cookie('nif', 'undefined', -1);
+	$.cookie('password', 'undefined', -1);
+	var nif = $.cookie('nif');
+	var pass = $.cookie('password');
+
+	alert(nif + ", " + pass);
+	window.location.href = "index.html";
+});

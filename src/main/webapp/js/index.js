@@ -22,15 +22,19 @@ function callbackLogUser(data, status, jqxhr) {
 	var photo = JSON.stringify(data.status.photo);
 	var msg = JSON.stringify(data.status.message);
 
-	alert("esta al index JS");
-
 	if (code == 200) {
-		if (!eval(photo)) {
-			alert("Please, upload a picture first");
-			window.location.replace("load.html");
-		} else {
-			alert("You have already uploaded a picture");
-			window.location.replace("homepage.html");
+		if (contestStatus == 601) {
+			alert("PRESENTATIONS_OPENED");
+			if (!eval(photo)) {
+				alert("Please, upload a picture first");
+				window.location.replace("load.html");
+			} else {
+				alert(contestStatus);
+				alert("You have already uploaded a picture");
+				displayInformation(contestStatus);
+				window.location.replace("information.html");
+				
+			}
 		}
 	} else {
 		alert("Log in msg: " + msg);
