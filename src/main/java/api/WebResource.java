@@ -325,7 +325,7 @@ public class WebResource {
 			"This user has not upload an image.", contestStatus,
 			false, query.checkUserVoted(user));
 
-	    return new PhotoDTO(user.getImage());
+	    return new PhotoDTO(user.getPhotos().get(0));
 
 	} catch (NoSuchAlgorithmException e) {
 	    System.err.println(e.getMessage());

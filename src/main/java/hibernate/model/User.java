@@ -3,14 +3,15 @@ package hibernate.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
@@ -26,7 +27,7 @@ public class User implements Serializable {
     private String password;
     private Integer salt;
     private String nif;
-    private Photo image;
+    private List<Photo> photos = new ArrayList<Photo>();
     private Boolean voted;
     private Boolean isAdmin;
 
@@ -130,13 +131,13 @@ public class User implements Serializable {
 	this.isAdmin = isAdmin;
     }
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
-    public Photo getImage() {
-	return image;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    public List<Photo> getPhotos() {
+	return photos;
     }
 
-    public void setImage(Photo image) {
-	this.image = image;
+    public void setPhotos(List<Photo> photos) {
+	this.photos = photos;
     }
 
     @Column(name = "SALT")

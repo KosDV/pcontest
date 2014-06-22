@@ -5,6 +5,7 @@ import hibernate.model.User;
 import hibernate.specific.PictureDAO;
 import hibernate.specific.UserDAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -28,11 +29,15 @@ public class PictureManager implements IPictureManager {
 	}
     }
 
-    public void saveNewPicture(Photo pic, User user) {
+    public void saveNewPicture(Photo photo, User user) {
 	try {
 	    HibernateUtil.beginTransaction();
-	    user.setImage(pic);
-	    pic.setUser(user);
+	    List<Photo> photos = new ArrayList<Photo>(0);
+	    photos.add(photo);
+	    user.setPhotos(photos);
+
+	    photo.setUser(user);
+	    pictureDAO.save(photo);
 	    userDAO.update(user);
 	    HibernateUtil.commitTransaction();
 	} catch (HibernateException ex) {

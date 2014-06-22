@@ -29,7 +29,7 @@ import api.model.VoteDTO;
 public class Queries {
 
     public void registerUser(RegisterDTO userBean) throws HibernateException,
-    NoSuchAlgorithmException {
+	    NoSuchAlgorithmException {
 	Random randomGenerator = new Random();
 	Integer randInt = randomGenerator.nextInt();
 
@@ -69,7 +69,7 @@ public class Queries {
     }
 
     public void insertPhoto(Photo photo, User user) throws HibernateException,
-    NoSuchAlgorithmException {
+	    NoSuchAlgorithmException {
 
 	PictureManager pictureManager = new PictureManager();
 	pictureManager.saveNewPicture(photo, user);
@@ -84,7 +84,7 @@ public class Queries {
     }
 
     public Boolean checkUserHasPhoto(User user) {
-	if (user.getImage() != null)
+	if (user.getPhotos().size() != 0)
 	    return true;
 	return false;
     }
@@ -92,7 +92,7 @@ public class Queries {
     public Boolean checkUserHasPhoto(String nif) {
 	UserManager usrM = new UserManager();
 	User user = usrM.findByUserNif(nif);
-	if (user.getImage() != null)
+	if (user.getPhotos().size() != 0)
 	    return true;
 	return false;
     }
@@ -137,7 +137,7 @@ public class Queries {
 	List<Photo> allPhotos = picM.loadAllPictures();
 
 	for (int i = 0; i < allPhotos.size(); i++) {
-	    if (allPhotos.get(i).getId() == userId)
+	    if (allPhotos.get(i).getUser().getId() == userId)
 		allPhotos.remove(i);
 	}
 
@@ -205,7 +205,7 @@ public class Queries {
 	List<User> userList = usrM.loadAllUsers();
 	int count = 0;
 	for (int i = 0; i < userList.size(); i++) {
-	    if (userList.get(i).getImage() != null)
+	    if (userList.get(i).getPhotos().size() != 0)
 		count++;
 	}
 	return count;
@@ -278,7 +278,7 @@ public class Queries {
     public Integer getTotalVoteLength(int numPhotos, int individualLength) {
 	Integer totalLength = numPhotos * individualLength;
 	System.out.println("Num Photos: " + numPhotos + " Indidual Length: "
-		+ individualLength + " Total Length: "+totalLength);
+		+ individualLength + " Total Length: " + totalLength);
 	return totalLength;
     }
 
@@ -338,16 +338,18 @@ public class Queries {
 	    start = start + individualLength;
 	    end = end + individualLength;
 	    photoId++;
-	    if (end == totalLength)
+	    if (end > totalLength)
 		break;
 	}
 	return results;
     }
 
-    public Boolean closeContest(Integer census, Integer numPhotos, Integer numVotes, List<Results> results){
-	try{
+    public Boolean closeContest(Integer census, Integer numPhotos,
+	    Integer numVotes, List<Results> results) {
+	try {
 	    Contest contest = ContestUtil.Singleton.INSTANCE.get();
-	    ContestUtil.Singleton.INSTANCE.closeContest(census, numPhotos, numVotes, results, contest);
+	    ContestUtil.Singleton.INSTANCE.closeContest(census, numPhotos,
+		    numVotes, results, contest);
 	    return true;
 	} catch (HibernateException ex) {
 	    return false;
