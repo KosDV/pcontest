@@ -98,22 +98,33 @@ function callbackRegUser(data, status, jqxhr) {
 	var photo = JSON.stringify(data.status.photo);
 	var msg = JSON.stringify(data.status.message);
 	var contestStatus = JSON.stringify(data.status.contest);
-	alert(code);
+
+	$.cookie('contestStatus', contestStatus);
 
 	if (code == 200) {
-		if (!eval(photo)) {
-			alert("Please, upload a picture first");
-			window.location.replace("load.html");
-		} else {
-			alert("You have already uploaded a picture");
-			window.location.replace("homepage.html");
+		if (contestStatus == 601) {
+			alert("PRESENTATIONS_OPENED");
+			if (!eval(photo)) {
+				alert("Please, upload a picture first");
+				window.location.replace("load.html");
+			} else {
+				alert("You have already uploaded a picture");
+				window.location.replace("information.html");
+			}
+		} else if (contestStatus == 602) {
+			alert("VOTES_OPENED");
+			if (!eval(photo)) {
+				alert("You cannot upload a picture. Presentations period is closed.");
+				contestStatus = 900;
+				$.cookie('contestStatus', contestStatus);
+				window.location.replace("information.html");
+			} else {
+				alert("You have already uploaded a picture. Time to vote!");
+				window.location.replace("homepage.html");
+			}
 		}
 	} else {
-		if (code == 608) {
-			alert("Signup msg: " + msg);
-			displayInformation(contestStatus);
-			window.location.replace("information.html");
-		}
+		alert("Log in msg: " + msg);
 	}
 }
 

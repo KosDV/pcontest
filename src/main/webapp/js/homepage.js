@@ -54,12 +54,9 @@ $('#log_out').click(function(e) {
 	var nif = $.cookie('nif');
 	var pass = $.cookie('password');
 
-	alert(nif + ", " + pass);
 	window.location.href = "index.html";
 });
 
 function getImages() {
-	
-	
 	
 }

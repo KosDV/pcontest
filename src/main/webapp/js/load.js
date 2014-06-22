@@ -30,9 +30,12 @@ $('#upload').submit(function(e) {
 	$.ajax({
 		url : formUrl,
 		type : 'POST',
-		data : formData, // Data to be sent in the body of the request for POST requests.
-		dataType: "json", // Specifies the type of data expected in the response.
-		contentType : false, // Specifies the HTTP Content-Type header for the request.
+		data : formData, // Data to be sent in the body of the request for
+							// POST requests.
+		dataType : "json", // Specifies the type of data expected in the
+							// response.
+		contentType : false, // Specifies the HTTP Content-Type header for
+								// the request.
 		cache : false,
 		processData : false,
 		crossDomain : true,
@@ -60,3 +63,15 @@ function callbackLoad(data, status, jqxhr) {
 
 	window.location.replace("information.html");
 }
+
+// LOG OUT
+$('#log_out').click(function(e) {
+	e.preventDefault();
+	$.cookie('nif', 'undefined', -1);
+	$.cookie('password', 'undefined', -1);
+	var nif = $.cookie('nif');
+	var pass = $.cookie('password');
+
+	alert(nif + ", " + pass);
+	window.location.href = "index.html";
+});

@@ -22,6 +22,9 @@ function callbackLogUser(data, status, jqxhr) {
 	var photo = JSON.stringify(data.status.photo);
 	var msg = JSON.stringify(data.status.message);
 
+	alert(contestStatus);
+	$.cookie('contestStatus', contestStatus);
+
 	if (code == 200) {
 		if (contestStatus == 601) {
 			alert("PRESENTATIONS_OPENED");
@@ -29,11 +32,19 @@ function callbackLogUser(data, status, jqxhr) {
 				alert("Please, upload a picture first");
 				window.location.replace("load.html");
 			} else {
-				alert(contestStatus);
 				alert("You have already uploaded a picture");
-				displayInformation(contestStatus);
 				window.location.replace("information.html");
-				
+			}
+		} else if (contestStatus == 602) {
+			alert("VOTES_OPENED");
+			if (!eval(photo)) {
+				alert("You cannot upload a picture. Presentations period is closed.");
+				contestStatus = 900;
+				$.cookie('contestStatus', contestStatus);
+				window.location.replace("information.html");
+			} else {
+				alert("You have already uploaded a picture. Time to vote!");
+				window.location.replace("homepage.html");
 			}
 		}
 	} else {

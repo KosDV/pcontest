@@ -12,11 +12,31 @@
 <link href="/css/box.css" rel="stylesheet">
 </head>
 <body>
+	<!--------------------- NAVIGATION BAR STARTS --------------------->
+	<nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="">pContest</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a id="log_out" href=""><span
+							class="glyphicon glyphicon-off"></span></a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 	<!--------------------- PAGE CONTENT --------------------->
 	<div id="fullscreen_bg" class="fullscreen_bg" />
 	<div class="container">
 		<div class="row">
-			<br> <br>
+			<br> <br> <br> <br>
 			<div class="col-xs-6 col-sm-4">
 				<div class="box"></div>
 				<div class="info">
@@ -32,17 +52,14 @@
 					<h3>
 						<center>pContest Information</center>
 					</h3>
-					<p align="justify" id="user_information">Si quieres transformar una rejilla de anchura fija en una
-						rejilla de anchura variable que ocupa toda la anchura del
-						navegador, reemplaza la clase CSS .container por .container-fluid
-						en el elemento que encierra a todos los demás elementos de la
-						rejilla:</p>
-					<button type="button" class="btn btn-default center-block">Normal</button>
+					<p align="center" id="user_information"></p>
+					<br>
+					<button type="button" id="info_btn"
+						class="btn btn-default center-block">Go!</button>
 				</div>
 			</div>
 		</div>
 	</div>
-
 
 	<!--------------------- FOOTER --------------------->
 	<footer class="navbar-default navbar-fixed-bottom">
@@ -55,5 +72,6 @@
 	<script
 		src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 	<script src="js/jquery.cookie.js"></script>
+	<script src="js/information.js"></script>
 </body>
 </html>
