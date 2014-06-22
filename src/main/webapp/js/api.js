@@ -82,10 +82,10 @@ function getPictures(nif, password, callback, callbackError) {
 		},
 		crossDomain : true,
 		success : function(data, status, jqxhr) {
-			callback(data, status, jqxhr);
+			callbackGetPhotos(data, status, jqxhr);
 		},
 		error : function(jqXHR, options, error) {
-			callbackError(jqXHR, options, error);
+			callbackErrorGetPhotos(jqXHR, options, error);
 		}
 	});
 

@@ -6,11 +6,11 @@ $(document).ready(function() {
 	getPictures(nif, password, callback, callbackError);
 });
 
-function callbackError(jqXHR, options, error) {
+function callbackErrorGetPhotos(jqXHR, options, error) {
 	alert("Connection to the server failed");
 }
 
-function callback(data, status, jqxhr) {
+function callbackGetPhotos(data, status, jqxhr) {
 	alert("Connection OK");
 	alert("Està al homepage js");
 
@@ -29,7 +29,8 @@ function loadPictures() {
 		'image2' : 'assets/sampleImg/4.jpg',
 		'image3' : 'assets/sampleImg/2.jpg'
 	};
-	var title = 'hola ';
+	var title = 'hola 
+		';
 
 	$
 			.each(
@@ -56,3 +57,9 @@ $('#log_out').click(function(e) {
 	alert(nif + ", " + pass);
 	window.location.href = "index.html";
 });
+
+function getImages() {
+	
+	
+	
+}

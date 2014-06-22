@@ -97,7 +97,9 @@ function callbackRegUser(data, status, jqxhr) {
 	var code = JSON.stringify(data.status.code);
 	var photo = JSON.stringify(data.status.photo);
 	var msg = JSON.stringify(data.status.message);
-	alert(photo + eval(photo));
+	var contestStatus = JSON.stringify(data.status.contest);
+	alert(code);
+
 	if (code == 200) {
 		if (!eval(photo)) {
 			alert("Please, upload a picture first");
@@ -107,7 +109,11 @@ function callbackRegUser(data, status, jqxhr) {
 			window.location.replace("homepage.html");
 		}
 	} else {
-		alert("Signup msg: " + msg);
+		if (code == 608) {
+			alert("Signup msg: " + msg);
+			displayInformation(contestStatus);
+			window.location.replace("information.html");
+		}
 	}
 }
 

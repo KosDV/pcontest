@@ -26,6 +26,7 @@ $('#upload').submit(function(e) {
 	var formUrl = formObj.attr("action");
 	var formData = new FormData(this);
 
+	$.support.cors = true
 	$.ajax({
 		url : formUrl,
 		type : 'POST',
@@ -34,6 +35,7 @@ $('#upload').submit(function(e) {
 		contentType : false,
 		cache : false,
 		processData : false,
+		crossDomain : true,
 		success : function(data, status, jqxhr) {
 			callbackLoad(data, status, jqxhr);
 		},
@@ -49,6 +51,12 @@ function callbackLoadError(jqXHR, options, error) {
 
 function callbackLoad(data, status, jqxhr) {
 	alert("Connection OK");
-	alert("Està al load js");
-	window.location.replace("main.html");
+
+	var code = JSON.stringify(data.status.code);
+	var msg = JSON.stringify(data.status.message);
+	var photo = JSON.stringify(data.status.photo);
+
+	alert(code + ", " + msg + ", " + photo);
+
+	window.location.replace("information.html");
 }
