@@ -472,7 +472,7 @@ public class WebResource {
     @GET
     @Path("/contest")
     @Produces(MediaType.APPLICATION_JSON)
-    public StatusDTO getResults(@QueryParam("nif") String nif,
+    public StatusDTO closeContest(@QueryParam("nif") String nif,
 	    @QueryParam("pass") String password) {
 	Queries query = new Queries();
 	Integer contestStatus = query.checkContestStatus();
@@ -533,7 +533,7 @@ public class WebResource {
 			"Contest cannot be closed", contestStatus, false, false);
 
 	    contestStatus = query.checkContestStatus();
-	    return new StatusDTO(Status.OK, "Method not finished yet",
+	    return new StatusDTO(Status.OK, "Contest closed succesfully",
 		    contestStatus, false, false);
 	} catch (HibernateException e) {
 	    System.err.println(e.getMessage());
