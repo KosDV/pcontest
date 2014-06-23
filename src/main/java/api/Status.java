@@ -25,6 +25,7 @@ public class Status {
     public static Integer CANNOT_INSERT_RESULTS = 614;
     public static Integer CANNOT_CLOSE_CONTEST = 615;
     public static Integer MORE_VOTES_THAN_CENSUS = 616;
+    public static Integer CANNOT_SHOW_RESULTS = 617;
     /* Photos */
     public static Integer TITLE_REQUIRED = 701;
     public static Integer DESCRIPTION_REQUIRED = 702;

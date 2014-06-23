@@ -1,6 +1,7 @@
 package api;
 
 import hibernate.manager.UserManager;
+import hibernate.model.Contest;
 import hibernate.model.Photo;
 import hibernate.model.Results;
 import hibernate.model.User;
@@ -32,13 +33,16 @@ import org.hibernate.HibernateException;
 import servers.conf.ServerConfigurator;
 import util.DigestUtil;
 import util.PhotoUtil;
+import api.model.ClosureDTO;
 import api.model.ContestDTO;
 import api.model.PhotoDTO;
 import api.model.PhotosDTO;
 import api.model.RegisterDTO;
+import api.model.ResultsDTO;
 import api.model.StatusDTO;
 import api.model.UserDTO;
 import api.model.VoteDTO;
+import api.model.VotedPhotosDTO;
 
 @Path("/web")
 public class WebResource {
@@ -541,4 +545,59 @@ public class WebResource {
 	}
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/contest")
+    public Object getResults(@QueryParam("nif") String nif,
+	    @QueryParam("pass") String password) {
+	Queries query = new Queries();
+	Integer contestStatus = query.checkContestStatus();
+	if (contestStatus != Status.CONTEST_CLOSED.intValue())
+	    return new StatusDTO(Status.CONTEST_OPENED, "Check contest state.",
+		    contestStatus, false, false);
+	try {
+	    if (!query.checkUserExist(nif)
+		    || !query.checkUserPassword(nif, password))
+		return new StatusDTO(Status.UNAUTHORIZED,
+			"The nif or password you entered are not correct",
+			contestStatus, false, false);
+	    Contest contest = query.getContest();
+
+	    List<ResultsDTO> resultsDTO = new ArrayList<>();
+
+	    List<Results> results = query.getContest().getResults();
+	    ResultsDTO resultDTO;
+	    Integer votes;
+	    Photo photo;
+
+	    for (int i = 0; i < results.size(); i++) {
+		photo = query.getPhoto(results.get(i).getPhotoId());
+		votes = results.get(i).getVotes();
+		resultDTO = new ResultsDTO(photo.getUser().getNif(), votes,
+			new VotedPhotosDTO(photo));
+		resultsDTO.add(resultDTO);
+	    }
+
+	    if (resultsDTO.isEmpty())
+		return new StatusDTO(Status.CANNOT_SHOW_RESULTS,
+			"Results cannot be recovered from system",
+			contestStatus, query.checkUserHasPhoto(nif),
+			query.checkUserVoted(nif));
+
+	    Integer census = contest.getNumCensus();
+	    Integer numPhotos = contest.getNumPhotos();
+	    Integer numVotes = contest.getNumVotes();
+
+	    return new ClosureDTO(census, numPhotos, numVotes, resultsDTO);
+	} catch (HibernateException e) {
+	    System.err.println(e.getMessage());
+	    return new StatusDTO(Status.BAD_REQUEST, "Please check parameters",
+		    contestStatus, null, null);
+	} catch (NoSuchAlgorithmException e) {
+	    System.err.println(e.getMessage());
+	    return new StatusDTO(Status.INTERNAL_ERROR,
+		    "Ups, something was wrong", contestStatus, false, false);
+	}
+
+    }
 }

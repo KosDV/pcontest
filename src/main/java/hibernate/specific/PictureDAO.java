@@ -12,7 +12,7 @@ public class PictureDAO extends GenericPictureDAO<Photo, Integer> implements
 		IPictureDAO {
 	public Photo findByPictureById(Integer id) {
 		Photo pic = null;
-		String hql = "from Picture pic where pic.id = :id";
+		String hql = "from Photo pic where pic.id = :id";
 		Query query = HibernateUtil.getSession().createQuery(hql)
 				.setParameter("id", id);
 		pic = findOne(query);

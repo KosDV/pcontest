@@ -63,9 +63,12 @@ public class Queries {
     }
 
     public User getUser(String nif) {
-	UserManager usrM = new UserManager();
-	return usrM.findByUserNif(nif);
-
+	try {
+	    UserManager usrM = new UserManager();
+	    return usrM.findByUserNif(nif);
+	} catch (HibernateException ex) {
+	    return null;
+	}
     }
 
     public void insertPhoto(Photo photo, User user) throws HibernateException,
@@ -353,6 +356,19 @@ public class Queries {
 	    return true;
 	} catch (HibernateException ex) {
 	    return false;
+	}
+    }
+
+    public Contest getContest() {
+	return ContestUtil.Singleton.INSTANCE.get();
+    }
+
+    public Photo getPhoto(Integer id) {
+	try {
+	    PictureManager picMgr = new PictureManager();
+	    return picMgr.findPictureById(id);
+	} catch (HibernateException ex) {
+	    return null;
 	}
     }
 }
