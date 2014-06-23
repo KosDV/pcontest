@@ -469,6 +469,14 @@ public class WebResource {
 			"Status could not be update", contestStatus, false,
 			false);
 
+	    List<PhotoDTO> listPhotosToVote = query.getPhotosToVote(user
+		    .getId());
+	    if (newStatus == Status.VOTES_OPENED.intValue()
+		    && (listPhotosToVote == null || listPhotosToVote.size() == 5))
+		return new StatusDTO(Status.NOT_ENOUGH_PARTICIPANTS,
+			"There are not enough participants", contestStatus,
+			false, false);
+
 	    if (!query.updateContestStatus(newStatus))
 		return new StatusDTO(Status.STATUS_COULD_NOT_BE_UPDATED,
 			"Status could not be updated", contestStatus, false,
@@ -611,7 +619,7 @@ public class WebResource {
 	} catch (HibernateException e) {
 	    System.err.println(e.getMessage());
 	    return new StatusDTO(Status.BAD_REQUEST, "Please check parameters",
-		    contestStatus, null, null);
+		    contestStatus, false, false);
 	} catch (NoSuchAlgorithmException e) {
 	    System.err.println(e.getMessage());
 	    return new StatusDTO(Status.INTERNAL_ERROR,
