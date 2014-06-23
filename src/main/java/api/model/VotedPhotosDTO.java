@@ -11,8 +11,10 @@ public class VotedPhotosDTO {
     String description;
     @JsonProperty("author")
     String author;
-    @JsonProperty("latLng")
-    String coordinates;
+    @JsonProperty("gpsLatitude")
+    String gpsLatitude;
+    @JsonProperty("gpsLongitude")
+    String gpsLongitude;
     @JsonProperty("url")
     String url;
 
@@ -24,7 +26,8 @@ public class VotedPhotosDTO {
 	super();
 	this.title = photo.getTitle();
 	this.description = photo.getDescription();
-	this.coordinates = photo.getCoordinates();
+	this.gpsLatitude = photo.getGpsLatitude();
+	this.gpsLongitude = photo.getGpsLongitude();
 	this.author = photo.getUser().getName();
 	this.url = photo.getUrl();
     }
@@ -45,12 +48,20 @@ public class VotedPhotosDTO {
 	this.description = description;
     }
 
-    public String getCoordinates() {
-	return coordinates;
+    public String getGpsLatitude() {
+	return gpsLatitude;
     }
 
-    public void setCoordinates(String coordinates) {
-	this.coordinates = coordinates;
+    public void setGpsLatitude(String gpsLatitude) {
+	this.gpsLatitude = gpsLatitude;
+    }
+
+    public String getGpsLongitude() {
+	return gpsLongitude;
+    }
+
+    public void setGpsLongitude(String gpsLongitude) {
+	this.gpsLongitude = gpsLongitude;
     }
 
     public String getUrl() {

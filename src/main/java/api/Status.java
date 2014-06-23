@@ -33,6 +33,7 @@ public class Status {
     public static Integer USER_HAS_ALLREADY_UPLOADED_PHOTO = 704;
     public static Integer USER_HAS_NOT_UPLOADED_PHOTO = 705;
     public static Integer PHOTO_CANNOT_BE_UPLOADED = 706;
+    public static Integer WRONG_METADATA = 707;
     /* Votes */
     public static Integer VOTE_CANNOT_BE_SUBMITTED = 800;
     public static Integer USER_TRY_VOTE_PHOTO_NOT_LISTED = 801;

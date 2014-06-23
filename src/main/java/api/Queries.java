@@ -8,11 +8,14 @@ import hibernate.model.Results;
 import hibernate.model.User;
 import hibernate.model.Vote;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.hibernate.HibernateException;
@@ -25,6 +28,9 @@ import util.VoteUtil;
 import api.model.PhotoDTO;
 import api.model.RegisterDTO;
 import api.model.VoteDTO;
+
+import com.thebuzzmedia.exiftool.ExifTool;
+import com.thebuzzmedia.exiftool.ExifTool.Tag;
 
 public class Queries {
 
@@ -368,6 +374,20 @@ public class Queries {
 	    PictureManager picMgr = new PictureManager();
 	    return picMgr.findPictureById(id);
 	} catch (HibernateException ex) {
+	    return null;
+	}
+    }
+
+    public Map<Tag, String> getMetadata(File photo) {
+	ExifTool tool = new ExifTool();
+	try {
+	    return tool.getImageMeta(photo, Tag.GPS_LATITUDE,
+		    Tag.GPS_LONGITUDE, Tag.DATE_TIME_ORIGINAL, Tag.APERTURE,
+		    Tag.EXPOSURE_TIME, Tag.ISO, Tag.IMAGE_WIDTH,
+		    Tag.IMAGE_HEIGHT, Tag.MODEL, Tag.FOCAL_LENGTH, Tag.FLASH,
+		    Tag.MAKE);
+	} catch (IllegalArgumentException | SecurityException | IOException e) {
+	    System.out.println(e.getMessage());
 	    return null;
 	}
     }

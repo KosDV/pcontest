@@ -25,14 +25,16 @@ public class Photo implements Serializable {
     private Integer salt;
     private String url;
     private String date;
-    private String coordinates;
-    private String dimensions;
-    private String brand;
+    private String gpsLatitude;
+    private String gpsLongitude;
+    private String width;
+    private String height;
+    private String make;
     private String model;
     private String flash;
     private String ISO;
     private String focalLength;
-    private String fNum;
+    private String aperture;
     private String exposureTime;
     private User user;
 
@@ -52,24 +54,27 @@ public class Photo implements Serializable {
     }
 
     public Photo(String title, String description, String filename,
-	    String date, Integer salt, String url, String coordinates,
-	    String dimensions, String brand, String model, String flash,
-	    String iSO, String focalLength, String fNum, String exposureTime) {
+	    Integer salt, String url, String date, String gpsLatitude,
+	    String gpsLongitude, String width, String height, String make,
+	    String model, String flash, String iSO, String focalLength,
+	    String aperture, String exposureTime) {
 	super();
 	this.title = title;
 	this.description = description;
 	this.filename = filename;
-	this.date = date;
 	this.salt = salt;
 	this.url = url;
-	this.coordinates = coordinates;
-	this.dimensions = dimensions;
-	this.brand = brand;
+	this.date = date;
+	this.gpsLatitude = gpsLatitude;
+	this.gpsLongitude = gpsLongitude;
+	this.width = width;
+	this.height = height;
+	this.make = make;
 	this.model = model;
 	this.flash = flash;
-	this.ISO = iSO;
+	ISO = iSO;
 	this.focalLength = focalLength;
-	this.fNum = fNum;
+	this.aperture = aperture;
 	this.exposureTime = exposureTime;
     }
 
@@ -120,31 +125,58 @@ public class Photo implements Serializable {
 	this.date = date;
     }
 
-    @Column(name = "COORDINATES")
-    public String getCoordinates() {
-	return coordinates;
+    @Column(name = "GPS_LATITUDE")
+    public String getGpsLatitude() {
+	return gpsLatitude;
     }
 
-    public void setCoordinates(String coordinates) {
-	this.coordinates = coordinates;
+    public void setGpsLatitude(String gpsLatitude) {
+	this.gpsLatitude = gpsLatitude;
     }
 
-    @Column(name = "DIMENSIONS")
-    public String getDimensions() {
-	return dimensions;
+    @Column(name = "GPS_LONGITUDE")
+    public String getGpsLongitude() {
+	return gpsLongitude;
     }
 
-    public void setDimensions(String dimensions) {
-	this.dimensions = dimensions;
+    public void setGpsLongitude(String gpsLongitude) {
+	this.gpsLongitude = gpsLongitude;
     }
 
-    @Column(name = "BRAND")
-    public String getBrand() {
-	return brand;
+    @Column(name = "WIDTH")
+    public String getWidth() {
+	return width;
     }
 
-    public void setBrand(String brand) {
-	this.brand = brand;
+    public void setWidth(String width) {
+	this.width = width;
+    }
+
+    @Column(name = "HENGHT")
+    public String getHeight() {
+	return height;
+    }
+
+    public void setHeight(String height) {
+	this.height = height;
+    }
+
+    @Column(name = "MAKE")
+    public String getMake() {
+	return make;
+    }
+
+    public void setMake(String make) {
+	this.make = make;
+    }
+
+    @Column(name = "APERTURE")
+    public String getAperture() {
+	return aperture;
+    }
+
+    public void setAperture(String aperture) {
+	this.aperture = aperture;
     }
 
     @Column(name = "MODEL")
@@ -181,15 +213,6 @@ public class Photo implements Serializable {
 
     public void setFocalLength(String focalLength) {
 	this.focalLength = focalLength;
-    }
-
-    @Column(name = "FNUM")
-    public String getfNum() {
-	return fNum;
-    }
-
-    public void setfNum(String fNum) {
-	this.fNum = fNum;
     }
 
     @Column(name = "EXPOSURE_TIME")

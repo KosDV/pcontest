@@ -14,6 +14,7 @@ import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.ws.rs.Consumes;
@@ -43,6 +44,8 @@ import api.model.StatusDTO;
 import api.model.UserDTO;
 import api.model.VoteDTO;
 import api.model.VotedPhotosDTO;
+
+import com.thebuzzmedia.exiftool.ExifTool.Tag;
 
 @Path("/web")
 public class WebResource {
@@ -167,7 +170,6 @@ public class WebResource {
 		return new StatusDTO(Status.BAD_REQUEST,
 			"Please, upload a photo", contestStatus, userHasPhoto,
 			userVoted);
-	    // TODO check that file is an image jpeg
 
 	    else if (photoDetail.getFileName() == null
 		    || photoDetail.getFileName().length() < 4)
@@ -204,6 +206,8 @@ public class WebResource {
 	    StringBuilder fileLocation = new StringBuilder(pathLocationBuilder);
 	    fileLocation.append(filename);
 	    File newFile = new File(fileLocation.toString());
+	    System.out.println("new file: " + newFile + " New dir: " + newDir
+		    + " Filelocation: " + fileLocation.toString());
 	    try {
 		PhotoUtil.writeToFile(photoS, newFile);
 	    } catch (IOException e) {
@@ -219,15 +223,30 @@ public class WebResource {
 	    String imageURL = urlBuilder.toString();
 	    System.out.println("IMAGEURL: " + imageURL);
 
-	    // TODO get metadata from exif
+	    Map<Tag, String> metadataMap = query.getMetadata(newFile);
+	    if (metadataMap == null)
+		return new StatusDTO(Status.WRONG_METADATA,
+			"This file cannot be uploaded", contestStatus,
+			userHasPhoto, userVoted);
+
 	    Photo photo = new Photo();
 	    photo.setTitle(title);
 	    photo.setDescription(description);
 	    photo.setFilename(filename);
-	    // TODO add DATE
 	    photo.setSalt(salt);
 	    photo.setUrl(imageURL);
-	    // TODO add metadata
+	    photo.setGpsLatitude(metadataMap.get(Tag.GPS_LATITUDE));
+	    photo.setGpsLongitude(metadataMap.get(Tag.GPS_LONGITUDE));
+	    photo.setDate(metadataMap.get(Tag.DATE_TIME_ORIGINAL));
+	    photo.setAperture(metadataMap.get(Tag.APERTURE));
+	    photo.setExposureTime(metadataMap.get(Tag.EXPOSURE_TIME));
+	    photo.setISO(metadataMap.get(Tag.ISO));
+	    photo.setWidth(metadataMap.get(Tag.IMAGE_WIDTH));
+	    photo.setHeight(metadataMap.get(Tag.IMAGE_HEIGHT));
+	    photo.setModel(metadataMap.get(Tag.MODEL));
+	    photo.setFocalLength(metadataMap.get(Tag.FOCAL_LENGTH));
+	    photo.setAperture(metadataMap.get(Tag.FLASH));
+	    photo.setMake(metadataMap.get(Tag.MAKE));
 
 	    query.insertPhoto(photo, user);
 	    userHasPhoto = query.checkUserHasPhoto(nif);
