@@ -1,9 +1,20 @@
+// Global
+var JSONobject;
+
 $(document).ready(function() {
 	var nif = $.cookie('nif');
 	var password = $.cookie('password');
 
-	alert("Homepage: " + nif + " - " + password);
-	getPictures(nif, password, callback, callbackError);
+	// //BORRAR
+	/*
+	 * var data =
+	 * '{"PhotosToVote":{"n":115836834038114737932769981489975356861332142458482215125989887597840484303316737271218860905588540434320434095870339412636194361624256322864091405695114767363377373181263541081679725401250016928985480391559112062884425415378138116797489070155815511421312400461088683002718600636837348199277241271515991121601,"g":3740048650284190113788647293118948560426033476120935293115169295858982092948326759283343427665135228212804220187845730377920108083114721065320182315165644681274891715233002977137753511977778389894328963740875936281435373434200906915892843734898827677390828229097427673637040699819700733516060268577266813034275763632767256090075766623309416112809814759024467011558008733913740082091473749002576402717045188784255389304424527404226878837169840430402741380010167844963326800556213848209311250608520617840325218152333192505032497050375947069646210606747062387180057916768644466234911160233021934490077130211609585156490,"listPhotosToVote":[{"title":"H","description":"Hdasdasdasdas","id":12,"date":null,"dimensions":null,"brand":null,"model":null,"flash":null,"ISO":null,"focalLength":null,"fNum":null,"exposureTime":null,"url":"/assets/sampleImg/1.jpg","iso":null,"fileName":"photo.jpg","latLng":null},{"title":"J","description":"Jdasdasdasdas","id":14,"date":null,"dimensions":null,"brand":null,"model":null,"flash":null,"ISO":null,"focalLength":null,"fNum":null,"exposureTime":null,"url":"/assets/sampleImg/2.jpg","iso":null,"fileName":"photo.jpg","latLng":null}],"individual-vote-length":2,"total-vote-length":26}}';
+	 * 
+	 * JSONobject = JSON.parse(data); loadPictures();
+	 */
+	// ///////// FIN BORRAR
+	getPictures(nif, password, callbackGetPhotos, callbackErrorGetPhotos); // Uncomment
+
 });
 
 function callbackErrorGetPhotos(jqXHR, options, error) {
@@ -11,39 +22,63 @@ function callbackErrorGetPhotos(jqXHR, options, error) {
 }
 
 function callbackGetPhotos(data, status, jqxhr) {
-	alert("Connection OK");
-	alert("Està al homepage js");
-
-	// var code = JSON.stringify(data.status.code);
-	// var contestStatus = JSON.stringify(data.status.contest);
-	// var photo = JSON.stringify(data.status.photo);
-	// var msg = JSON.stringify(data.status.message);
-
-	loadPictures();
+	// var contestStatus = JSON.stringify(data.status.code);
+	//
+	// $.cookie('contestStatus', contestStatus);
+	// if (contestStatus == 609) {
+	// window.location.replace("information.html");
+	// }
+	//JSONobject = JSON.parse(data);
+	
+	//var result = JSON.stringify(data.status.code);
+	
+	loadPictures(data);
 }
 
-function loadPictures() {
-	// load image array
-	var images = {
-		'image1' : 'assets/sampleImg/3.jpg',
-		'image2' : 'assets/sampleImg/4.jpg',
-		'image3' : 'assets/sampleImg/2.jpg'
-	};
-	var title = 'hola 
-		';
+function loadPictures(data) {
+	var title;
+	var description;
+	var url;
+	var latLng;
+	var id;
 
-	$
-			.each(
-					images,
-					function() {
-						$('#imagesList')
-								.append(
-										'<div class="col-md-4 portfolio-item"><a href="index.html"><img class="img-responsive" src="'
-												+ this
-												+ '"></a><h5><p style="text-align:center"><b> '
-												+ title
-												+ '</b><input type="checkbox" name="input"></p></h5></div>');
-					});
+	var i = 0;
+	var tmp = data.PhotosToVote.listPhotosToVote;
+
+	$('#imagesList').html('');
+	while (i < tmp.length) {
+		$('#imagesList')
+				.append(
+						'<div id="photo'
+								+ i
+								+ '" class="col-md-3 portfolio-item"><div onClick="loadInfo('
+								+ i + ')"><img id="url'
+								+ i
+								+ '" class="img-responsive" src="'
+								+ tmp[i].url
+								+ '"><h5><p id="title'
+								+ i
+								+ '" style="text-align:center"><b> '
+								+ tmp[i].title
+								+ '</b></div><input type="checkbox" id="checkbox_id '
+								+ i + '" name="input"></p></h5></div>');
+		i++;
+	}
+}
+
+function loadInfo(i) {
+	var title;
+	var description;
+	var url;
+	var latLng;
+
+	var tmp = data.PhotosToVote.listPhotosToVote;
+	$(info_title).html('<h5>' + tmp[i].title + '</h5>');
+	$(info_desc).html('<h5>' + tmp[i].description + '</h5>');
+
+	$(info_image).html(
+			'<img id="url" class="img-responsive" src="' + tmp[i].url + '">');
+	$(info_map).html('');
 }
 
 // LOG OUT
@@ -56,7 +91,3 @@ $('#log_out').click(function(e) {
 
 	window.location.href = "index.html";
 });
-
-function getImages() {
-	
-}
