@@ -10,6 +10,7 @@ import hibernate.model.Vote;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -18,10 +19,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.mail.MessagingException;
+
 import org.hibernate.HibernateException;
 
 import util.ContestUtil;
 import util.DigestUtil;
+import util.MailUtil;
 import util.PaillierUtil;
 import util.PhotoUtil;
 import util.VoteUtil;
@@ -389,6 +393,26 @@ public class Queries {
 	} catch (IllegalArgumentException | SecurityException | IOException e) {
 	    System.out.println(e.getMessage());
 	    return null;
+	}
+    }
+
+    public Boolean sendConfirmationVoteMail(String email, String name) {
+	try {
+	    MailUtil.sendConfirmationVoteMail(email, name);
+	    return true;
+	} catch (UnsupportedEncodingException | MessagingException ex) {
+	    System.out.println(ex.getMessage());
+	    return false;
+	}
+    }
+
+    public Boolean sendConfirmationRegisterMail(String email, String name) {
+	try {
+	    MailUtil.sendConfirmationRegisterMail(email, name);
+	    return true;
+	} catch (UnsupportedEncodingException | MessagingException ex) {
+	    System.out.println(ex.getMessage());
+	    return false;
 	}
     }
 }

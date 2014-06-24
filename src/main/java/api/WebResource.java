@@ -80,6 +80,9 @@ public class WebResource {
 			    "Someone already has that nif. Try another?",
 			    contestStatus, false, false);
 		query.registerUser(user);
+
+		query.sendConfirmationRegisterMail(user.getEmail(),
+			user.getName());
 		return new StatusDTO(Status.OK, "User registered correctly",
 			contestStatus, false, false);
 	    } catch (HibernateException e) {
@@ -425,7 +428,7 @@ public class WebResource {
 			"Cannot unlink this user with his list of photos to vote",
 			contestStatus, userHasPhoto, userVoted);
 	    }
-
+	    query.sendConfirmationVoteMail(user.getEmail(), user.getName());
 	    userVoted = true;
 	    return new StatusDTO(Status.OK, "User voted successfully",
 		    contestStatus, userHasPhoto, userVoted);
