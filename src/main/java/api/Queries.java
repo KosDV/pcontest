@@ -323,11 +323,20 @@ public class Queries {
     }
 
     public List<Results> insertResults(String decryptedVotes,
-	    Integer individualLength, Integer totalLength) {
+	    Integer individualLength, Integer totalLength, Integer difference) {
 
 	System.out.println("Decrypted votes length: " + decryptedVotes.length()
-		+ " totalLength: " + totalLength);
+		+ " totalLength: " + totalLength + " differece " + difference);
 
+	StringBuilder sb = new StringBuilder();
+	for (int i = 0; i < difference; i++) {
+	    sb.append("0");
+	}
+	sb.append(decryptedVotes);
+
+	decryptedVotes = sb.toString();
+
+	System.out.println("Fixed decrypted vote: " + decryptedVotes);
 	Contest contest = ContestUtil.Singleton.INSTANCE.get();
 	List<Results> results = new ArrayList<Results>();
 	Results result;

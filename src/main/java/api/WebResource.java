@@ -556,13 +556,20 @@ public class WebResource {
 	    Integer totalLength = query.getTotalVoteLength(numPhotos,
 		    individualLength);
 
-	    if (votesDecrypted.length() != totalLength)
+	    Integer voteLength = votesDecrypted.length();
+
+	    Integer difference = 0;
+	    // Integer.parseInt(Integer.toString(9) + Integer.toString(10));
+	    if (voteLength > totalLength)
 		return new StatusDTO(Status.VOTES_DECRYPTED_WRONG_SIZE,
 			"There are a problem with submitted votes",
 			contestStatus, false, false);
+	    else if (voteLength < totalLength)
+		difference = (totalLength - voteLength);
+	    System.out.println("(voteLength - totalLength) => " + difference);
 
 	    List<Results> results = query.insertResults(votesDecrypted,
-		    individualLength, totalLength);
+		    individualLength, totalLength, difference);
 	    if (results.isEmpty())
 		return new StatusDTO(Status.CANNOT_INSERT_RESULTS,
 			"Results cannot be inserted successfully",
