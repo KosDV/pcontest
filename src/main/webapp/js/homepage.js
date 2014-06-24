@@ -32,10 +32,13 @@ function callbackGetPhotos(data, status, jqxhr) {
 	
 	//var result = JSON.stringify(data.status.code);
 	
-	loadPictures(data);
+	json = data;
+	loadPictures(json);
 }
 
-function loadPictures(data) {
+var json;
+
+function loadPictures(json) {
 	var title;
 	var description;
 	var url;
@@ -43,7 +46,7 @@ function loadPictures(data) {
 	var id;
 
 	var i = 0;
-	var tmp = data.PhotosToVote.listPhotosToVote;
+	var tmp = json.PhotosToVote.listPhotosToVote;
 
 	$('#imagesList').html('');
 	while (i < tmp.length) {
@@ -72,7 +75,7 @@ function loadInfo(i) {
 	var url;
 	var latLng;
 
-	var tmp = data.PhotosToVote.listPhotosToVote;
+	var tmp = json.PhotosToVote.listPhotosToVote;
 	$(info_title).html('<h5>' + tmp[i].title + '</h5>');
 	$(info_desc).html('<h5>' + tmp[i].description + '</h5>');
 

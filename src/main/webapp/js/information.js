@@ -24,7 +24,7 @@ $(document)
 										'pContest is close at the moment. If you would like to check out the previous winners, please feel free to visit the following page..<br>');
 						$('#info_btn').show();
 						$('#info_btn').click(function() {
-							window.location = "";
+							window.location = "results.html";
 						});
 					} else if (contestStatus == 900) {
 						$('#user_information')

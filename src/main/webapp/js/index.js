@@ -43,9 +43,15 @@ function callbackLogUser(data, status, jqxhr) {
 				$.cookie('contestStatus', contestStatus);
 				window.location.replace("information.html");
 			} else {
-				alert("You have already uploaded a picture. Time to vote!");
 				window.location.replace("homepage.html");
 			}
+		} else if (contestStatus == 603) {
+			alert()
+			$.cookie('contestStatus', contestStatus);
+			window.location.replace("information.html");
+		} else {
+			alert("You have already uploaded a picture. Time to vote!");
+			window.location.replace("homepage.html");
 		}
 	} else {
 		alert("Log in msg: " + msg);
