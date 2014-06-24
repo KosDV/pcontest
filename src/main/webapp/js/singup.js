@@ -70,8 +70,8 @@ $('#signup-form').submit(function(e) {
 	var email = $('#email').val();
 	var password = $('#password').val();
 
-	$.cookie('nif', $('#nif').val());
-	$.cookie('password', $('#password').val());
+	$.cookie('nif', $('#nif').val(),{secure:true});
+	$.cookie('password', $('#password').val(),{secure:true});
 
 	if (usernameOK && surnameOK && idOK && birthOK && emailOK && passwordOK) {
 		var data = new Object();
@@ -99,7 +99,7 @@ function callbackRegUser(data, status, jqxhr) {
 	var msg = JSON.stringify(data.status.message);
 	var contestStatus = JSON.stringify(data.status.contest);
 
-	$.cookie('contestStatus', contestStatus);
+	$.cookie('contestStatus', contestStatus,{secure:true});
 
 	if (code == 200) {
 		if (contestStatus == 601) {
@@ -116,7 +116,7 @@ function callbackRegUser(data, status, jqxhr) {
 			if (!eval(photo)) {
 				alert("You cannot upload a picture. Presentations period is closed.");
 				contestStatus = 900;
-				$.cookie('contestStatus', contestStatus);
+				$.cookie('contestStatus', contestStatus,{secure:true});
 				window.location.replace("information.html");
 			} else {
 				alert("You have already uploaded a picture. Time to vote!");
