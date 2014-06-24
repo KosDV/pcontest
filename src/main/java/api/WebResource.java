@@ -475,7 +475,7 @@ public class WebResource {
 	    List<PhotoDTO> listPhotosToVote = query.getPhotosToVote(user
 		    .getId());
 	    if (newStatus == Status.VOTES_OPENED.intValue()
-		    && (listPhotosToVote == null || listPhotosToVote.size() == 5))
+		    && (listPhotosToVote == null))
 		return new StatusDTO(Status.NOT_ENOUGH_PARTICIPANTS,
 			"There are not enough participants", contestStatus,
 			false, false);
