@@ -26,25 +26,39 @@ audio,canvas,progress,video {
 }
 
 audio
+
+
 :not
+
  
+
 (
 [
 controls
 ]
+
  
+
 )
 {
 display
-:
- 
-none
-;
 
-	
-height
+
 :
+
  
+
+none
+
+
+;
+height
+
+
+:
+
+ 
+
 0;
 }
 [hidden],template {
@@ -105,20 +119,30 @@ img {
 }
 
 svg
+
+
 :not
+
  
+
 (
 :root
+
  
+
 )
 {
 overflow
+
+
 :
+
  
+
 hidden
+
+
 ;
-
-
 }
 figure {
 	margin: 1em 40px;
@@ -343,7 +367,8 @@ img {
 	{
 	display: block;
 	max-width: 100%;
-	height: auto;
+	height: 400px;
+	overflow: hidden;
 }
 
 .img-rounded {
@@ -777,25 +802,25 @@ pre code {
 	padding-right: 15px;
 }
 
-html, body {
-  height: 100%;
+html,body {
+	height: 100%;
 }
 
 #wrap {
-  min-height: 100%;
+	min-height: 100%;
 }
 
 #main {
-  overflow:auto;
-  padding-bottom:150px; /* this needs to be bigger than footer height*/
+	overflow: auto;
+	padding-bottom: 150px; /* this needs to be bigger than footer height*/
 }
 
 .footer {
-  position: relative;
-  margin-top: -3em; /* negative value of footer height -150px */
-  height: 3em;
-  clear:both;
-  padding-top:20px;
+	position: relative;
+	margin-top: -3em; /* negative value of footer height -150px */
+	height: 3em;
+	clear: both;
+	padding-top: 20px;
 }
 
 .row {
@@ -3378,29 +3403,47 @@ input[type="submit"].btn-block,input[type="reset"].btn-block,input[type="button"
 .btn-group
 >
 .btn
+
+
 :not
+
  
+
 (
 :first-child
+
  
+
 )
 :not
+
  
+
 (
 :last-child
+
  
+
 )
 :not
+
  
+
 (
 .dropdown-toggle
 
+
 	
+
 )
 {
 border-radius
+
+
 :
+
  
+
 0;
 }
 .btn-group>.btn:first-child {
@@ -3410,57 +3453,99 @@ border-radius
 .btn-group
 >
 .btn
+
+
 :first-child
+
+
 :not
+
  
+
 (
 :last-child
+
  
+
 )
 :not
+
  
+
 (
 .dropdown-toggle
+
  
+
 )
 {
 border-bottom-right-radius
+
+
 :
+
  
+
 0;
 border-top-right-radius
+
+
 :
+
  
+
 0;
 }
 .btn-group
 >
 .btn
+
+
 :last-child
+
+
 :not
+
  
+
 (
 :first-child
+
  
+
 ),
 .btn-group
 >
 .dropdown-toggle
+
+
 :not
 
+
 	
+
 (
 :first-child
+
  
+
 )
 {
 border-bottom-left-radius
+
+
 :
+
  
+
 0;
 border-top-left-radius
+
+
 :
+
  
+
 0;
 }
 .btn-group>.btn-group {
@@ -3540,78 +3625,132 @@ border-top-left-radius
 .btn-group-vertical
 >
 .btn
+
+
 :not
+
  
+
 (
 :first-child
+
  
+
 )
 :not
+
  
+
 (
 :last-child
+
  
+
 )
 {
 border-radius
+
+
 :
+
  
+
 0;
 }
 .btn-group-vertical
 >
 .btn
+
+
 :first-child
+
+
 :not
+
  
+
 (
 :last-child
+
  
+
 )
 {
 border-top-right-radius
+
+
 :
+
  
+
 4
 px
-;
 
-	
+
+;
 border-bottom-right-radius
+
+
 :
+
  
+
 0;
 border-bottom-left-radius
+
+
 :
+
  
+
 0;
 }
 .btn-group-vertical
 >
 .btn
+
+
 :last-child
+
+
 :not
+
  
+
 (
 :first-child
+
  
+
 )
 {
 border-bottom-left-radius
+
+
 :
+
  
+
 4
 px
-;
 
-	
+
+;
 border-top-right-radius
+
+
 :
+
  
+
 0;
 border-top-left-radius
+
+
 :
+
  
+
 0;
 }
 .btn-group-vertical>.btn-group:not (:first-child ):not (:last-child ) >.btn
@@ -3718,52 +3857,88 @@ textarea.input-group-sm>.form-control,textarea.input-group-sm>.input-group-addon
 }
 
 .input-group-addon
+
+
 :not
+
  
+
 (
 :first-child
+
  
+
 )
 :not
+
  
+
 (
 :last-child
+
  
+
 ),
 .input-group-btn
+
+
 :not
 
+
 	
+
 (
 :first-child
+
  
+
 )
 :not
+
  
+
 (
 :last-child
+
  
+
 ),
 .input-group
+
  
+
 .form-control
+
+
 :not
+
  
+
 (
 :first-child
 
+
 	
+
 )
 :not
+
  
+
 (
 :last-child
+
  
+
 )
 {
 border-radius
+
+
 :
+
  
+
 0;
 }
 .input-group-addon,.input-group-btn {
@@ -6432,4 +6607,15 @@ button.close {
 	.hidden-print {
 		display: none !important;
 	}
+}
+
+.crop {
+	height: 100px;
+	width: 100px;
+	overflow: hidden;
+}
+
+.crop img {
+	height: 100px;
+	width: auto;
 }

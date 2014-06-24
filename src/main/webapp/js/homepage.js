@@ -28,10 +28,10 @@ function callbackGetPhotos(data, status, jqxhr) {
 	// if (contestStatus == 609) {
 	// window.location.replace("information.html");
 	// }
-	//JSONobject = JSON.parse(data);
-	
-	//var result = JSON.stringify(data.status.code);
-	
+	// JSONobject = JSON.parse(data);
+
+	// var result = JSON.stringify(data.status.code);
+
 	json = data;
 	loadPictures(json);
 }
@@ -54,17 +54,19 @@ function loadPictures(json) {
 				.append(
 						'<div id="photo'
 								+ i
-								+ '" class="col-md-3 portfolio-item"><div onClick="loadInfo('
-								+ i + ')"><img id="url'
+								+ '" class="col-md-6 portfolio-item"><div onClick="loadInfo('
+								+ i
+								+ ')"><img id="url'
 								+ i
 								+ '" class="img-responsive" src="'
 								+ tmp[i].url
-								+ '"><h5><p id="title'
-								+ i
-								+ '" style="text-align:center"><b> '
+								+ '" alt="'
 								+ tmp[i].title
-								+ '</b></div><input type="checkbox" id="checkbox_id '
-								+ i + '" name="input"></p></h5></div>');
+								+ '"/><p id="title'
+								+ i
+								+ '" align="center"><input type="checkbox" id="checkbox_id '
+								+ i + '" name="input"> <b>' + tmp[i].title
+								+ '</b></p></div>');
 		i++;
 	}
 }
