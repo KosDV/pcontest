@@ -302,7 +302,8 @@ public class WebResource {
 
 	    List<PhotoDTO> listPhotosToVote = query.getPhotosToVote(user
 		    .getId());
-	    if (listPhotosToVote == null)
+	    int numParticipants = query.getNumUsersUploadImage();
+	    if (listPhotosToVote == null || numParticipants < 15)
 		return new StatusDTO(Status.NOT_ENOUGH_PARTICIPANTS,
 			"There are not enough participants", contestStatus,
 			userHasPhoto, userVoted);
@@ -315,11 +316,19 @@ public class WebResource {
 		    individualVoteLength);
 	    BigInteger n = new BigInteger(ServerConfigurator.getN());
 	    BigInteger g = new BigInteger(ServerConfigurator.getG());
+
+	    Integer votes;
+	    if (numPhotosTotal >= 15 && numPhotosTotal < 39)
+		votes = 3;
+	    else if (numPhotosTotal >= 39)
+		votes = 5;
+	    else
+		votes = 0;
+
 	    PhotosDTO photos = new PhotosDTO(listPhotosToVote,
-		    individualVoteLength, totalVoteLength, n, g);
+		    individualVoteLength, totalVoteLength, n, g, votes);
 
 	    return photos;
-
 	} catch (HibernateException e) {
 	    System.err.println(e.getMessage());
 	    return new StatusDTO(Status.BAD_REQUEST, "Please check parameters",
@@ -474,8 +483,10 @@ public class WebResource {
 
 	    List<PhotoDTO> listPhotosToVote = query.getPhotosToVote(user
 		    .getId());
+
+	    Integer numParticipants = query.getNumUsersUploadImage();
 	    if (newStatus == Status.VOTES_OPENED.intValue()
-		    && (listPhotosToVote == null))
+		    && (listPhotosToVote == null || numParticipants < 15))
 		return new StatusDTO(Status.NOT_ENOUGH_PARTICIPANTS,
 			"There are not enough participants", contestStatus,
 			false, false);

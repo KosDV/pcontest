@@ -24,25 +24,30 @@ public class PhotosDTO {
     @JsonProperty("listPhotosToVote")
     List<PhotoDTO> listPhotosToVote;
 
+    @JsonProperty("votes")
+    Integer votes;
+
     public PhotosDTO() {
 	super();
     }
 
     public PhotosDTO(List<PhotoDTO> listPhotosToVote,
-	    Integer individualVoteLength, Integer totalVoteLength) {
+	    Integer individualVoteLength, Integer totalVoteLength, Integer votes) {
 	this.listPhotosToVote = listPhotosToVote;
 	this.individualVoteLength = individualVoteLength;
 	this.totalVoteLength = totalVoteLength;
+	this.votes = votes;
     }
 
     public PhotosDTO(List<PhotoDTO> listPhotosToVote,
 	    Integer individualVoteLength, Integer totalVoteLength,
-	    BigInteger n, BigInteger g) {
+	    BigInteger n, BigInteger g, Integer votes) {
 	this.listPhotosToVote = listPhotosToVote;
 	this.individualVoteLength = individualVoteLength;
 	this.totalVoteLength = totalVoteLength;
 	this.n = n;
 	this.g = g;
+	this.votes = votes;
     }
 
     public Integer getIndividualVoteLength() {
@@ -84,4 +89,13 @@ public class PhotosDTO {
     public void setG(BigInteger g) {
 	this.g = g;
     }
+
+    public Integer getVotes() {
+	return votes;
+    }
+
+    public void setVotes(Integer votes) {
+	this.votes = votes;
+    }
+
 }
