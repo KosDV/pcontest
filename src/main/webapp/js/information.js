@@ -24,7 +24,7 @@ $(document)
 					} else if (contestStatus == 603) {
 						$('#user_information')
 								.after(
-										'pContest is close at the moment. If you would like to check out the previous winners, please feel free to visit the following page..<br>');
+										'pContest is closed at the moment. If you would like to check out the previous winners, please feel free to visit the following page..<br>');
 						$('#info_btn').show();
 						$('#info_btn').click(function() {
 							window.location = "results.html";
@@ -39,6 +39,14 @@ $(document)
 								.after(
 										'Sorry! There are not enough participants. Pcontest is currently closed :(');
 						$('#info_btn').hide();
+					} else if (contestStatus == 608) {
+						$('#user_information')
+								.after(
+										'The registration is closed at the moment. If you would like to check out the previous winners, please feel free to visit the following page..<br>');
+						$('#info_btn').show();
+						$('#info_btn').click(function() {
+							window.location = "results.html";
+						});
 					} else if (contestStatus == 2) {
 						$('#user_information')
 								.after(

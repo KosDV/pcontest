@@ -147,7 +147,7 @@ function loadInfo(i) {
 						+ tmp[i].exposureTime + '<td></td></tr>');
 		console.log(tmp[i].gpsLatitude);
 
-		if (tmp[i].gpsLatitude == null) {
+		if (tmp[i].gpsLatitude === undefined) {
 			$('#map_canvas').html('');
 		} else {
 			var yourStartLatLng = new google.maps.LatLng(tmp[i].gpsLatitude,

@@ -41,7 +41,10 @@ function callbackRegUser(data, status, jqxhr) {
 			}
 		}
 	} else {
-		console.log("Log in msg: " + msg);
+		if (data.status.code == 608) {
+			alert(msg);
+		}
+		
 	}
 }
 
