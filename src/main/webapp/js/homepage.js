@@ -161,4 +161,37 @@ function loadInfo(i) {
 	$('html, body').animate({
 		scrollTop : ($('#exif_table').offset().top)
 	}, 500);
+
+	var loop = function getVotes() {
+		var iter = 0;
+
+		var voteStr = '';
+		for (iter = 0; iter < totalVoteLength; iter++) {
+			voteStr += 0;
+		}
+		console.log("Original: " + voteStr);
+		var pos = 0;
+		var input = [ 1, 2, 5 ];
+		var len = input.length;
+		console.log("lengthlen: " + len);
+
+		var iter = 0;
+		var strL = '';
+		var strR = '';
+		var strFirst = '';
+		for (iter = 0; iter < len; iter++) {
+			pos = (input[iter] * individualVoteLength) - 1;
+			console.log("pos: " + pos);
+
+			strL = voteStr.slice(0, pos);
+			console.log("strL: " + strL);
+
+			strR = voteStr.slice(pos + 1, voteStr.length + 1);
+			console.log("strR: " + strR);
+
+			voteStr = strL + 1 + strR;
+		}
+		console.log("voteStr: " + voteStr);
+
+	}
 }
