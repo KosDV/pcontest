@@ -89,7 +89,7 @@ function loadPictures(json) {
 					});
 }
 
-function sendVote(totalVoteLength, individualVoteLength) {
+function sendVote(individualVoteLength, totalVoteLength) {
 	console.log("Votes: " + votes + " Checked IDs: " + checkedIds);
 	if (checkedIds.length == votes) {
 		encVote(checkedIds, totalVoteLength, individualVoteLength);
@@ -102,6 +102,38 @@ function encVote(checkedIds, totalVoteLength, individualVoteLength) {
 	console.log("checkedIds: " + checkedIds);
 	console.log("totalVoteLength: " + totalVoteLength);
 	console.log("individualVoteLength: " + individualVoteLength);
+
+	var iter = 0;
+	console.log(iter);
+	var voteStr = '';
+	for (iter = 0; iter < totalVoteLength; iter++) {
+		voteStr += 0;
+	}
+	console.log("Original: " + voteStr);
+	var pos = 0;
+	var len = checkedIds.length;
+	console.log("lengthlen: " + len);
+
+	var iter = 0;
+	var strL = '';
+	var strR = '';
+	var strFirst = '';
+	for (iter = 0; iter < len; iter++) {
+		pos = (checkedIds[iter] * individualVoteLength) - 1;
+		console.log("pos: " + pos);
+
+		strL = voteStr.slice(0, pos);
+		console.log("strL: " + strL);
+
+		strR = voteStr.slice(pos + 1, voteStr.length + 1);
+		console.log("strR: " + strR);
+
+		voteStr = strL + 1 + strR;
+	}
+	console.log("voteStr: " + voteStr);
+	var nif = $.cookie('nif');
+	var password = $.cookie('password');
+	sendEncVote(nif, password, JSON.stringify(voteStr), callbackVote, callbackVoteError);
 }
 
 $('#log_out').click(function(e) {
@@ -161,37 +193,23 @@ function loadInfo(i) {
 	$('html, body').animate({
 		scrollTop : ($('#exif_table').offset().top)
 	}, 500);
+}
 
-	var loop = function getVotes() {
-		var iter = 0;
-
-		var voteStr = '';
-		for (iter = 0; iter < totalVoteLength; iter++) {
-			voteStr += 0;
+function callbackVote(data, status, jqxhr) {
+	
+	var contestStatus = data.status.contest;
+	var voted = data.status.voted;
+	
+	if (contestStatus == 602){
+		console.log("VOTES_OPENED");
+		if (voted){
+			$.cookie('contestStatus', 900);
+			console.log("You have already voted. Wait for the result");
+			window.location.replace("information.html");
 		}
-		console.log("Original: " + voteStr);
-		var pos = 0;
-		var input = [ 1, 2, 5 ];
-		var len = input.length;
-		console.log("lengthlen: " + len);
-
-		var iter = 0;
-		var strL = '';
-		var strR = '';
-		var strFirst = '';
-		for (iter = 0; iter < len; iter++) {
-			pos = (input[iter] * individualVoteLength) - 1;
-			console.log("pos: " + pos);
-
-			strL = voteStr.slice(0, pos);
-			console.log("strL: " + strL);
-
-			strR = voteStr.slice(pos + 1, voteStr.length + 1);
-			console.log("strR: " + strR);
-
-			voteStr = strL + 1 + strR;
-		}
-		console.log("voteStr: " + voteStr);
-
 	}
+}
+
+function callbackVoteError(jqXHR, options, error) {
+	console.log("Connection to the server failed");
 }

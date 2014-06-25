@@ -47,7 +47,7 @@ $(document)
 						$('#info_btn').click(function() {
 							window.location = "results.html";
 						});
-					} else if (contestStatus == 2) {
+					} else if (contestStatus == 900) {
 						$('#user_information')
 								.after(
 										'You have already voted. You will be able to see the results when the period is done.');

@@ -45,6 +45,29 @@ function loginUser(nif, password, callbackLogUser, callbackLogUserError) {
 	});
 }
 
+function sendEncVote(nif, password, voteStr, callbackVote, callbackVoteError) {
+	var url = API_BASE_URL + '/web/vote?nif=' + nif + '&pass=' + password;
+
+	$.support.cors = true
+	$.ajax({
+		url : url,
+		type : 'POST',
+		data : voteStr,
+		dataType : 'json',
+		headers : {
+			"Content-Type" : "Application/json",
+			"Accept" : "Application/json"
+		},
+		crossDomain : true,
+		success : function(data, status, jqxhr) {
+			callbackVote(data, status, jqxhr);
+		},
+		error : function(jqXHR, options, error) {
+			callbackVoteError(jqXHR, options, error);
+		}
+	});
+}
+
 function getResults(nif, password, callbackGetResults, callbackGetResultsError) {
 	var url = API_BASE_URL + '/web/contest?nif=' + nif + '&pass=' + password;
 
