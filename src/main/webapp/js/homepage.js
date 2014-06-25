@@ -1,8 +1,8 @@
-var json;
-
 $(document).ready(function() {
 	var nif = $.cookie('nif');
 	var password = $.cookie('password');
+
+	console.log(nif + ", " + password);
 
 	getPictures(nif, password, callbackGetPhotos, callbackErrorGetPhotos);
 
@@ -13,12 +13,23 @@ function callbackErrorGetPhotos(jqXHR, options, error) {
 }
 
 function callbackGetPhotos(data, status, jqxhr) {
-	json = data;
-	loadPictures(json);
+	$.cookie('contestStatus', data.status.code,{secure:true});
+	console.log($.cookie('password'));
+	
+	if (!data.status) {
+		json = data;
+		loadPictures(json);
+	} else {
+		console.log("Error");
+		window.location.replace("information.html");
+	}
 }
+
+var json;
 
 function loadPictures(json) {
 	var i = 0;
+
 	var tmp = json.PhotosToVote.listPhotosToVote;
 
 	$('#imagesList').html('');

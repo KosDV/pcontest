@@ -33,7 +33,7 @@ $(document)
 								.after(
 										'You cannot upload a picture. Presentations period is closed :(');
 						$('#info_btn').hide();
-					} else if (contestStatus == 609) {
+					} else if (contestStatus== 609) {
 						$('#user_information')
 								.after(
 										'Sorry! There are not enough participants. Pcontest is currently closed :(');

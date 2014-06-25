@@ -11,7 +11,7 @@
     left: 0;
     background-size: cover;
     background-position: 50% 50%;
-    background-image: url('http://eargasmusic.com/wp-content/uploads/2012/04/background_may2014.jpg');
+    background-image: url('/img/back.jpg');
   }
   .form-signin {
     max-width: 280px;
