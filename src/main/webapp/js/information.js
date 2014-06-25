@@ -5,7 +5,7 @@ $(document)
 					var pass = $.cookie('password');
 					var contestStatus = $.cookie('contestStatus');
 
-					alert(nif + ", " + pass + ", " + contestStatus);
+					console.log(nif + ", " + pass + ", " + contestStatus);
 
 					if (contestStatus == 601) {
 						$('#user_information')
@@ -13,7 +13,9 @@ $(document)
 										'Presentations are opened. You have already uploaded a picture. You will be able to vote as soon as the votation period starts. <br>');
 						$('#info_btn').hide();
 					} else if (contestStatus == 602) {
-						$('#user_information').after('Time to vote :-D! <br>');
+						$('#user_information')
+								.after(
+										'You have already uploaded a picture. The votations period is currently open. Time to vote :D! <br>');
 						$('#info_btn').show();
 						$('#info_btn').click(function() {
 							window.location = "homepage.html";
@@ -51,6 +53,6 @@ $('#log_out').click(function(e) {
 	var nif = $.cookie('nif');
 	var pass = $.cookie('password');
 
-	alert(nif + ", " + pass);
+	console.log(nif + ", " + pass);
 	window.location.href = "index.html";
 });

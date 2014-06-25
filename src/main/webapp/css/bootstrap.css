@@ -28,36 +28,52 @@ audio,canvas,progress,video {
 audio
 
 
+
+
 :not
 
+
  
+
 
 (
 [
 controls
 ]
 
+
  
+
 
 )
 {
 display
 
 
+
+
 :
+
 
  
 
+
 none
+
+
 
 
 ;
 height
 
 
+
+
 :
 
+
  
+
 
 0;
 }
@@ -121,25 +137,37 @@ img {
 svg
 
 
+
+
 :not
 
+
  
+
 
 (
 :root
 
+
  
+
 
 )
 {
 overflow
 
 
+
+
 :
+
 
  
 
+
 hidden
+
+
 
 
 ;
@@ -1535,7 +1563,7 @@ th {
 }
 
 .table {
-	width: 100%;
+	width: 60%;
 	margin-bottom: 20px;
 }
 
@@ -3405,44 +3433,62 @@ input[type="submit"].btn-block,input[type="reset"].btn-block,input[type="button"
 .btn
 
 
+
+
 :not
 
+
  
+
 
 (
 :first-child
 
+
  
+
 
 )
 :not
 
+
  
+
 
 (
 :last-child
 
+
  
+
 
 )
 :not
 
+
  
+
 
 (
 .dropdown-toggle
 
 
+
 	
+
 
 )
 {
 border-radius
 
 
+
+
 :
 
+
  
+
 
 0;
 }
@@ -3455,44 +3501,64 @@ border-radius
 .btn
 
 
+
+
 :first-child
+
+
 
 
 :not
 
+
  
+
 
 (
 :last-child
 
+
  
+
 
 )
 :not
 
+
  
+
 
 (
 .dropdown-toggle
 
+
  
+
 
 )
 {
 border-bottom-right-radius
 
 
+
+
 :
 
+
  
+
 
 0;
 border-top-right-radius
 
 
+
+
 :
 
+
  
+
 
 0;
 }
@@ -3501,17 +3567,25 @@ border-top-right-radius
 .btn
 
 
+
+
 :last-child
+
+
 
 
 :not
 
+
  
+
 
 (
 :first-child
 
+
  
+
 
 ),
 .btn-group
@@ -3519,32 +3593,46 @@ border-top-right-radius
 .dropdown-toggle
 
 
+
+
 :not
+
 
 
 	
 
+
 (
 :first-child
 
+
  
+
 
 )
 {
 border-bottom-left-radius
 
 
+
+
 :
 
+
  
+
 
 0;
 border-top-left-radius
 
 
+
+
 :
 
+
  
+
 
 0;
 }
@@ -3627,33 +3715,47 @@ border-top-left-radius
 .btn
 
 
+
+
 :not
 
+
  
+
 
 (
 :first-child
 
+
  
+
 
 )
 :not
 
+
  
+
 
 (
 :last-child
 
+
  
+
 
 )
 {
 border-radius
 
 
+
+
 :
 
+
  
+
 
 0;
 }
@@ -3662,46 +3764,68 @@ border-radius
 .btn
 
 
+
+
 :first-child
+
+
 
 
 :not
 
+
  
+
 
 (
 :last-child
 
+
  
+
 
 )
 {
 border-top-right-radius
 
 
+
+
 :
+
 
  
 
+
 4
 px
+
+
 
 
 ;
 border-bottom-right-radius
 
 
+
+
 :
 
+
  
+
 
 0;
 border-bottom-left-radius
 
 
+
+
 :
 
+
  
+
 
 0;
 }
@@ -3710,46 +3834,68 @@ border-bottom-left-radius
 .btn
 
 
+
+
 :last-child
+
+
 
 
 :not
 
+
  
+
 
 (
 :first-child
 
+
  
+
 
 )
 {
 border-bottom-left-radius
 
 
+
+
 :
+
 
  
 
+
 4
 px
+
+
 
 
 ;
 border-top-right-radius
 
 
+
+
 :
 
+
  
+
 
 0;
 border-top-left-radius
 
 
+
+
 :
 
+
  
+
 
 0;
 }
@@ -3859,85 +4005,121 @@ textarea.input-group-sm>.form-control,textarea.input-group-sm>.input-group-addon
 .input-group-addon
 
 
+
+
 :not
 
+
  
+
 
 (
 :first-child
 
+
  
+
 
 )
 :not
 
+
  
+
 
 (
 :last-child
 
+
  
+
 
 ),
 .input-group-btn
 
 
+
+
 :not
+
 
 
 	
 
+
 (
 :first-child
 
+
  
+
 
 )
 :not
 
+
  
+
 
 (
 :last-child
 
+
  
+
 
 ),
 .input-group
 
+
  
+
 
 .form-control
 
 
+
+
 :not
 
+
  
+
 
 (
 :first-child
 
 
+
 	
+
 
 )
 :not
 
+
  
+
 
 (
 :last-child
 
+
  
+
 
 )
 {
 border-radius
 
 
+
+
 :
 
+
  
+
 
 0;
 }
@@ -6618,4 +6800,9 @@ button.close {
 .crop img {
 	height: 100px;
 	width: auto;
+}
+
+.center-table {
+	margin: 0 auto !important;
+	float: none !important;
 }

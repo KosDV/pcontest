@@ -1,3 +1,4 @@
+/** variables definition * */
 var API_BASE_URL = "https://localhost:4430/api";
 
 function registerUser(user, callbackRegUser, callbackRegUserError) {
@@ -44,34 +45,31 @@ function loginUser(nif, password, callbackLogUser, callbackLogUserError) {
 	});
 }
 
-// function loadPicture(photo, callbackLoad, callbackLoadError) {
-// var url = API_BASE_URL + '/web/photos/upload';
-//	
-// $.support.cors = true
-// $.ajax({
-// url : url,
-// type : 'POST',
-// data : photo,
-// dataType : 'json',
-// headers : {
-// "Content-Type" : "Application/json",
-// "Accept" : "Application/json"
-// },
-// crossDomain : true,
-// success : function(data, status, jqxhr) {
-// callbackLoad(data, status, jqxhr);
-// },
-// error : function(jqXHR, options, error) {
-// callbackLoadError(jqXHR, options, error);
-// }
-// });
-//	
-// }
+function getResults(nif, password, callbackGetResults, callbackGetResultsError) {
+	var url = API_BASE_URL + '/web/contest?nif=' + nif + '&pass=' + password;
+
+	$.support.cors = true
+	$.ajax({
+		url : url,
+		type : 'GET',
+		headers : {
+			"Content-Type" : "Application/json",
+			"Accept" : "Application/json"
+		},
+		crossDomain : true,
+		success : function(data, status, jqxhr) {
+			callbackGetResults(data, status, jqxhr);
+		},
+		error : function(jqXHR, options, error) {
+			callbackGetResultsError(jqXHR, options, error);
+		}
+	});
+
+}
 
 function getPictures(nif, password, callbackGetPhotos, callbackErrorGetPhotos) {
 	var url = API_BASE_URL + '/web/photos/vote?nif=' + nif + '&pass='
 			+ password;
-
 	$.support.cors = true
 	$.ajax({
 		url : url,
@@ -88,5 +86,4 @@ function getPictures(nif, password, callbackGetPhotos, callbackErrorGetPhotos) {
 			callbackErrorGetPhotos(jqXHR, options, error);
 		}
 	});
-
 }

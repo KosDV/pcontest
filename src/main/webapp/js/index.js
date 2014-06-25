@@ -11,11 +11,11 @@ $('#signin-form').submit(function(e) {
 });
 
 function callbackLogUserError(jqXHR, options, error) {
-	alert("Connection to the server failed");
+	console.log("Connection to the server failed");
 }
 
 function callbackLogUser(data, status, jqxhr) {
-	alert("Connection OK");
+	console.log("Connection OK");
 
 	var code = JSON.stringify(data.status.code);
 	var contestStatus = JSON.stringify(data.status.contest);
@@ -25,20 +25,21 @@ function callbackLogUser(data, status, jqxhr) {
 	alert(contestStatus);
 	$.cookie('contestStatus', contestStatus,{secure:true});
 
+
 	if (code == 200) {
 		if (contestStatus == 601) {
-			alert("PRESENTATIONS_OPENED");
+			console.log("PRESENTATIONS_OPENED");
 			if (!eval(photo)) {
-				alert("Please, upload a picture first");
+				console.log("Please, upload a picture first");
 				window.location.replace("load.html");
 			} else {
-				alert("You have already uploaded a picture");
+				console.log("You have already uploaded a picture");
 				window.location.replace("information.html");
 			}
 		} else if (contestStatus == 602) {
-			alert("VOTES_OPENED");
+			console.log("VOTES_OPENED");
 			if (!eval(photo)) {
-				alert("You cannot upload a picture. Presentations period is closed.");
+				console.log("You cannot upload a picture. Presentations period is closed.");
 				contestStatus = 900;
 				$.cookie('contestStatus', contestStatus,{secure:true});
 				window.location.replace("information.html");
@@ -48,12 +49,13 @@ function callbackLogUser(data, status, jqxhr) {
 		} else if (contestStatus == 603) {
 			alert()
 			$.cookie('contestStatus', contestStatus,{secure:true});
+
 			window.location.replace("information.html");
 		} else {
-			alert("You have already uploaded a picture. Time to vote!");
+			console.log("You have already uploaded a picture. Time to vote!");
 			window.location.replace("homepage.html");
 		}
 	} else {
-		alert("Log in msg: " + msg);
+		console.log("Log in msg: " + msg);
 	}
 }

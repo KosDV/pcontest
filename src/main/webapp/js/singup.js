@@ -1,3 +1,4 @@
+/** variables definition * */
 var usernameOK = false;
 var surnameOK = false;
 var passwordOK = false;
@@ -6,6 +7,49 @@ var usernameExists = false;
 var idOK = false;
 var birthOK = false;
 
+function callbackRegUser(data, status, jqxhr) {
+	console.log("Entra al callbackRegUser");
+	var code = JSON.stringify(data.status.code);
+	var photo = JSON.stringify(data.status.photo);
+	var msg = JSON.stringify(data.status.message);
+	var contestStatus = JSON.stringify(data.status.contest);
+
+	$.cookie('contestStatus', contestStatus);
+
+	if (code == 200) {
+		if (contestStatus == 601) {
+			console.log("PRESENTATIONS_OPENED");
+			if (!eval(photo)) {
+				console.log("Please, upload a picture first");
+				window.location.replace("load.html");
+			} else {
+				console.log("You have already uploaded a picture");
+				window.location.replace("information.html");
+			}
+		} else if (contestStatus == 602) {
+			console.log("VOTES_OPENED");
+			if (!eval(photo)) {
+				console
+						.log("You cannot upload a picture. Presentations period is closed.");
+				contestStatus = 900;
+				$.cookie('contestStatus', contestStatus);
+				window.location.replace("information.html");
+			} else {
+				console
+						.log("You have already uploaded a picture. Time to vote!");
+				window.location.replace("homepage.html");
+			}
+		}
+	} else {
+		console.log("Log in msg: " + msg);
+	}
+}
+
+function callbackRegUserError(jqxhr, options, error) {
+	console.log("Connection to the server failed");
+}
+
+/** check form data * */
 $('#name').blur(function() {
 	var username = $('#name').val();
 	if (username === '') {
@@ -81,54 +125,13 @@ $('#signup-form').submit(function(e) {
 		data.birth = birth;
 		data.email = email;
 		data.password = password;
-		alert("Dades del signup: " + JSON.stringify({
+		console.log("Dades del signup: " + JSON.stringify({
 			"user" : data
 		}));
 		registerUser(JSON.stringify({
 			"user" : data
 		}), callbackRegUser, callbackRegUserError);
 	} else {
-		alert("Error al introducir los datos!");
+		console.log("Error al introducir los datos!");
 	}
 });
-
-function callbackRegUser(data, status, jqxhr) {
-	alert("Entra al callbackRegUser");
-	var code = JSON.stringify(data.status.code);
-	var photo = JSON.stringify(data.status.photo);
-	var msg = JSON.stringify(data.status.message);
-	var contestStatus = JSON.stringify(data.status.contest);
-
-	$.cookie('contestStatus', contestStatus,{secure:true});
-
-	if (code == 200) {
-		if (contestStatus == 601) {
-			alert("PRESENTATIONS_OPENED");
-			if (!eval(photo)) {
-				alert("Please, upload a picture first");
-				window.location.replace("load.html");
-			} else {
-				alert("You have already uploaded a picture");
-				window.location.replace("information.html");
-			}
-		} else if (contestStatus == 602) {
-			alert("VOTES_OPENED");
-			if (!eval(photo)) {
-				alert("You cannot upload a picture. Presentations period is closed.");
-				contestStatus = 900;
-				$.cookie('contestStatus', contestStatus,{secure:true});
-				window.location.replace("information.html");
-			} else {
-				alert("You have already uploaded a picture. Time to vote!");
-				window.location.replace("homepage.html");
-			}
-		}
-	} else {
-		alert("Log in msg: " + msg);
-	}
-}
-
-function callbackRegUserError(jqxhr, options, error) {
-	alert("Entra al callbackRegUserError");
-	alert("Connection to the server failed");
-}

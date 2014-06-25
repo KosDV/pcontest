@@ -1,22 +1,27 @@
-$(document).ready(function() {
-	alert("Entra al load.js");
-	var nif = $.cookie('nif');
-	var pass = $.cookie('password');
+/** variables definition * */
+var nif;
+var pass;
+var contestStatus;
 
-	alert(nif + ", " + pass);
+$(document).ready(function() {
+	nif = $.cookie('nif');
+	pass = $.cookie('password');
+	contestStatus = $.cookie('contestStatus');
+
+	console.log(nif + ", " + pass + ", " + contestStatus);
+	
+	if (contestStatus == 602) {
+		console.log("VOTES_OPENED");
+		window.location.replace("information.html");
+	} else if (contestStatus == 603) {
+		console.log("CONTEST_CLOSED");
+		window.location.replace("information.html");
+	} else {
+		console.log("CONTEST_OPENED");
+	}
 
 	$('#nif_user').val(nif);
 	$('#password_user').val(pass);
-});
-
-$('#fileupload').change(function(evt) {
-	var files = evt.target.files;
-	var f = files[0];
-	var fileName = f.name;
-	var fileType = f.type;
-
-	if (f.type !== 'image/jpeg')
-		$('#fileupload').val('');
 });
 
 $('#upload').submit(function(e) {
@@ -30,12 +35,9 @@ $('#upload').submit(function(e) {
 	$.ajax({
 		url : formUrl,
 		type : 'POST',
-		data : formData, // Data to be sent in the body of the request for
-							// POST requests.
-		dataType : "json", // Specifies the type of data expected in the
-							// response.
-		contentType : false, // Specifies the HTTP Content-Type header for
-								// the request.
+		data : formData,
+		dataType : "json",
+		contentType : false,
 		cache : false,
 		processData : false,
 		crossDomain : true,
@@ -49,22 +51,21 @@ $('#upload').submit(function(e) {
 });
 
 function callbackLoadError(jqXHR, options, error) {
-	alert("Connection to the server failed");
+	console.log("Connection to the server failed");
 }
 
 function callbackLoad(data, status, jqxhr) {
-	alert("Connection OK");
+	console.log("Connection OK");
 
 	var code = JSON.stringify(data.status.code);
 	var msg = JSON.stringify(data.status.message);
 	var photo = JSON.stringify(data.status.photo);
 
-	alert("WOLOLO: " + code + ", " + msg + ", " + photo);
+	console.log("WOLOLO: " + code + ", " + msg + ", " + photo);
 
 	window.location.replace("information.html");
 }
 
-// LOG OUT
 $('#log_out').click(function(e) {
 	e.preventDefault();
 	$.cookie('nif', 'undefined', -1);
@@ -72,6 +73,16 @@ $('#log_out').click(function(e) {
 	var nif = $.cookie('nif');
 	var pass = $.cookie('password');
 
-	alert(nif + ", " + pass);
+	console.log(nif + ", " + pass);
 	window.location.href = "index.html";
+});
+
+$('#fileupload').change(function(evt) {
+	var files = evt.target.files;
+	var f = files[0];
+	var fileName = f.name;
+	var fileType = f.type;
+
+	if (f.type !== 'image/jpeg')
+		$('#fileupload').val('');
 });

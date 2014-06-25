@@ -12,6 +12,10 @@
 <!-------------- CSS STYLE SHEETS ------------------------>
 <link href="/css/bootstrap.css" rel="stylesheet">
 <link href="/css/homepage.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+<link rel="stylesheet" href="css/bootstrap-image-gallery.min.css">
+
 </head>
 <body>
 	<!--------------------- NAVIGATION BAR STARTS --------------------->
@@ -31,10 +35,7 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="#user" onClick='User()'>Profile</a></li>
-				</ul>
-				<ul class="nav navbar-nav">
-					<li><a href="#about" onClick='About()'>pContest</a></li>
+					<li><a href="rules.html">Rules</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a id="log_out" href=""><span
@@ -53,38 +54,45 @@
 	</div>
 	<!--------------------- PAGE CONTENT --------------------->
 	<div class="container">
-		<div id="contingut-pagina">
-			<section id="contingut">
-				<div id="imagesList">
+		<div id="imagesList"></div>
+		<br> <br>
+	</div>
+	<div class="container">
+		<!-- 	picture information  -->
+		<div id="info_title"></div>
+		<div id="info_image"></div>
+		<div id="info_desc"></div>
+		<div id="info_map"></div>
+		<br> <br>
+	</div>
 
-
-					<div class="col-md-4 portfolio-item crop">
-
-						<a href="#project-link"> <img class="img-responsive"
-							src="/assets/sampleImg/5.jpg">
-						</a>
-						<h5>
-							<p style="text-align: center">
-								<b> Sandland </b><input type="checkbox" name="input"
-									value="Type here">
-							</p>
-						</h5>
+	<div id="blueimp-gallery" class="blueimp-gallery">
+		<!-- The container for the modal slides -->
+		<div class="slides"></div>
+		<!-- Controls for the borderless lightbox -->
+		<h3 class="title"></h3>
+		<a class="prev">‹</a> <a class="next">›</a> <a class="close">×</a> <a
+			class="play-pause"></a>
+		<ol class="indicator"></ol>
+		<!-- The modal dialog, which will be used to wrap the lightbox content -->
+		<div class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" aria-hidden="true">&times;</button>
+						<h4 class="modal-title"></h4>
 					</div>
-		</section>
-
-		<div id="contingut-pagina">
-			<section id="contingut">
-				<div class="row" id="informacio">
-					<!-- 	picture information  -->
-					<div id="info_title"></div>
-					<div id="info_image"></div>
-					<div id="info_desc"></div>
-					<div id="info_map"></div>
+					<div class="modal-body next"></div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default pull-left prev">
+							<i class="glyphicon glyphicon-chevron-left"></i> Previous
+						</button>
+						<button type="button" class="btn btn-primary next">
+							Next <i class="glyphicon glyphicon-chevron-right"></i>
+						</button>
+					</div>
 				</div>
-			</section>
-			<br>
-			<!-- 			<div id="links"></div> -->
-			<br>
+			</div>
 		</div>
 	</div>
 
@@ -102,5 +110,8 @@
 	<script src='js/homepage.js'></script>
 	<script src="js/jquery.cookie.js"></script>
 	<script src="js/api.js"></script>
+	<script
+		src="http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+	<script src="js/bootstrap-image-gallery.min.js"></script>
 </body>
 </html>
