@@ -133,8 +133,7 @@ function loadInfo(i) {
 	// $(info_map).html('');
 
 	$('#exif_table').html('');
-	$('#title_exif_data').html(
-			'<h4>EXIF DATA from Picture' + tmp[i].title + '</h4>');
+	$('#title_exif_data').html('<h4>EXIF DATA INFORMATION</h4>');
 	$('#exif_table')
 			.append(
 					'<thead><tr><th>Name</th><th>Title</th><th>Description</th><th>Date</th><th>GPS Latitude</th><th>GPS Longitude</th><th>ISO</th><th>Aperture</th><th>Exposure Time</th></tr></thead>');
@@ -162,15 +161,4 @@ function loadInfo(i) {
 	$('html, body').animate({
 		scrollTop : ($('#exif_table').offset().top)
 	}, 500);
-
-	// $('#map_canvas').gmap().bind('init', function(ev, map) {
-	// $('#map_canvas').gmap('addMarker', {
-	// 'position' : tmp[i].gpsLatitude + ', ' + tmp[i].gpsLongitude,
-	// 'bounds' : true
-	// }).click(function() {
-	// $('#map_canvas').gmap('openInfoWindow', {
-	// 'content' : 'Hello World!'
-	// }, this);
-	// });
-	// });
 }

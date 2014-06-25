@@ -29,23 +29,26 @@ function callbackGetResultsError(jqXHR, options, error) {
 }
 
 function createTable(JSONobject) {
-	var author;
-	var title;
-	var totalPictures; // photos
-
 	var i = 0;
 
 	var tmp = JSONobject.results.results;
 	var census = JSONobject.results.census;
-	console.log(census);
-	console.log(tmp[1].photo.author);
-	console.log(tmp[1].photo.title);
-	console.log(tmp[1].nif);
+	var photos = JSONobject.results.photos;
+	var votes = JSONobject.results.votes;
+
+	$('#census').html('');
+	$('#census').append('<h5>Census: ' + census + '   Total pictures: ' + photos + '   Total votes: ' + votes + '</h5>');
+
+//	$('#num_photos').html('');
+//	$('#num_photos').append('<h5>Total pictures: ' + photos + '</h5>');
+//
+//	$('#num_votes').html('');
+//	$('#num_votes').append('<h5>Total votes: ' + votes + '</h5>');
 
 	$('#results_table').html('');
 	$('#results_table')
 			.append(
-					'<thead><tr><th>Name</th><th>Photo Title</th><th>Census</th><th>URL</th></tr></thead>');
+					'<thead><tr><th>Name</th><th>Photo Title</th><th>Votes</th><th>URL</th></tr></thead>');
 	while (i < tmp.length) {
 		$('#results_table')
 				.append(
@@ -54,7 +57,7 @@ function createTable(JSONobject) {
 								+ '</td><td>'
 								+ tmp[i].photo.title
 								+ '</td><td>'
-								+ census
+								+ tmp[i].votes
 								+ '</td><td><a href="'
 								+ tmp[i].photo.url
 								+ '"><span class="glyphicon glyphicon-picture"></span></a></td></tr>');
