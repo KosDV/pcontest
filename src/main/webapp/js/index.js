@@ -22,7 +22,6 @@ function callbackLogUser(data, status, jqxhr) {
 	var photo = JSON.stringify(data.status.photo);
 	var msg = JSON.stringify(data.status.message);
 
-	alert(contestStatus);
 	$.cookie('contestStatus', contestStatus,{secure:true});
 
 
@@ -47,7 +46,6 @@ function callbackLogUser(data, status, jqxhr) {
 				window.location.replace("homepage.html");
 			}
 		} else if (contestStatus == 603) {
-			alert()
 			$.cookie('contestStatus', contestStatus,{secure:true});
 
 			window.location.replace("information.html");

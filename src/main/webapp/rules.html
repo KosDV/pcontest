@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" href="/assets/ico/favicon.ico">
+<title>pContest</title>
+<link href="/css/bootstrap.css" rel="stylesheet">
+<link href="/css/box.css" rel="stylesheet">
+</head>
+<body>
+	<!--------------------- NAVIGATION BAR STARTS --------------------->
+	<nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="homepage.html">pContest</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="rules.html">Rules</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a id="log_out" href=""><span
+							class="glyphicon glyphicon-off"></span></a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!--------------------- PAGE CONTENT --------------------->
+	<div id="fullscreen_bg" class="fullscreen_bg" />
+	<div class="container">
+		<div class="row">
+			<br> <br> <br> <br>
+			<div class="col-xs-6 col-sm-4">
+				<div class="box"></div>
+				<div class="info">
+					<h3 class="title">
+						<center></center>
+					</h3>
+					<p></p>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-6 col-md-4 center-block">
+					<h3>
+						<center>pContest Information</center>
+					</h3>
+					<p align="center" id="user_information"></p>
+					<br>
+					<button type="button" id="info_btn"
+						class="btn btn-default center-block">Go!</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--------------------- FOOTER --------------------->
+	<footer class="navbar-default navbar-fixed-bottom">
+		<div class="container">
+			<p class="text-muted">Copyright &copy; KosDV 2014</p>
+		</div>
+	</footer>
+
+	<!--------------------- SCRIPTS --------------------->
+	<script src="js/jquery-2.1.1.min.js"></script>
+	<script src="js/jquery.cookie.js"></script>
+	<script src="js/rules.js"></script>
+</body>
+</html>

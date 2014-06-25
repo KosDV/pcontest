@@ -9,10 +9,10 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 @XmlRootElement(name = "PhotosToVote")
 public class PhotosDTO {
-    @JsonProperty("individual-vote-length")
+    @JsonProperty("individualVoteLength")
     Integer individualVoteLength;
 
-    @JsonProperty("total-vote-length")
+    @JsonProperty("totalVoteLength")
     Integer totalVoteLength;
 
     @JsonProperty("n")

@@ -121,3 +121,7 @@ input,textarea,button {
 	font-size: 26px;
 	margin: -3px 0 0 12px;
 }
+
+.votebtn {
+	display: inline-block;
+}

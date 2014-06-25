@@ -6,6 +6,7 @@ $(document)
 					var contestStatus = $.cookie('contestStatus');
 
 					console.log(nif + ", " + pass + ", " + contestStatus);
+					contestStatus = 2;
 
 					if (contestStatus == 601) {
 						$('#user_information')
@@ -33,10 +34,15 @@ $(document)
 								.after(
 										'You cannot upload a picture. Presentations period is closed :(');
 						$('#info_btn').hide();
-					} else if (contestStatus== 609) {
+					} else if (contestStatus == 609) {
 						$('#user_information')
 								.after(
 										'Sorry! There are not enough participants. Pcontest is currently closed :(');
+						$('#info_btn').hide();
+					} else if (contestStatus == 2) {
+						$('#user_information')
+								.after(
+										'You have already voted. You will be able to see the results when the period is done.');
 						$('#info_btn').hide();
 					} else {
 						$('#user_information').after('');

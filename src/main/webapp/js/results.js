@@ -31,7 +31,6 @@ function callbackGetResultsError(jqXHR, options, error) {
 function createTable(JSONobject) {
 	var author;
 	var title;
-
 	var totalPictures; // photos
 
 	var i = 0;
