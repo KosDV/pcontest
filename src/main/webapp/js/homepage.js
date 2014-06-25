@@ -34,11 +34,12 @@ var votes;
 var checkedIds = [];
 var individualVoteLength;
 var totalVoteLength;
+var tmp;
 
 function loadPictures(json) {
 	var i = 0;
 
-	var tmp = json.PhotosToVote.listPhotosToVote;
+	tmp = json.PhotosToVote.listPhotosToVote;
 
 	$('#imagesList').html('');
 	while (i < tmp.length) {
@@ -51,7 +52,8 @@ function loadPictures(json) {
 						+ '" alt="' + tmp[i].title + '"/></a><p id="title' + i
 						+ '" align="center"><input type="checkbox" id="'
 						+ tmp[i].id + '" name="input"> <b>' + tmp[i].title
-						+ '</b></p></div>');
+						+ '</b>    <a onClick="loadInfo(' + i
+						+ /* ', ' + tmp + */')">+ info</a></p></div>');
 		i++;
 	}
 	votes = json.PhotosToVote.votes;
@@ -61,11 +63,12 @@ function loadPictures(json) {
 			+ totalVoteLength);
 
 	$('#user_info').html('');
+	$('#exif_table').html('');
 	$('#user_info')
 			.append(
 					'<div><h4>You must select '
 							+ votes
-							+ ' pictures to vote.</h4><button type="button" onClick="sendVote('
+							+ ' pictures to vote</h4><button type="button" onClick="sendVote('
 							+ individualVoteLength
 							+ ', '
 							+ totalVoteLength
@@ -111,17 +114,63 @@ $('#log_out').click(function(e) {
 	window.location.href = "index.html";
 });
 
-// function loadInfo(i) {
-// var title;
-// var description;
-// var url;
-// var latLng;
-//
-// var tmp = json.PhotosToVote.listPhotosToVote;
-// $(info_title).html('<h5>' + tmp[i].title + '</h5>');
-// $(info_desc).html('<h5>' + tmp[i].description + '</h5>');
-//
-// $(info_image).html(
-// '<img id="url" class="img-responsive" src="' + tmp[i].url + '">');
-// $(info_map).html('');
-// }
+function loadInfo(i) {
+
+	// $(info_form).html('<h3>EXIF DATA</h3>');
+	// $(info_title).html('<h5>Title:</h5><p> ' + tmp[i].title + '</p>');
+	// $(info_desc)
+	// .html('<h5>Description:</h5><p> ' + tmp[i].description + '</p>');
+	// $(info_date).html('<h5>Date:</h5><p> ' + tmp[i].date + '</h5>');
+	// $(info_lat)
+	// .html('<h5>GPS Latitude:</h5><p> ' + tmp[i].gpsLatitude + '</p>');
+	// $(info_long).html(
+	// '<h5>GPS Longitude:</h5><p> ' + tmp[i].gpsLongitude + '</p>');
+	// $(info_iso).html('<h5>ISO:</h5><p> ' + tmp[i].ISO + '</p>');
+	// $(info_aperture).html('<h5>Aperture:</h5><p> ' + tmp[i].aperture +
+	// '</p>');
+	// $(info_exposureTime).html(
+	// '<h5>Exposure Time:</h5><p> ' + tmp[i].exposureTime + '</p>');
+	// $(info_map).html('');
+
+	$('#exif_table').html('');
+	$('#title_exif_data').html(
+			'<h4>EXIF DATA from Picture' + tmp[i].title + '</h4>');
+	$('#exif_table')
+			.append(
+					'<thead><tr><th>Name</th><th>Title</th><th>Description</th><th>Date</th><th>GPS Latitude</th><th>GPS Longitude</th><th>ISO</th><th>Aperture</th><th>Exposure Time</th></tr></thead>');
+	while (i < tmp.length) {
+		$('#exif_table').append(
+				'<tr><td>' + tmp[i].title + '</td><td>' + tmp[i].description
+						+ '</td><td>' + tmp[i].date + '</td><td>'
+						+ tmp[i].gpsLatitude + '</td><td>'
+						+ tmp[i].gpsLongitude + '</td><td>' + tmp[i].ISO
+						+ '</td><td>' + tmp[i].aperture + '</td>'
+						+ tmp[i].exposureTime + '<td></td></tr>');
+		console.log(tmp[i].gpsLatitude);
+
+		if (tmp[i].gpsLatitude == null) {
+			$('#map_canvas').html('');
+		} else {
+			var yourStartLatLng = new google.maps.LatLng(tmp[i].gpsLatitude,
+					tmp[i].gpsLongitude);
+			$('#map_canvas').gmap({
+				'center' : yourStartLatLng
+			});
+		}
+		i++;
+	}
+	$('html, body').animate({
+		scrollTop : ($('#exif_table').offset().top)
+	}, 500);
+
+	// $('#map_canvas').gmap().bind('init', function(ev, map) {
+	// $('#map_canvas').gmap('addMarker', {
+	// 'position' : tmp[i].gpsLatitude + ', ' + tmp[i].gpsLongitude,
+	// 'bounds' : true
+	// }).click(function() {
+	// $('#map_canvas').gmap('openInfoWindow', {
+	// 'content' : 'Hello World!'
+	// }, this);
+	// });
+	// });
+}

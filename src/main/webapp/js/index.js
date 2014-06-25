@@ -24,7 +24,6 @@ function callbackLogUser(data, status, jqxhr) {
 
 	$.cookie('contestStatus', contestStatus,{secure:true});
 
-
 	if (code == 200) {
 		if (contestStatus == 601) {
 			console.log("PRESENTATIONS_OPENED");

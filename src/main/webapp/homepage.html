@@ -46,6 +46,11 @@
 
 	<!--------------------- PAGE HEADER STARTS --------------------->
 	<div class="container">
+		<div>
+			<br> <br>
+		</div>
+	</div>
+	<div class="container">
 		<div id="user_info"></div>
 	</div>
 	<!--------------------- PAGE CONTENT --------------------->
@@ -53,12 +58,15 @@
 		<div id="imagesList"></div>
 		<br> <br>
 	</div>
+
 	<div class="container">
-		<!-- 	picture information  -->
-		<div id="info_title"></div>
-		<div id="info_image"></div>
-		<div id="info_desc"></div>
-		<div id="info_map"></div>
+		<h4 id="title_exif_data"></h4>
+		<table class="table" id="exif_table">
+		</table>
+	</div>
+
+	<div class="container">
+		<div id="map_canvas" style="width: 250px; height: 250px"></div>
 		<br> <br>
 	</div>
 	<!--------------------- gallery --------------------->
@@ -108,5 +116,11 @@
 	<script src="js/api.js"></script>
 	<script src="js/jquery.blueimp-gallery.min.js"></script>
 	<script src="js/bootstrap-image-gallery.min.js"></script>
+	<script type="text/javascript" src="js/js.js"></script>
+	<script type="text/javascript" src="js/jquery.mobile-1.0.min.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<!-- 	<script type="text/javascript" -->
+	<!-- 		src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script> -->
+	<script type="text/javascript" src="js/jquery.ui.map.full.min.js"></script>
 </body>
 </html>
