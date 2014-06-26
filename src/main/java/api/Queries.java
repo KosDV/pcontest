@@ -46,7 +46,6 @@ public class Queries {
 	String password = userBean.getPassword();
 	StringBuilder passRand = new StringBuilder(password).append(randInt);
 	String passwordDigested = DigestUtil.generateSHA2(passRand.toString());
-	System.out.println("passwordDigested: " + passwordDigested);
 
 	User user = new User(userBean.getName(), userBean.getSurname(),
 		userBean.getBirth(), userBean.getEmail(), passwordDigested,
@@ -162,11 +161,8 @@ public class Queries {
     private List<Photo> getPercentagePhotoList(List<Photo> shuffledPhotoList) {
 	Integer shuffledPhotoListSize = shuffledPhotoList.size();
 	Float twentyFivePercent = (float) (shuffledPhotoListSize * 0.25);
-	System.out.println("25%: " + twentyFivePercent);
-
 	Integer roundedNumPhotos = Math.round(twentyFivePercent);
-	System.out.println("Shuffled photo size: " + shuffledPhotoListSize);
-	System.out.println("25% rounded: " + roundedNumPhotos);
+
 	if (shuffledPhotoListSize < 5)
 	    return null;
 	else if (shuffledPhotoListSize >= 5 && roundedNumPhotos < 5) {
@@ -174,14 +170,12 @@ public class Queries {
 	    for (int i = 0; i < 5; i++) {
 		photosToVote.add(shuffledPhotoList.get(i));
 	    }
-	    System.out.println("returned size: " + photosToVote.size());
 	    return photosToVote;
 	} else {
 	    List<Photo> photosToVote = new ArrayList<Photo>();
 	    for (int i = 0; i < roundedNumPhotos; i++) {
 		photosToVote.add(shuffledPhotoList.get(i));
 	    }
-	    System.out.println("returned size: " + photosToVote.size());
 	    return photosToVote;
 	}
     }
@@ -310,7 +304,7 @@ public class Queries {
 
     public String getSumDecryptedVotes(List<Vote> encryptedVotes) {
 	PaillierUtil paillier = new PaillierUtil();
-	System.out.println("EncryptedVotes size: " + encryptedVotes.size());
+
 	BigInteger product = new BigInteger(encryptedVotes.get(0)
 		.getEncryptedVote());
 	for (int i = 1; i < encryptedVotes.size(); i++) {
@@ -325,9 +319,6 @@ public class Queries {
     public List<Results> insertResults(String decryptedVotes,
 	    Integer individualLength, Integer totalLength, Integer difference) {
 
-	System.out.println("Decrypted votes length: " + decryptedVotes.length()
-		+ " totalLength: " + totalLength + " differece " + difference);
-
 	StringBuilder sb = new StringBuilder();
 	for (int i = 0; i < difference; i++) {
 	    sb.append("0");
@@ -336,7 +327,6 @@ public class Queries {
 
 	decryptedVotes = sb.toString();
 
-	System.out.println("Fixed decrypted vote: " + decryptedVotes);
 	Contest contest = ContestUtil.Singleton.INSTANCE.get();
 	List<Results> results = new ArrayList<Results>();
 	Results result;
@@ -344,10 +334,6 @@ public class Queries {
 	int end = individualLength;
 	int photoId = 1;
 	while (true) {
-	    System.out.println("start=>" + start + "; end=>" + end
-		    + " photoId=>" + photoId);
-	    System.out.println("photoId: " + photoId + " votes: "
-		    + new Integer(decryptedVotes.substring(start, end)));
 	    result = new Results(photoId, new Integer(decryptedVotes.substring(
 		    start, end)), contest);
 	    try {
@@ -356,7 +342,6 @@ public class Queries {
 		return null;
 	    }
 	    results.add(result);
-	    System.out.println("results size=>" + results.size());
 	    start = start + individualLength;
 	    end = end + individualLength;
 	    photoId++;
@@ -400,7 +385,7 @@ public class Queries {
 		    Tag.IMAGE_HEIGHT, Tag.MODEL, Tag.FOCAL_LENGTH, Tag.FLASH,
 		    Tag.MAKE);
 	} catch (IllegalArgumentException | SecurityException | IOException e) {
-	    System.out.println(e.getMessage());
+	    System.err.println(e.getMessage());
 	    return null;
 	}
     }
@@ -410,7 +395,7 @@ public class Queries {
 	    MailUtil.sendConfirmationVoteMail(email, name);
 	    return true;
 	} catch (UnsupportedEncodingException | MessagingException ex) {
-	    System.out.println(ex.getMessage());
+	    System.err.println(ex.getMessage());
 	    return false;
 	}
     }
@@ -420,7 +405,7 @@ public class Queries {
 	    MailUtil.sendConfirmationRegisterMail(email, name);
 	    return true;
 	} catch (UnsupportedEncodingException | MessagingException ex) {
-	    System.out.println(ex.getMessage());
+	    System.err.println(ex.getMessage());
 	    return false;
 	}
     }

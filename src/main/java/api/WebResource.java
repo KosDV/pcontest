@@ -197,7 +197,6 @@ public class WebResource {
 		    ServerConfigurator.getPhotopath());
 	    pathLocationBuilder.append(pathDigested).append(File.separator);
 	    String pathLocation = pathLocationBuilder.toString();
-	    System.out.println("FILEPATH_DIGESTED: " + pathLocation);
 	    File newDir = new File(pathLocation);
 	    boolean succes = newDir.mkdir();
 	    if (!succes) {
@@ -209,8 +208,7 @@ public class WebResource {
 	    StringBuilder fileLocation = new StringBuilder(pathLocationBuilder);
 	    fileLocation.append(filename);
 	    File newFile = new File(fileLocation.toString());
-	    System.out.println("new file: " + newFile + " New dir: " + newDir
-		    + " Filelocation: " + fileLocation.toString());
+
 	    try {
 		PhotoUtil.writeToFile(photoS, newFile);
 	    } catch (IOException e) {
@@ -224,7 +222,6 @@ public class WebResource {
 	    urlBuilder.append(File.separator).append(pathDigested)
 		    .append(File.separator).append(filename);
 	    String imageURL = urlBuilder.toString();
-	    System.out.println("IMAGEURL: " + imageURL);
 
 	    Map<Tag, String> metadataMap = query.getMetadata(newFile);
 	    if (metadataMap == null)
@@ -547,7 +544,7 @@ public class WebResource {
 			contestStatus, false, false);
 
 	    String votesDecrypted = query.getSumDecryptedVotes(encryptedVotes);
-	    System.out.println("votes Decripted: " + votesDecrypted);
+	    System.out.println("Sum of decrypted votes: " + votesDecrypted);
 
 	    Integer numPhotos = query.getNumPhotosUploaded();
 
@@ -566,7 +563,6 @@ public class WebResource {
 			contestStatus, false, false);
 	    else if (voteLength < totalLength)
 		difference = (totalLength - voteLength);
-	    System.out.println("(voteLength - totalLength) => " + difference);
 
 	    List<Results> results = query.insertResults(votesDecrypted,
 		    individualLength, totalLength, difference);
