@@ -133,7 +133,9 @@ function encVote(checkedIds, totalVoteLength, individualVoteLength) {
 	console.log("voteStr: " + voteStr);
 	var nif = $.cookie('nif');
 	var password = $.cookie('password');
-	sendEncVote(nif, password, JSON.stringify(voteStr), callbackVote, callbackVoteError);
+
+	var vote = JSON.stringify({"vote":{"encrypted-vote":voteStr}});
+	sendEncVote(nif, password, vote, callbackVote, callbackVoteError);
 }
 
 $('#log_out').click(function(e) {

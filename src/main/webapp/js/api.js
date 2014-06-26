@@ -45,14 +45,14 @@ function loginUser(nif, password, callbackLogUser, callbackLogUserError) {
 	});
 }
 
-function sendEncVote(nif, password, voteStr, callbackVote, callbackVoteError) {
+function sendEncVote(nif, password, vote, callbackVote, callbackVoteError) {
 	var url = API_BASE_URL + '/web/vote?nif=' + nif + '&pass=' + password;
 
 	$.support.cors = true
 	$.ajax({
 		url : url,
 		type : 'POST',
-		data : voteStr,
+		data : vote,
 		dataType : 'json',
 		headers : {
 			"Content-Type" : "Application/json",
