@@ -4,9 +4,13 @@ $('#signin-form').submit(function(e) {
 	var nif = $('#nif').val();
 	var password = $('#password').val();
 
-	$.cookie('nif', nif,{secure:true});
-	$.cookie('password', password,{secure:true});
-
+	$.cookie('nif', nif, {
+		secure : true
+	});
+	$.cookie('password', password, {
+		secure : true
+	});
+	console.log("index.js");
 	loginUser(nif, password, callbackLogUser, callbackLogUserError);
 });
 
@@ -22,7 +26,9 @@ function callbackLogUser(data, status, jqxhr) {
 	var photo = JSON.stringify(data.status.photo);
 	var msg = JSON.stringify(data.status.message);
 
-	$.cookie('contestStatus', contestStatus,{secure:true});
+	$.cookie('contestStatus', contestStatus, {
+		secure : true
+	});
 
 	if (code == 200) {
 		if (contestStatus == 601) {
@@ -37,15 +43,20 @@ function callbackLogUser(data, status, jqxhr) {
 		} else if (contestStatus == 602) {
 			console.log("VOTES_OPENED");
 			if (!eval(photo)) {
-				console.log("You cannot upload a picture. Presentations period is closed.");
+				console
+						.log("You cannot upload a picture. Presentations period is closed.");
 				contestStatus = 900;
-				$.cookie('contestStatus', contestStatus,{secure:true});
+				$.cookie('contestStatus', contestStatus, {
+					secure : true
+				});
 				window.location.replace("information.html");
 			} else {
 				window.location.replace("homepage.html");
 			}
 		} else if (contestStatus == 603) {
-			$.cookie('contestStatus', contestStatus,{secure:true});
+			$.cookie('contestStatus', contestStatus, {
+				secure : true
+			});
 
 			window.location.replace("information.html");
 		} else {
@@ -53,6 +64,6 @@ function callbackLogUser(data, status, jqxhr) {
 			window.location.replace("homepage.html");
 		}
 	} else {
-		console.log("Log in msg: " + msg);
+		alert("Log in msg: " + msg);
 	}
 }

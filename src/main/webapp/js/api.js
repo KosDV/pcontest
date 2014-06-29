@@ -1,5 +1,5 @@
 /** variables definition * */
-var API_BASE_URL = "https://localhost:4430/api";
+var API_BASE_URL = "https://10.89.90.149:4430/api";
 
 function registerUser(user, callbackRegUser, callbackRegUserError) {
 	var url = API_BASE_URL + '/web/users/register';
